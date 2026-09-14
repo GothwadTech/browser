@@ -26,6 +26,7 @@ import kotlinx.coroutines.withContext
 
 class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.Callback {
     private var webView: WebViewEx? = null
+    var pageZoomController: PageZoomController? = null
     internal var callback: WebEngineWindowProviderCallback? = null
     private var viewParent: CursorLayout? = null
     private var fullScreenView: View? = null
@@ -84,43 +85,24 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
     override fun loadUrl(url: String) { webView?.loadUrl(url) }
     override fun canGoForward(): Boolean = webView?.canGoForward() ?: false
     override fun goForward() { webView?.goForward() }
-    override fun canZoomIn(): Boolean = true
-
-    private fun isEngineInDesktopMode(): Boolean {
-        val cfg = AppContext.provideConfig()
-        val effectiveUa = userAgentString ?: cfg.userAgentString.value ?: ""
-        return cfg.desktopMode.value ||
-               effectiveUa.contains("Windows") ||
-               effectiveUa.contains("X11; Linux x86_64") ||
-               effectiveUa.contains("Macintosh")
-    }
+    override fun canZoomIn(): Boolean = pageZoomController?.canZoomIn() ?: (webView?.canZoomIn() ?: true)
 
     override fun zoomIn() {
-        val cfg = AppContext.provideConfig()
-        val isDesktop = isEngineInDesktopMode()
-        val current = cfg.getEffectiveZoom(isDesktop)
-        val next = Config.STANDARD_ZOOM_LEVELS.firstOrNull { it > current } ?: Config.WEB_PAGE_ZOOM_PERCENT_MAX
-        cfg.setEffectiveZoom(isDesktop, next)
-        setPageZoom(next)
+        pageZoomController?.zoomIn() ?: webView?.zoomIn()
     }
 
-    override fun canZoomOut(): Boolean = true
+    override fun canZoomOut(): Boolean = pageZoomController?.canZoomOut() ?: (webView?.canZoomOut() ?: true)
 
     override fun zoomOut() {
-        val cfg = AppContext.provideConfig()
-        val isDesktop = isEngineInDesktopMode()
-        val current = cfg.getEffectiveZoom(isDesktop)
-        val prev = Config.STANDARD_ZOOM_LEVELS.lastOrNull { it < current } ?: Config.WEB_PAGE_ZOOM_PERCENT_MIN
-        cfg.setEffectiveZoom(isDesktop, prev)
-        setPageZoom(prev)
+        pageZoomController?.zoomOut() ?: webView?.zoomOut()
     }
 
-    override fun zoomBy(zoomBy: Float) { webView?.zoomBy(zoomBy) }
+    override fun zoomBy(zoomBy: Float) {
+        pageZoomController?.zoomBy(zoomBy) ?: webView?.zoomBy(zoomBy)
+    }
 
     override fun setPageZoom(percent: Int) {
-        val clamped = percent.coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-        tab.scale = clamped / 100f
-        webView?.applyZoom(clamped)
+        pageZoomController?.setPageZoom(percent) ?: webView?.applyZoom(percent)
     }
 
     override fun evaluateJavascript(script: String) { webView?.evaluateJavascript(script, null) }
@@ -130,13 +112,17 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
     @Throws(Exception::class)
     override fun getOrCreateView(activityContext: Context): View {
         if (webView == null) {
-            webView = WebViewEx(activityContext, webViewCallback, jsInterface)
-            tab.adblock?.let { webView?.onUpdateAdblockSetting(it) }
+            val wv = WebViewEx(activityContext, webViewCallback, jsInterface)
+            val pzc = PageZoomController(wv, tab)
+            wv.pageZoomController = pzc
+            this.pageZoomController = pzc
+            this.webView = wv
+            tab.adblock?.let { wv.onUpdateAdblockSetting(it) }
             val cfg = AppContext.provideConfig()
             val effectiveUa = userAgentString ?: cfg.userAgentString.value ?: if (cfg.desktopMode.value) Config.DESKTOP_UA else null
             if (effectiveUa != null) {
                 userAgentString = effectiveUa
-                webView?.settings?.userAgentString = effectiveUa
+                wv.settings.userAgentString = effectiveUa
             }
         }
         return webView!!
@@ -180,6 +166,7 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
         )
         parent.addView(wv, lp)
         viewParent?.cursorDrawerDelegate?.callback = this
+        pageZoomController?.restoreZoomForTab()
         onResume()
     }
 
@@ -191,6 +178,7 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
         if (completely || destroyTab) {
             try { webView?.destroy() } catch (e: Exception) {}
             webView = null
+            pageZoomController = null
         }
     }
 
@@ -204,6 +192,7 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
                 Log.w("WebViewWebEngine", "Error destroying webView in trimMemory: $e")
             }
             this.webView = null
+            this.pageZoomController = null
         }
     }
 

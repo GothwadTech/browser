@@ -69,7 +69,9 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
     private val uiHandler = Handler(Looper.getMainLooper())
     internal val config = AppContext.provideConfig()
     private var documentStartDesktopScriptRef: ScriptHandler? = null
-    var currentAppliedZoomPercent: Int = 100
+    var pageZoomController: PageZoomController? = null
+    val currentAppliedZoomPercent: Int
+        get() = pageZoomController?.currentAppliedZoomPercent ?: 100
 
     interface Callback {
         fun getActivity(): Activity?
@@ -125,11 +127,6 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
             displayZoomControls = false
             layoutAlgorithm = WebSettings.LayoutAlgorithm.NORMAL
             defaultTextEncodingName = "UTF-8"
-            val isDesktop = isDesktopModeEnabled()
-            val initialZoom = config.getEffectiveZoom(isDesktop).coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-            textZoom = initialZoom
-            currentAppliedZoomPercent = initialZoom
-            setInitialScale(if (initialZoom == 100) 0 else initialZoom)
             domStorageEnabled = true
             databaseEnabled = true
             allowFileAccess = true
@@ -503,17 +500,18 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
     }
 
     fun applyZoom(percent: Int) {
-        val clamped = percent.coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-        settings.textZoom = clamped
-        currentAppliedZoomPercent = clamped
-        setInitialScale(if (clamped == 100) 0 else clamped)
+        pageZoomController?.setPageZoom(percent)
+    }
+
+    fun onExternalScaleChanged(oldScale: Float, newScale: Float) {
+        pageZoomController?.onScaleChanged(oldScale, newScale)
     }
 
     fun onPageStartedResetZoom() {
-        val isDesktop = isDesktopModeEnabled()
-        val configuredZoom = config.getEffectiveZoom(isDesktop).coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-        currentAppliedZoomPercent = configuredZoom
-        settings.textZoom = configuredZoom
-        setInitialScale(if (configuredZoom == 100) 0 else configuredZoom)
+        pageZoomController?.onPageStarted()
+    }
+
+    fun restoreZoomForTab() {
+        pageZoomController?.restoreZoomForTab()
     }
 }

@@ -305,7 +305,6 @@ class Config(val prefs: SharedPreferences) {
         } else {
             mobileWebPageZoomPercent = clamped
         }
-        prefs.edit().putInt(WEB_PAGE_ZOOM_PERCENT_KEY, clamped).apply()
     }
 
     /** Current effective web page zoom percent based on active desktop/mobile mode (100 = default, 25 to 300). */

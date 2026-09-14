@@ -160,8 +160,7 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
 
         btnZoomReset.setOnClickListener {
             val isDesk = cbDesktop.isChecked
-            config.setEffectiveZoom(isDesk, 100)
-            activity.applyWebPageZoom(100)
+            activity.applyWebPageZoom(100, isDesk)
             updateZoomDisplay()
             Toast.makeText(activity, "Zoom reset to 100%", Toast.LENGTH_SHORT).show()
         }

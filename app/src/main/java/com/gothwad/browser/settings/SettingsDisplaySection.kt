@@ -85,11 +85,15 @@ object SettingsDisplaySection {
         vb.btnZoomTargetMobile.setOnClickListener {
             editingDesktopMode = false
             updateZoomUI()
+            val zoom = config.getEffectiveZoom(false)
+            mainAct?.applyWebPageZoom(zoom, targetIsDesktop = false)
         }
 
         vb.btnZoomTargetDesktop.setOnClickListener {
             editingDesktopMode = true
             updateZoomUI()
+            val zoom = config.getEffectiveZoom(true)
+            mainAct?.applyWebPageZoom(zoom, targetIsDesktop = true)
         }
 
         vb.sbWebPageZoom.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -99,7 +103,7 @@ object SettingsDisplaySection {
                 config.setEffectiveZoom(editingDesktopMode, value)
                 val modeTitle = if (editingDesktopMode) "Desktop" else "Mobile"
                 vb.tvWebPageZoomValue.text = if (value == 100) "$modeTitle: 100% (Default)" else "$modeTitle: $value%"
-                mainAct?.applyWebPageZoom(value)
+                mainAct?.applyWebPageZoom(value, targetIsDesktop = editingDesktopMode)
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
@@ -110,7 +114,7 @@ object SettingsDisplaySection {
             vb.sbWebPageZoom.progress = (percent - minWebZoom).coerceIn(0, maxWebZoom - minWebZoom)
             val modeTitle = if (editingDesktopMode) "Desktop" else "Mobile"
             vb.tvWebPageZoomValue.text = if (percent == 100) "$modeTitle: 100% (Default)" else "$modeTitle: $percent%"
-            mainAct?.applyWebPageZoom(percent)
+            mainAct?.applyWebPageZoom(percent, targetIsDesktop = editingDesktopMode)
         }
 
         vb.btnWebZoom50.setOnClickListener { setWebZoom(50) }

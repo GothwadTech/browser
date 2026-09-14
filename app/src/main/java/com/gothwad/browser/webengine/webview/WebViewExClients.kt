@@ -267,8 +267,10 @@ object WebViewExClients {
                 webViewEx.evaluateJavascript(webViewEx.getGenericJSInjects(), null)
                 val isDesktop = webViewEx.isDesktopModeEnabled()
                 val configuredZoom = webViewEx.config.getEffectiveZoom(isDesktop).coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-                if (webViewEx.settings.textZoom != configuredZoom) {
-                    webViewEx.settings.textZoom = configuredZoom
+                if (configuredZoom != 100) {
+                    webViewEx.post {
+                        webViewEx.applyZoom(configuredZoom)
+                    }
                 }
             }
 
@@ -289,6 +291,7 @@ object WebViewExClients {
 
             override fun onScaleChanged(view: WebView?, oldScale: Float, newScale: Float) {
                 super.onScaleChanged(view, oldScale, newScale)
+                webViewEx.onExternalScaleChanged(oldScale, newScale)
                 callback.onScaleChanged(oldScale, newScale)
             }
 

@@ -38,16 +38,17 @@ fun MainActivity.isCurrentTabInDesktopMode(): Boolean {
            engineUa.contains("Macintosh")
 }
 
-fun MainActivity.applyWebPageZoom(percent: Int) {
+fun MainActivity.applyWebPageZoom(percent: Int, targetIsDesktop: Boolean? = null) {
     val clamped = percent.coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-    val isDesktop = isCurrentTabInDesktopMode()
+    val isDesktop = targetIsDesktop ?: isCurrentTabInDesktopMode()
     config.setEffectiveZoom(isDesktop, clamped)
     tabsModel.tabsStates.forEach { tab ->
         val tabIsDesktop = tab.webEngine.userAgentString?.let { ua ->
             ua.contains("Windows") || ua.contains("X11; Linux x86_64") || ua.contains("Macintosh")
-        } ?: isDesktop
-        val tabZoom = config.getEffectiveZoom(tabIsDesktop)
-        tab.webEngine.setPageZoom(tabZoom)
+        } ?: (config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true)
+        if (tabIsDesktop == isDesktop) {
+            tab.webEngine.setPageZoom(clamped)
+        }
     }
 }
 
@@ -55,12 +56,12 @@ fun MainActivity.zoomWebIn() {
     val isDesktop = isCurrentTabInDesktopMode()
     val current = config.getEffectiveZoom(isDesktop)
     val next = Config.STANDARD_ZOOM_LEVELS.firstOrNull { it > current } ?: Config.WEB_PAGE_ZOOM_PERCENT_MAX
-    applyWebPageZoom(next)
+    applyWebPageZoom(next, isDesktop)
 }
 
 fun MainActivity.zoomWebOut() {
     val isDesktop = isCurrentTabInDesktopMode()
     val current = config.getEffectiveZoom(isDesktop)
     val prev = Config.STANDARD_ZOOM_LEVELS.lastOrNull { it < current } ?: Config.WEB_PAGE_ZOOM_PERCENT_MIN
-    applyWebPageZoom(prev)
+    applyWebPageZoom(prev, isDesktop)
 }
