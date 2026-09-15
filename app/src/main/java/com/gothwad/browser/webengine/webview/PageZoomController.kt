@@ -46,17 +46,20 @@ class PageZoomController(
 
         fun computeViewportContent(densityPercent: Int, isDesktop: Boolean): String {
             val clamped = densityPercent.coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-            val scale = clamped / 100.0
-            val scaleStr = String.format(Locale.US, "%.2f", scale)
 
             return if (isDesktop) {
+                val scale = clamped / 100.0
                 val baseDesktopWidth = 1024
                 val targetWidth = (baseDesktopWidth / scale).roundToInt().coerceIn(320, 4096)
-                "width=$targetWidth, initial-scale=$scaleStr"
+                "width=$targetWidth"
             } else {
                 when {
                     clamped == 100 -> "width=device-width, initial-scale=1.0"
-                    clamped > 100 -> "width=device-width, initial-scale=$scaleStr"
+                    clamped > 100 -> {
+                        val scale = clamped / 100.0
+                        val scaleStr = String.format(Locale.US, "%.2f", scale)
+                        "width=device-width, initial-scale=$scaleStr"
+                    }
                     else -> {
                         val targetWidth = when (clamped) {
                             90 -> 980
@@ -71,7 +74,7 @@ class PageZoomController(
                                 (960 + t * (1920 - 960)).roundToInt().coerceIn(960, 2560)
                             }
                         }
-                        "width=$targetWidth, initial-scale=$scaleStr"
+                        "width=$targetWidth"
                     }
                 }
             }
