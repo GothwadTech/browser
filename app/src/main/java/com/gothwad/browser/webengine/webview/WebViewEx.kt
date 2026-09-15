@@ -68,7 +68,6 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
     var currentOriginalUrl: Uri? = null
     private val uiHandler = Handler(Looper.getMainLooper())
     internal val config = AppContext.provideConfig()
-    private var documentStartDesktopScriptRef: ScriptHandler? = null
     var pageZoomController: PageZoomController? = null
     val currentAppliedZoomPercent: Int
         get() = pageZoomController?.currentAppliedZoomPercent ?: 100
@@ -443,60 +442,12 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
 
     fun applyDesktopMode() {
         val isDesktop = isDesktopModeEnabled()
+        val effectiveUa = config.userAgentString.value ?: if (isDesktop) Config.DESKTOP_UA else null
+        if (effectiveUa != null) {
+            settings.userAgentString = effectiveUa
+        }
         val targetZoom = config.getEffectiveZoom(isDesktop)
         applyZoom(targetZoom)
-
-        if (WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-            try {
-                documentStartDesktopScriptRef?.remove()
-                documentStartDesktopScriptRef = null
-            } catch (e: Throwable) {
-                Log.w(TAG, "Failed to remove previous document-start desktop script: ", e)
-            }
-
-            if (isDesktop) {
-                try {
-                    val desktopViewportScript = """
-                        (function() {
-                            function removeViewportMeta() {
-                                var metas = document.querySelectorAll('meta[name="viewport"]');
-                                for (var i = 0; i < metas.length; i++) {
-                                    if (metas[i] && metas[i].parentNode) {
-                                        metas[i].parentNode.removeChild(metas[i]);
-                                    }
-                                }
-                            }
-                            removeViewportMeta();
-                            if (window.MutationObserver) {
-                                var observer = new MutationObserver(function(mutations) {
-                                    removeViewportMeta();
-                                });
-                                if (document.documentElement) {
-                                    observer.observe(document.documentElement, { childList: true, subtree: true });
-                                } else {
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        removeViewportMeta();
-                                        if (document.documentElement) {
-                                            observer.observe(document.documentElement, { childList: true, subtree: true });
-                                        }
-                                    });
-                                }
-                            }
-                            document.addEventListener('DOMContentLoaded', removeViewportMeta);
-                            window.addEventListener('load', removeViewportMeta);
-                        })();
-                    """.trimIndent()
-
-                    documentStartDesktopScriptRef = WebViewCompat.addDocumentStartJavaScript(
-                        this,
-                        desktopViewportScript,
-                        setOf("*")
-                    )
-                } catch (e: Throwable) {
-                    Log.w(TAG, "Failed to add document-start desktop script: ", e)
-                }
-            }
-        }
     }
 
     fun applyZoom(percent: Int) {
@@ -513,5 +464,10 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
 
     fun restoreZoomForTab() {
         pageZoomController?.restoreZoomForTab()
+    }
+
+    override fun destroy() {
+        pageZoomController?.destroy()
+        super.destroy()
     }
 }

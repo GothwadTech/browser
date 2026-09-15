@@ -117,6 +117,7 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
             wv.pageZoomController = pzc
             this.pageZoomController = pzc
             this.webView = wv
+            pzc.restoreZoomForTab()
             tab.adblock?.let { wv.onUpdateAdblockSetting(it) }
             val cfg = AppContext.provideConfig()
             val effectiveUa = userAgentString ?: cfg.userAgentString.value ?: if (cfg.desktopMode.value) Config.DESKTOP_UA else null

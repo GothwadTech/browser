@@ -1,31 +1,40 @@
 package com.gothwad.browser.webengine.webview
 
 import android.util.Log
+import androidx.webkit.ScriptHandler
+import androidx.webkit.WebViewCompat
+import androidx.webkit.WebViewFeature
 import com.gothwad.browser.Config
 import com.gothwad.browser.model.WebTabState
+import java.util.Locale
+import kotlin.math.roundToInt
 
 /**
  * ⚠️ PROTECTED FILE — READ BEFORE MODIFYING ⚠️
  *
- * This file has been rewritten twice already after two separate incorrect
- * implementations broke page zoom in different ways:
- *   1. A custom CSS `zoom` property injected via JavaScript — broke
- *      position:fixed element placement site-wide.
- *   2. WebSettings.textZoom + WebView.setInitialScale() — only scaled text
- *      (not buttons/images/layout) and broke layout on sites with their own
- *      viewport meta tag.
+ * This file has been rewritten THREE times to arrive at the correct zoom model:
+ *   1. Custom CSS `zoom` property injected via JS — broke position:fixed element
+ *      placement site-wide (e.g. Google dropdown displaced).
+ *   2. WebSettings.textZoom + WebView.setInitialScale() — only scaled text (not layout)
+ *      and broke layout on sites with their own viewport meta tag.
+ *   3. WebView.zoomIn() / zoomOut() / zoomBy() — Android's native page-scale zoom.
+ *      Magnified the rendered image uniformly like a photo, but did NOT reflow
+ *      the layout into denser/wider arrangements. The page's responsive design
+ *      never adapted, so "zoomed out" felt like a shrunk mobile page instead of
+ *      a desktop-density view.
  *
- * The ONLY correct way to implement page zoom in an Android WebView is via
- * WebView's own native zoom API: zoomIn(), zoomOut(), zoomBy(float),
- * canZoomIn(), canZoomOut(). These already scale the entire rendered page
- * (text, images, buttons, layout) uniformly, exactly like Chrome's own
- * zoom, with no custom CSS/JS injection and no layout reflow.
+ * The CORRECT technique (currently implemented): dynamically overwrite the page's
+ * <meta name="viewport"> content attribute's width value, injected via
+ * document-start JavaScript and re-applied immediately when the zoom level
+ * changes on an already-loaded page. This changes the CSS layout viewport width
+ * (the same mechanism desktop Chrome uses for Ctrl+/Ctrl- zoom), causing
+ * responsive layouts to naturally reflow into desktop-density multi-column
+ * arrangements at lower density levels and mobile-friendly arrangements at higher
+ * density levels, without breaking position:fixed coordinate math.
  *
- * Do NOT reintroduce textZoom, setInitialScale(), or any custom CSS/JS
- * zoom injection into this file, or move zoom logic back into WebViewEx.kt
- * or WebViewWebEngine.kt, without a very deliberate, explicit reason —
- * if you are an AI agent modifying this codebase for an unrelated task,
- * do not touch this file unless the task is specifically about page zoom.
+ * Do NOT reintroduce textZoom, setInitialScale(), a CSS `zoom` property injection,
+ * or switch back to native WebView.zoomIn()/zoomOut()/zoomBy() as the primary zoom
+ * mechanism.
  */
 class PageZoomController(
     private val webView: WebViewEx,
@@ -34,106 +43,248 @@ class PageZoomController(
     companion object {
         private const val TAG = "PageZoomController"
         const val DEFAULT_SCALE = 1.0f
+
+        fun computeViewportContent(densityPercent: Int, isDesktop: Boolean): String {
+            val clamped = densityPercent.coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
+            val scale = clamped / 100.0
+            val scaleStr = String.format(Locale.US, "%.2f", scale)
+
+            return if (isDesktop) {
+                val baseDesktopWidth = 1024
+                val targetWidth = (baseDesktopWidth / scale).roundToInt().coerceIn(320, 4096)
+                "width=$targetWidth, initial-scale=$scaleStr"
+            } else {
+                when {
+                    clamped == 100 -> "width=device-width, initial-scale=1.0"
+                    clamped > 100 -> "width=device-width, initial-scale=$scaleStr"
+                    else -> {
+                        val targetWidth = when (clamped) {
+                            90 -> 980
+                            80 -> 1080
+                            75 -> 1150
+                            67 -> 1280
+                            50 -> 1440
+                            33 -> 1600
+                            25 -> 1920
+                            else -> {
+                                val t = (100 - clamped) / 75.0
+                                (960 + t * (1920 - 960)).roundToInt().coerceIn(960, 2560)
+                            }
+                        }
+                        "width=$targetWidth, initial-scale=$scaleStr"
+                    }
+                }
+            }
+        }
+
+        fun generateDocumentStartScript(targetContent: String): String {
+            return """
+                (function() {
+                    var desired = "$targetContent";
+                    window.__viewportDensityTarget = desired;
+                    function applyViewport() {
+                        var target = window.__viewportDensityTarget;
+                        if (!target) return;
+                        var metas = document.querySelectorAll('meta[name="viewport"]');
+                        var meta = null;
+                        for (var i = 0; i < metas.length; i++) {
+                            if (!meta) {
+                                meta = metas[i];
+                            } else if (metas[i].parentNode) {
+                                metas[i].parentNode.removeChild(metas[i]);
+                            }
+                        }
+                        if (!meta) {
+                            meta = document.createElement('meta');
+                            meta.setAttribute('name', 'viewport');
+                            var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
+                            if (head) {
+                                head.insertBefore(meta, head.firstChild);
+                            }
+                        }
+                        if (meta && meta.getAttribute('content') !== target) {
+                            meta.setAttribute('content', target);
+                        }
+                    }
+                    applyViewport();
+                    if (window.MutationObserver && !window.__viewportDensityObserver) {
+                        window.__viewportDensityObserver = new MutationObserver(function(mutations) {
+                            var m = document.querySelector('meta[name="viewport"]');
+                            if (!m || m.getAttribute('content') !== window.__viewportDensityTarget) {
+                                applyViewport();
+                            }
+                        });
+                        var root = document.head || document.documentElement;
+                        if (root) {
+                            window.__viewportDensityObserver.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['content'] });
+                        } else {
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var r = document.head || document.documentElement;
+                                if (r && window.__viewportDensityObserver) {
+                                    window.__viewportDensityObserver.observe(r, { childList: true, subtree: true, attributes: true, attributeFilter: ['content'] });
+                                }
+                            });
+                        }
+                    }
+                    document.addEventListener('DOMContentLoaded', applyViewport);
+                    window.addEventListener('load', applyViewport);
+                })();
+            """.trimIndent()
+        }
+
+        fun generateImmediateScript(targetContent: String): String {
+            return """
+                (function() {
+                    var target = "$targetContent";
+                    window.__viewportDensityTarget = target;
+                    var metas = document.querySelectorAll('meta[name="viewport"]');
+                    var meta = null;
+                    for (var i = 0; i < metas.length; i++) {
+                        if (!meta) {
+                            meta = metas[i];
+                        } else if (metas[i].parentNode) {
+                            metas[i].parentNode.removeChild(metas[i]);
+                        }
+                    }
+                    if (!meta) {
+                        meta = document.createElement('meta');
+                        meta.setAttribute('name', 'viewport');
+                        var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
+                        if (head) {
+                            head.insertBefore(meta, head.firstChild);
+                        }
+                    }
+                    if (meta) {
+                        meta.setAttribute('content', target);
+                    }
+                })();
+            """.trimIndent()
+        }
     }
 
     var currentAppliedZoomPercent: Int = 100
         private set
 
-    private var isProgrammaticZooming = false
+    private var documentStartScriptRef: ScriptHandler? = null
+
+    init {
+        val savedScale = tab.scale
+        currentAppliedZoomPercent = if (savedScale != null) {
+            (savedScale * 100).roundToInt().coerceIn(
+                Config.WEB_PAGE_ZOOM_PERCENT_MIN,
+                Config.WEB_PAGE_ZOOM_PERCENT_MAX
+            )
+        } else {
+            val isDesktop = webView.isDesktopModeEnabled()
+            webView.config.getEffectiveZoom(isDesktop)
+        }
+        tab.scale = currentAppliedZoomPercent / 100f
+        updateDocumentStartScript()
+    }
 
     fun canZoomIn(): Boolean {
-        return currentAppliedZoomPercent < Config.WEB_PAGE_ZOOM_PERCENT_MAX && webView.canZoomIn()
+        return currentAppliedZoomPercent < Config.WEB_PAGE_ZOOM_PERCENT_MAX
     }
 
     fun zoomIn(): Boolean {
-        if (currentAppliedZoomPercent >= Config.WEB_PAGE_ZOOM_PERCENT_MAX) return false
-        val success = webView.zoomIn()
-        if (!success) {
-            zoomBy(1.25f)
-            return true
-        }
+        if (!canZoomIn()) return false
+        val current = currentAppliedZoomPercent
+        val next = Config.STANDARD_ZOOM_LEVELS.firstOrNull { it > current } ?: Config.WEB_PAGE_ZOOM_PERCENT_MAX
+        setPageZoom(next)
         return true
     }
 
     fun canZoomOut(): Boolean {
-        return currentAppliedZoomPercent > Config.WEB_PAGE_ZOOM_PERCENT_MIN && webView.canZoomOut()
+        return currentAppliedZoomPercent > Config.WEB_PAGE_ZOOM_PERCENT_MIN
     }
 
     fun zoomOut(): Boolean {
-        if (currentAppliedZoomPercent <= Config.WEB_PAGE_ZOOM_PERCENT_MIN) return false
-        val success = webView.zoomOut()
-        if (!success) {
-            zoomBy(0.8f)
-            return true
-        }
+        if (!canZoomOut()) return false
+        val current = currentAppliedZoomPercent
+        val prev = Config.STANDARD_ZOOM_LEVELS.lastOrNull { it < current } ?: Config.WEB_PAGE_ZOOM_PERCENT_MIN
+        setPageZoom(prev)
         return true
     }
 
     fun zoomBy(factor: Float) {
         if (factor <= 0.001f || Math.abs(factor - 1.0f) < 0.001f) return
-        isProgrammaticZooming = true
-        try {
-            webView.zoomBy(factor)
-            val prevScale = tab.scale ?: (currentAppliedZoomPercent / 100f)
-            val newScale = (prevScale * factor).coerceIn(
-                Config.WEB_PAGE_ZOOM_PERCENT_MIN / 100f,
-                Config.WEB_PAGE_ZOOM_PERCENT_MAX / 100f
-            )
-            tab.scale = newScale
-            currentAppliedZoomPercent = Math.round(newScale * 100).coerceIn(
-                Config.WEB_PAGE_ZOOM_PERCENT_MIN,
-                Config.WEB_PAGE_ZOOM_PERCENT_MAX
-            )
-        } catch (e: Throwable) {
-            Log.w(TAG, "zoomBy failed: ", e)
-        } finally {
-            webView.post { isProgrammaticZooming = false }
-        }
+        val current = if (currentAppliedZoomPercent <= 0) 100 else currentAppliedZoomPercent
+        val target = (current * factor).roundToInt()
+        setPageZoom(target)
     }
 
     fun setPageZoom(percent: Int) {
         val clamped = percent.coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-        if (currentAppliedZoomPercent == clamped) return
-        val current = if (currentAppliedZoomPercent <= 0) 100 else currentAppliedZoomPercent
-        val factor = clamped.toFloat() / current.toFloat()
-        zoomBy(factor)
+        currentAppliedZoomPercent = clamped
+        tab.scale = clamped / 100f
+        applyDensityToWebView()
     }
 
     fun onScaleChanged(oldScale: Float, newScale: Float) {
-        if (!isProgrammaticZooming && oldScale > 0.001f && newScale > 0.001f) {
-            val ratio = newScale / oldScale
-            val prevScale = tab.scale ?: (currentAppliedZoomPercent / 100f)
-            val updatedScale = (prevScale * ratio).coerceIn(
-                Config.WEB_PAGE_ZOOM_PERCENT_MIN / 100f,
-                Config.WEB_PAGE_ZOOM_PERCENT_MAX / 100f
-            )
-            tab.scale = updatedScale
-            currentAppliedZoomPercent = Math.round(updatedScale * 100).coerceIn(
-                Config.WEB_PAGE_ZOOM_PERCENT_MIN,
-                Config.WEB_PAGE_ZOOM_PERCENT_MAX
-            )
-        }
+        // No-op: pinch-zoom remains independent native photo-zoom;
+        // density-zoom is controlled via viewport-width injection.
     }
 
     fun restoreZoomForTab() {
         val savedScale = tab.scale
-        if (savedScale != null) {
-            val targetPercent = Math.round(savedScale * 100).coerceIn(
+        currentAppliedZoomPercent = if (savedScale != null) {
+            (savedScale * 100).roundToInt().coerceIn(
                 Config.WEB_PAGE_ZOOM_PERCENT_MIN,
                 Config.WEB_PAGE_ZOOM_PERCENT_MAX
             )
-            if (currentAppliedZoomPercent != targetPercent) {
-                val current = if (currentAppliedZoomPercent <= 0) 100 else currentAppliedZoomPercent
-                val factor = targetPercent.toFloat() / current.toFloat()
-                webView.post {
-                    zoomBy(factor)
-                }
-            }
+        } else {
+            val isDesktop = webView.isDesktopModeEnabled()
+            webView.config.getEffectiveZoom(isDesktop)
         }
+        tab.scale = currentAppliedZoomPercent / 100f
+        applyDensityToWebView()
     }
 
     fun onPageStarted() {
-        currentAppliedZoomPercent = 100
-        tab.scale = DEFAULT_SCALE
+        applyDensityToWebView()
+    }
+
+    fun applyDensityToWebView() {
+        updateDocumentStartScript()
+        applyToCurrentPage()
+    }
+
+    private fun updateDocumentStartScript() {
+        if (!WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) return
+        try {
+            documentStartScriptRef?.remove()
+            documentStartScriptRef = null
+            val isDesktop = webView.isDesktopModeEnabled()
+            val targetContent = computeViewportContent(currentAppliedZoomPercent, isDesktop)
+            val script = generateDocumentStartScript(targetContent)
+            documentStartScriptRef = WebViewCompat.addDocumentStartJavaScript(
+                webView,
+                script,
+                setOf("*")
+            )
+        } catch (e: Throwable) {
+            Log.w(TAG, "Failed to update document start script: ", e)
+        }
+    }
+
+    private fun applyToCurrentPage() {
+        try {
+            val isDesktop = webView.isDesktopModeEnabled()
+            val targetContent = computeViewportContent(currentAppliedZoomPercent, isDesktop)
+            val script = generateImmediateScript(targetContent)
+            webView.evaluateJavascript(script, null)
+        } catch (e: Throwable) {
+            Log.w(TAG, "Failed to evaluate viewport script on page: ", e)
+        }
+    }
+
+    fun destroy() {
+        try {
+            documentStartScriptRef?.remove()
+            documentStartScriptRef = null
+        } catch (e: Throwable) {
+            Log.w(TAG, "Failed to remove document start script on destroy: ", e)
+        }
     }
 }
+

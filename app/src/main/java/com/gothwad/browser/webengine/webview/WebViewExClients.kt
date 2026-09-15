@@ -245,32 +245,14 @@ object WebViewExClients {
                 webViewEx.currentOriginalUrl = url.toUri()
                 webViewEx.onPageStartedResetZoom()
                 callback.onPageStarted(url)
-                if (webViewEx.isDesktopModeEnabled()) {
-                    if (!WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) {
-                        webViewEx.evaluateJavascript("""
-                            (function() {
-                                var metas = document.querySelectorAll('meta[name="viewport"]');
-                                for (var i = 0; i < metas.length; i++) {
-                                    if (metas[i] && metas[i].parentNode) {
-                                        metas[i].parentNode.removeChild(metas[i]);
-                                    }
-                                }
-                            })();
-                        """.trimIndent(), null)
-                    }
-                }
             }
 
             override fun onPageFinished(view: WebView, url: String?) {
                 super.onPageFinished(view, url)
                 callback.onPageFinished(url)
                 webViewEx.evaluateJavascript(webViewEx.getGenericJSInjects(), null)
-                val isDesktop = webViewEx.isDesktopModeEnabled()
-                val configuredZoom = webViewEx.config.getEffectiveZoom(isDesktop).coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
-                if (configuredZoom != 100) {
-                    webViewEx.post {
-                        webViewEx.applyZoom(configuredZoom)
-                    }
+                webViewEx.post {
+                    webViewEx.restoreZoomForTab()
                 }
             }
 
