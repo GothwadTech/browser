@@ -104,6 +104,7 @@ class ActionBar @JvmOverloads constructor(
 
         if (isInEditMode) return
 
+        vb.ibVoiceSearch.visibility = View.GONE
         if (Utils.isFireTV(context)) {
             (vb.ibVoiceSearch.parent as? ViewGroup)?.removeView(vb.ibVoiceSearch)
         } else {
