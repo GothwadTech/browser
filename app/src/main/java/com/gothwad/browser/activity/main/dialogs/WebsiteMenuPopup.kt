@@ -130,7 +130,7 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
         // Desktop Site Checkbox setup
         val btnDesktop: View = contentView.findViewById(R.id.btnWebMenuDesktop)
         val cbDesktop: CheckBox = contentView.findViewById(R.id.cbWebMenuDesktop)
-        val isDesktop = config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true
+        val isDesktop = config.isDesktopMode()
         cbDesktop.isChecked = isDesktop
 
         // 🔎 Website Zoom Controls

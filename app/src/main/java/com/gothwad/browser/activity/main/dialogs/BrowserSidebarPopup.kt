@@ -229,7 +229,7 @@ class BrowserSidebarPopup(private val activity: MainActivity) {
 
         // 10. Desktop View Mode
         val ivDesktopCheck = contentView.findViewById<ImageView>(R.id.ivSideDesktopCheck)
-        val isDesktop = config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true
+        val isDesktop = config.isDesktopMode()
         ivDesktopCheck?.setImageResource(
             if (isDesktop) R.drawable.ic_check_box_checked else R.drawable.ic_check_box_outline
         )

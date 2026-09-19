@@ -218,7 +218,7 @@ object SettingsGeneralSection {
 
         vb.btnQuickZoomIn.setOnClickListener {
             mainAct?.zoomWebIn()
-            val isDesk = config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true
+            val isDesk = config.isDesktopMode()
             val zoom = config.getEffectiveZoom(isDesk)
             vb.sbWebPageZoom.progress = (zoom - Config.WEB_PAGE_ZOOM_PERCENT_MIN).coerceIn(0, Config.WEB_PAGE_ZOOM_PERCENT_MAX - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
             val modeTitle = if (isDesk) "Desktop" else "Mobile"
@@ -228,7 +228,7 @@ object SettingsGeneralSection {
 
         vb.btnQuickZoomOut.setOnClickListener {
             mainAct?.zoomWebOut()
-            val isDesk = config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true
+            val isDesk = config.isDesktopMode()
             val zoom = config.getEffectiveZoom(isDesk)
             vb.sbWebPageZoom.progress = (zoom - Config.WEB_PAGE_ZOOM_PERCENT_MIN).coerceIn(0, Config.WEB_PAGE_ZOOM_PERCENT_MAX - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
             val modeTitle = if (isDesk) "Desktop" else "Mobile"
@@ -237,7 +237,7 @@ object SettingsGeneralSection {
         }
 
         vb.btnQuickZoomReset.setOnClickListener {
-            val isDesk = config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true
+            val isDesk = config.isDesktopMode()
             mainAct?.applyWebPageZoom(100, isDesk)
             vb.sbWebPageZoom.progress = 100 - Config.WEB_PAGE_ZOOM_PERCENT_MIN
             val modeTitle = if (isDesk) "Desktop" else "Mobile"

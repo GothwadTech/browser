@@ -109,6 +109,7 @@ class PageZoomController(
                             meta.setAttribute('content', target);
                         }
                     }
+                    window.__applyViewportDensity = applyViewport;
                     applyViewport();
                     if (window.MutationObserver && !window.__viewportDensityObserver) {
                         window.__viewportDensityObserver = new MutationObserver(function(mutations) {
@@ -140,25 +141,43 @@ class PageZoomController(
                 (function() {
                     var target = "$targetContent";
                     window.__viewportDensityTarget = target;
-                    var metas = document.querySelectorAll('meta[name="viewport"]');
-                    var meta = null;
-                    for (var i = 0; i < metas.length; i++) {
+                    function applyViewport() {
+                        var target = window.__viewportDensityTarget;
+                        if (!target) return;
+                        var metas = document.querySelectorAll('meta[name="viewport"]');
+                        var meta = null;
+                        for (var i = 0; i < metas.length; i++) {
+                            if (!meta) {
+                                meta = metas[i];
+                            } else if (metas[i].parentNode) {
+                                metas[i].parentNode.removeChild(metas[i]);
+                            }
+                        }
                         if (!meta) {
-                            meta = metas[i];
-                        } else if (metas[i].parentNode) {
-                            metas[i].parentNode.removeChild(metas[i]);
+                            meta = document.createElement('meta');
+                            meta.setAttribute('name', 'viewport');
+                            var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
+                            if (head) {
+                                head.insertBefore(meta, head.firstChild);
+                            }
+                        }
+                        if (meta && meta.getAttribute('content') !== target) {
+                            meta.setAttribute('content', target);
                         }
                     }
-                    if (!meta) {
-                        meta = document.createElement('meta');
-                        meta.setAttribute('name', 'viewport');
-                        var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement;
-                        if (head) {
-                            head.insertBefore(meta, head.firstChild);
+                    window.__applyViewportDensity = applyViewport;
+                    applyViewport();
+                    if (window.MutationObserver && !window.__viewportDensityObserver) {
+                        window.__viewportDensityObserver = new MutationObserver(function(mutations) {
+                            var m = document.querySelector('meta[name="viewport"]');
+                            if (!m || m.getAttribute('content') !== window.__viewportDensityTarget) {
+                                applyViewport();
+                            }
+                        });
+                        var root = document.head || document.documentElement;
+                        if (root) {
+                            window.__viewportDensityObserver.observe(root, { childList: true, subtree: true, attributes: true, attributeFilter: ['content'] });
                         }
-                    }
-                    if (meta) {
-                        meta.setAttribute('content', target);
                     }
                 })();
             """.trimIndent()

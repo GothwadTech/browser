@@ -432,20 +432,13 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
     }
 
     fun isDesktopModeEnabled(): Boolean {
-        val effectiveUa = settings.userAgentString ?: ""
-        return config.desktopMode.value ||
-               config.userAgentString.value?.contains("Windows") == true ||
-               effectiveUa.contains("Windows") ||
-               effectiveUa.contains("X11; Linux x86_64") ||
-               effectiveUa.contains("Macintosh")
+        return config.isDesktopMode()
     }
 
     fun applyDesktopMode() {
         val isDesktop = isDesktopModeEnabled()
         val effectiveUa = config.userAgentString.value ?: if (isDesktop) Config.DESKTOP_UA else null
-        if (effectiveUa != null) {
-            settings.userAgentString = effectiveUa
-        }
+        settings.userAgentString = effectiveUa
         val targetZoom = config.getEffectiveZoom(isDesktop)
         applyZoom(targetZoom)
     }

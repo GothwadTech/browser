@@ -162,7 +162,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         // 8. Desktop Site Checkbox
         val btnDesktop: View = contentView.findViewById(R.id.btnMenuDesktop)
         val cbDesktop: CheckBox = contentView.findViewById(R.id.cbDesktopSite)
-        val isDesktop = config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true
+        val isDesktop = config.isDesktopMode()
         cbDesktop.isChecked = isDesktop
 
         bindMenuItem(btnDesktop) {

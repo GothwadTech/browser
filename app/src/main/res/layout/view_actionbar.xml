@@ -42,7 +42,6 @@
         android:padding="5dp"
         android:scaleType="fitCenter"
         android:tint="@color/day_night_icon_color"
-        android:visibility="gone"
         android:src="@drawable/ic_mic_none_grey_900_36dp" />
 
     <!-- URL and Search input text field -->

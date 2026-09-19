@@ -307,11 +307,20 @@ class Config(val prefs: SharedPreferences) {
         }
     }
 
+    fun isDesktopUa(ua: String?): Boolean {
+        if (ua == null) return false
+        return ua.contains("Windows") || ua.contains("X11; Linux x86_64") || ua.contains("Macintosh")
+    }
+
+    fun isDesktopMode(customUa: String? = userAgentString.value): Boolean {
+        return desktopMode.value || isDesktopUa(customUa)
+    }
+
     /** Current effective web page zoom percent based on active desktop/mobile mode (100 = default, 25 to 300). */
     var webPageZoomPercent: Int
-        get() = getEffectiveZoom(desktopMode.value || userAgentString.value?.contains("Windows") == true)
+        get() = getEffectiveZoom(isDesktopMode())
         set(value) {
-            setEffectiveZoom(desktopMode.value || userAgentString.value?.contains("Windows") == true, value)
+            setEffectiveZoom(isDesktopMode(), value)
         }
 
     /** Whether to record visited URLs and searches into local history. */

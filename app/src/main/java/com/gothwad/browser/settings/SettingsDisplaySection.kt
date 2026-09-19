@@ -63,7 +63,7 @@ object SettingsDisplaySection {
         }
 
         // Web Page Zoom controls (Separate Mobile & Desktop Zoom)
-        var editingDesktopMode: Boolean = config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true
+        var editingDesktopMode: Boolean = config.isDesktopMode()
         val minWebZoom = Config.WEB_PAGE_ZOOM_PERCENT_MIN
         val maxWebZoom = Config.WEB_PAGE_ZOOM_PERCENT_MAX
         vb.sbWebPageZoom.max = maxWebZoom - minWebZoom

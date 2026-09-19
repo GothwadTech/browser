@@ -138,7 +138,6 @@
                 android:padding="6dp"
                 android:scaleType="fitCenter"
                 android:tint="@color/header_button_icon_tint"
-                android:visibility="gone"
                 android:src="@drawable/ic_history_grey_900_36dp" />
 
             <!-- 1. Home -->
@@ -255,7 +254,6 @@
                 android:padding="7dp"
                 android:scaleType="fitCenter"
                 android:tint="@color/header_button_icon_tint"
-                android:visibility="gone"
                 android:src="@drawable/ic_nav_notes" />
 
             <!-- 9. Download Icon -->
@@ -284,7 +282,6 @@
                 android:padding="7dp"
                 android:scaleType="fitCenter"
                 android:tint="@color/header_button_icon_tint"
-                android:visibility="gone"
                 android:src="@drawable/ic_nav_files" />
 
             <!-- 11. Bookmark Icon -->

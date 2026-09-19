@@ -31,11 +31,8 @@ fun MainActivity.handleSearch(aText: String) {
 
 fun MainActivity.isCurrentTabInDesktopMode(): Boolean {
     val currentTab = tabsModel.currentTab.value
-    val engineUa = currentTab?.webEngine?.userAgentString ?: config.userAgentString.value ?: ""
-    return config.desktopMode.value ||
-           engineUa.contains("Windows") ||
-           engineUa.contains("X11; Linux x86_64") ||
-           engineUa.contains("Macintosh")
+    val engineUa = currentTab?.webEngine?.userAgentString ?: config.userAgentString.value
+    return config.isDesktopMode(engineUa)
 }
 
 fun MainActivity.applyWebPageZoom(percent: Int, targetIsDesktop: Boolean? = null) {
@@ -44,8 +41,8 @@ fun MainActivity.applyWebPageZoom(percent: Int, targetIsDesktop: Boolean? = null
     config.setEffectiveZoom(isDesktop, clamped)
     tabsModel.tabsStates.forEach { tab ->
         val tabIsDesktop = tab.webEngine.userAgentString?.let { ua ->
-            ua.contains("Windows") || ua.contains("X11; Linux x86_64") || ua.contains("Macintosh")
-        } ?: (config.desktopMode.value || config.userAgentString.value?.contains("Windows") == true)
+            config.isDesktopUa(ua)
+        } ?: config.isDesktopMode()
         if (tabIsDesktop == isDesktop) {
             tab.webEngine.setPageZoom(clamped)
         }
