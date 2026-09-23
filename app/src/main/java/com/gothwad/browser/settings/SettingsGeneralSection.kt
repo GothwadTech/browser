@@ -180,10 +180,6 @@ object SettingsGeneralSection {
             onDismissDialog?.invoke()
             mainAct?.showFavorites()
         }
-        vb.btnQuickClipboard.setOnClickListener {
-            onDismissDialog?.invoke()
-            mainAct?.showClipboard()
-        }
         vb.btnQuickDownloads.setOnClickListener {
             onDismissDialog?.invoke()
             mainAct?.showDownloads()

@@ -11,7 +11,6 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import com.gothwad.browser.R
 import com.gothwad.browser.model.WebTabState
-import com.gothwad.browser.notes.clipboard.ClipboardRepository
 import com.gothwad.browser.webengine.WebEngineWindowProviderCallback
 import com.gothwad.browser.widgets.cursor.CursorDrawerDelegate
 import kotlinx.coroutines.CoroutineScope
@@ -21,22 +20,9 @@ import kotlinx.coroutines.launch
 object MainActivityWebContextMenuHelper {
 
     fun handleCopyTextToClipboard(activity: MainActivity, url: String) {
-        val clipBoard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipBoard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         val clipData = ClipData.newPlainText("URL", url)
-        ClipboardRepository.markCopiedByApp(url)
-        ClipboardRepository.isInternalClipboardWrite = true
-        try {
-            clipBoard.setPrimaryClip(clipData)
-        } finally {
-            ClipboardRepository.isInternalClipboardWrite = false
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                ClipboardRepository(activity).recordCopiedText(url)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
+        clipBoard?.setPrimaryClip(clipData)
         Toast.makeText(activity, activity.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
     }
 

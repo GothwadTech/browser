@@ -192,15 +192,6 @@ class ShortcutMgr private constructor() {
                     }
                 }
             }
-            Shortcut.NOTES -> {
-                mainActivity.showNotes()
-            }
-            Shortcut.CLIPBOARD -> {
-                mainActivity.showClipboard()
-            }
-            Shortcut.FILE_MANAGER -> {
-                mainActivity.showFileManager()
-            }
             Shortcut.ZOOM_IN -> {
                 mainActivity.zoomWebIn()
             }

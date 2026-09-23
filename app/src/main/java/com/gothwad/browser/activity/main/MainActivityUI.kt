@@ -15,12 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import com.gothwad.browser.Config
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.main.dialogs.BrowserSidebarPopup
-import com.gothwad.browser.activity.main.dialogs.ClipboardSidebarPopup
 import com.gothwad.browser.activity.main.dialogs.DownloadsSidebarPopup
 import com.gothwad.browser.activity.main.dialogs.FavoritesSidebarPopup
-import com.gothwad.browser.activity.main.dialogs.FileManagerSidebarPopup
 import com.gothwad.browser.activity.main.dialogs.HistorySidebarPopup
-import com.gothwad.browser.activity.main.dialogs.NotesSidebarPopup
 import com.gothwad.browser.activity.main.dialogs.ShortcutDialog
 import com.gothwad.browser.activity.main.dialogs.TabSearchSidebarPopup
 import com.gothwad.browser.activity.main.dialogs.favorites.FavoriteEditorDialog
@@ -68,7 +65,6 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
     }
     vb.flTabsSwitcher.setOnClickListener { showTabsRowDialog() }
     vb.tvTabCountBadge.setOnClickListener { showTabsRowDialog() }
-    vb.ibNotes.setOnClickListener { showNotes(vb.ibNotes) }
     vb.ibBack.setOnClickListener { navigateBack() }
     vb.ibForward.setOnClickListener {
         val tab = tabsModel.currentTab.value ?: return@setOnClickListener
@@ -83,7 +79,6 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
     }
     vb.ibRefresh.setOnClickListener { refresh() }
     vb.ibDownloads.setOnClickListener { showDownloads(vb.ibDownloads) }
-    vb.ibFileManager.setOnClickListener { showFileManager(vb.ibFileManager) }
     vb.ibBookmarks.setOnClickListener { showFavoritesDialog(vb.ibBookmarks) }
     vb.ibIncognito.setOnClickListener { toggleIncognitoMode(true) }
     vb.ibSettings.setOnClickListener { showSettingsDialog() }
@@ -122,8 +117,8 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
         vb.ibTopTabSearch, vb.ibTopHideBars, vb.ibTopCloseApp,
         vb.ibTopNewTab,
         vb.ibMenu, vb.ibHistory, vb.ibHome, vb.ibBack, vb.ibForward, vb.ibRefresh,
-        vb.ibNewTab, vb.flTabsSwitcher, vb.ibNotes, vb.ibDownloads,
-        vb.ibFileManager, vb.ibBookmarks, vb.ibIncognito, vb.ibSettings
+        vb.ibNewTab, vb.flTabsSwitcher, vb.ibDownloads,
+        vb.ibBookmarks, vb.ibIncognito, vb.ibSettings
     ).forEach {
         it.isFocusable = true
         it.isFocusableInTouchMode = false
@@ -274,19 +269,6 @@ internal fun MainActivity.showDownloads(anchorView: View? = null) {
 
 internal fun MainActivity.showDownloadsActivity(anchorView: View? = null) {
     showDownloads(anchorView)
-}
-
-internal fun MainActivity.showFileManager(anchorView: View? = null) {
-    FileManagerSidebarPopup(this).show(anchorView ?: vb.ibFileManager)
-}
-
-internal fun MainActivity.showNotes(anchorView: View? = null) {
-    NotesSidebarPopup(this).show(anchorView ?: vb.ibNotes)
-}
-
-internal fun MainActivity.showClipboardActivity(anchorView: View? = null) {
-    ClipboardSidebarPopup(this).show(anchorView)
-    hideMenuOverlay()
 }
 
 fun MainActivity.showShortcutDialog(shortcut: Shortcut) {

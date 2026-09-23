@@ -244,26 +244,11 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
                 if (uri.authority == INTERNAL_SCHEME_WARNING_DOMAIN && uri.getQueryParameter("type") == INTERNAL_SCHEME_WARNING_DOMAIN_TYPE_CERT) {
                     val data = context.assets.open("pages/warning-certificate.html").bufferedReader().use { it.readText() }
                     loadDataWithBaseURL("file:///android_asset/", data, "text/html", "UTF-8", uri.getQueryParameter("url"))
-                } else if (uri.authority == "fileviewer") {
-                    val filePath = uri.getQueryParameter("path")
-                    if (filePath != null) {
-                        val file = java.io.File(filePath)
-                        val data = com.gothwad.browser.filemanager.FileViewerContentHelper.generateHtmlForFile(context, file)
-                        loadDataWithBaseURL("file://${file.parent ?: ""}/", data, "text/html", "UTF-8", url)
-                    }
                 }
             }
             url.startsWith("file://") -> {
-                val file = java.io.File(url.removePrefix("file://"))
-                val ext = file.extension.lowercase(java.util.Locale.ROOT)
-                if (com.gothwad.browser.filemanager.FileViewerContentHelper.isMarkdown(ext) ||
-                    com.gothwad.browser.filemanager.FileViewerContentHelper.isCodeFile(ext)) {
-                    val data = com.gothwad.browser.filemanager.FileViewerContentHelper.generateHtmlForFile(context, file)
-                    loadDataWithBaseURL("file://${file.parent ?: ""}/", data, "text/html", "UTF-8", url)
-                } else {
-                    currentOriginalUrl = Uri.parse(url)
-                    super.loadUrl(url)
-                }
+                currentOriginalUrl = Uri.parse(url)
+                super.loadUrl(url)
             }
             else -> {
                 currentOriginalUrl = Uri.parse(url)

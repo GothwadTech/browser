@@ -13,8 +13,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
@@ -120,34 +118,6 @@
             tools:ignore="DiscouragedApi" />
 
         <activity android:name=".activity.downloads.DownloadsActivity"
-            android:theme="@style/Theme.SidebarRight"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize"
-            tools:ignore="DiscouragedApi"/>
-
-        <activity android:name=".filemanager.FileManagerActivity"
-            android:theme="@style/Theme.SidebarRight"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize"
-            tools:ignore="DiscouragedApi"/>
-
-        <activity android:name=".filemanager.InAppFileViewerActivity"
-            android:theme="@style/Theme.BrowserApp"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize"
-            tools:ignore="DiscouragedApi"/>
-
-        <activity android:name=".notes.NotesActivity"
-            android:theme="@style/Theme.SidebarRight"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize"
-            tools:ignore="DiscouragedApi"/>
-
-        <activity android:name=".notes.clipboard.ClipboardActivity"
             android:theme="@style/Theme.SidebarRight"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:screenOrientation="behind"

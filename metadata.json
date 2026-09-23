@@ -1,6 +1,6 @@
 {
   "name": "Gothwad Browser",
-  "description": "Android TV Web Browser featuring Clipboard Manager & Quick Snippets, Downloads, TV Notes, and native D-Pad controls",
+  "description": "Android TV Web Browser featuring Downloads, Bookmarks, History, and native D-Pad controls",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

@@ -20,11 +20,9 @@ import com.gothwad.browser.activity.downloads.DownloadsActivity
 import com.gothwad.browser.activity.lock.AppLockActivity
 import com.gothwad.browser.activity.main.MainActivity
 import com.gothwad.browser.activity.main.openInNewTab
-import com.gothwad.browser.activity.main.showClipboardActivity
 import com.gothwad.browser.activity.main.showHistoryActivity
 import com.gothwad.browser.activity.main.showSettingsDialog
 import com.gothwad.browser.activity.main.toggleIncognitoMode
-import com.gothwad.browser.notes.clipboard.ClipboardActivity
 import com.gothwad.browser.singleton.AppLockManager
 
 class ChromeMenuPopup(private val activity: MainActivity) {
@@ -183,7 +181,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         bindMenuItem(contentView.findViewById(R.id.btnMenuHelp)) {
             AlertDialog.Builder(activity)
                 .setTitle("Gothwad Browser")
-                .setMessage("Modern Fast TV Web Browser with Native Clipboard, File Manager & Notes.\n\nVersion: ${BuildConfig.VERSION_NAME}\nDeveloper: gothwadtech@gmail.com")
+                .setMessage("Modern Fast TV Web Browser.\n\nVersion: ${BuildConfig.VERSION_NAME}\nDeveloper: gothwadtech@gmail.com")
                 .setPositiveButton("OK", null)
                 .show()
         }

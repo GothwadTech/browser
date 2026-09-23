@@ -7,7 +7,7 @@ import com.gothwad.browser.R
 object SidebarHelper {
     /**
      * Calculates the uniform horizontal width for right-hand sidebars (Settings, Downloads,
-     * File Manager, Tabs, Notes, Clipboard, etc.).
+     * Tabs, etc.).
      * The width is anchored dynamically to header geometry, extending from the starting edge
      * of the microphone/voice search icon inside the address bar to the right edge of the screen.
      */

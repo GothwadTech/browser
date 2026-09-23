@@ -242,21 +242,7 @@
                     android:textStyle="bold" />
             </FrameLayout>
 
-            <!-- 8. TV Notes Icon (Placed right after Tab Count Box) -->
-            <ImageButton
-                android:id="@+id/ibNotes"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
-                android:background="@drawable/button_bg_selector"
-                android:contentDescription="TV Notes"
-                android:focusable="true"
-                android:padding="7dp"
-                android:scaleType="fitCenter"
-                android:tint="@color/header_button_icon_tint"
-                android:src="@drawable/ic_nav_notes" />
-
-            <!-- 9. Download Icon -->
+            <!-- 8. Download Icon -->
             <ImageButton
                 android:id="@+id/ibDownloads"
                 android:layout_width="38dp"
@@ -270,21 +256,7 @@
                 android:tint="@color/header_button_icon_tint"
                 android:src="@drawable/ic_file_download_grey_900" />
 
-            <!-- 10. File Manager Icon (Placed right after Downloads) -->
-            <ImageButton
-                android:id="@+id/ibFileManager"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
-                android:background="@drawable/button_bg_selector"
-                android:contentDescription="File Manager"
-                android:focusable="true"
-                android:padding="7dp"
-                android:scaleType="fitCenter"
-                android:tint="@color/header_button_icon_tint"
-                android:src="@drawable/ic_nav_files" />
-
-            <!-- 11. Bookmark Icon -->
+            <!-- 9. Bookmark Icon -->
             <ImageButton
                 android:id="@+id/ibBookmarks"
                 android:layout_width="38dp"

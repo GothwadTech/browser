@@ -75,38 +75,7 @@
             android:paddingStart="6dp"
             android:paddingEnd="6dp">
 
-            <!-- 1. File Manager -->
-            <LinearLayout
-                android:id="@+id/btnSidebarFileManager"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:background="@drawable/menu_item_selector"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_nav_files"
-                    android:tint="@color/day_night_icon_color"
-                    android:contentDescription="@null" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="File Manager"
-                    android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <!-- 2. Bookmarks -->
+            <!-- 1. Bookmarks -->
             <LinearLayout
                 android:id="@+id/btnSidebarBookmarks"
                 android:layout_width="match_parent"
@@ -196,67 +165,7 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- 5. Notes -->
-            <LinearLayout
-                android:id="@+id/btnSidebarNotes"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:background="@drawable/menu_item_selector"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_nav_notes"
-                    android:tint="@color/day_night_icon_color"
-                    android:contentDescription="@null" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="Notes"
-                    android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <!-- 6. Native Clipboard -->
-            <LinearLayout
-                android:id="@+id/btnSidebarClipboard"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:background="@drawable/menu_item_selector"
-                android:clickable="true"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_nav_clipboard"
-                    android:tint="@color/day_night_icon_color"
-                    android:contentDescription="@null" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="Clipboard"
-                    android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <!-- 7. Incognito Mode -->
+            <!-- 4. Incognito Mode -->
             <LinearLayout
                 android:id="@+id/btnSidebarIncognito"
                 android:layout_width="match_parent"

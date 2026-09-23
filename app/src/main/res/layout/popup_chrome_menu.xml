@@ -147,7 +147,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:nextFocusUp="@+id/btnMenuNewTab"
-                android:nextFocusDown="@+id/btnMenuClipboard"
+                android:nextFocusDown="@+id/btnMenuHistory"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="8dp"

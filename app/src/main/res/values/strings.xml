@@ -257,9 +257,6 @@
     <string name="shortcut_downloads">Downloads Hub</string>
     <string name="shortcut_bookmarks">Favorites &amp; Bookmarks</string>
     <string name="shortcut_add_bookmark">Add Current Page to Bookmarks</string>
-    <string name="shortcut_notes">TV Quick Notes</string>
-    <string name="shortcut_clipboard">Clipboard Manager</string>
-    <string name="shortcut_file_manager">TV File Manager</string>
     <string name="shortcut_toggle_incognito">Toggle Incognito Mode</string>
     <string name="shortcut_fullscreen">Toggle Fullscreen</string>
     <string name="shortcut_zoom_in">Zoom In (+)</string>

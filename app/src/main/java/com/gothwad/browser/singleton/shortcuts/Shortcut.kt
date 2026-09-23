@@ -42,9 +42,6 @@ enum class Shortcut private constructor(
     DOWNLOADS(R.string.shortcut_downloads, "shortcut_downloads", KeyEvent.KEYCODE_J, KeyEvent.META_CTRL_ON),
     BOOKMARKS(R.string.shortcut_bookmarks, "shortcut_bookmarks", KeyEvent.KEYCODE_B, KeyEvent.META_CTRL_ON),
     ADD_BOOKMARK(R.string.shortcut_add_bookmark, "shortcut_add_bookmark", KeyEvent.KEYCODE_D, KeyEvent.META_CTRL_ON),
-    NOTES(R.string.shortcut_notes, "shortcut_notes", KeyEvent.KEYCODE_N, KeyEvent.META_CTRL_ON),
-    CLIPBOARD(R.string.shortcut_clipboard, "shortcut_clipboard", KeyEvent.KEYCODE_V, KeyEvent.META_ALT_ON),
-    FILE_MANAGER(R.string.shortcut_file_manager, "shortcut_file_manager", KeyEvent.KEYCODE_E, KeyEvent.META_ALT_ON),
 
     // 5. Display & Zoom
     ZOOM_IN(R.string.shortcut_zoom_in, "shortcut_zoom_in", KeyEvent.KEYCODE_EQUALS, KeyEvent.META_CTRL_ON),

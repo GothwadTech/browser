@@ -20,12 +20,9 @@ import com.gothwad.browser.R
 import com.gothwad.browser.activity.lock.AppLockActivity
 import com.gothwad.browser.activity.lock.TvPinDialog
 import com.gothwad.browser.activity.main.MainActivity
-import com.gothwad.browser.activity.main.showClipboardActivity
 import com.gothwad.browser.activity.main.showDownloads
 import com.gothwad.browser.activity.main.showFavoritesDialog
-import com.gothwad.browser.activity.main.showFileManager
 import com.gothwad.browser.activity.main.showHistoryActivity
-import com.gothwad.browser.activity.main.showNotes
 import com.gothwad.browser.activity.main.showSettingsDialog
 import com.gothwad.browser.activity.main.toggleIncognitoMode
 import com.gothwad.browser.singleton.AppLockManager
@@ -206,28 +203,7 @@ class BrowserSidebarPopup(private val activity: MainActivity) {
             }
         }
 
-        // 7. File Manager (Right Sidebar)
-        contentView.findViewById<View>(R.id.btnSideFileManager)?.let { btn ->
-            bindItem(btn) {
-                activity.showFileManager()
-            }
-        }
-
-        // 8. Notes (Right Sidebar)
-        contentView.findViewById<View>(R.id.btnSideNotes)?.let { btn ->
-            bindItem(btn) {
-                activity.showNotes()
-            }
-        }
-
-        // 9. Native Clipboard (Right Sidebar)
-        contentView.findViewById<View>(R.id.btnSideClipboard)?.let { btn ->
-            bindItem(btn) {
-                activity.showClipboardActivity()
-            }
-        }
-
-        // 10. Desktop View Mode
+        // 7. Desktop View Mode
         val ivDesktopCheck = contentView.findViewById<ImageView>(R.id.ivSideDesktopCheck)
         val isDesktop = config.isDesktopMode()
         ivDesktopCheck?.setImageResource(

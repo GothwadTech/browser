@@ -36,11 +36,8 @@ import com.gothwad.browser.activity.main.dialogs.WebsiteMenuPopup
 import com.gothwad.browser.activity.main.view.ActionBar
 import com.gothwad.browser.browser.tabs.TabsRowDialog
 import com.gothwad.browser.databinding.ActivityMainBinding
-import com.gothwad.browser.filemanager.FileManagerActivity
 import com.gothwad.browser.model.Download
 import com.gothwad.browser.utils.HardwareMousePointerManager
-import com.gothwad.browser.notes.NotesActivity
-import com.gothwad.browser.notes.clipboard.ClipboardActivity
 import com.gothwad.browser.service.downloads.DownloadService
 import com.gothwad.browser.settings.SettingsModel
 import com.gothwad.browser.singleton.AppLockManager
@@ -63,7 +60,6 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         const val REQUEST_CODE_UNKNOWN_APP_SOURCES = 10007
         const val KEY_PROCESS_ID_TO_KILL = "proc_id_to_kill"
         const val MY_PERMISSIONS_REQUEST_VOICE_SEARCH_PERMISSIONS = 10008
-        const val REQUEST_CODE_CLIPBOARD_ACTIVITY = 10010
         private const val COMMON_REQUESTS_START_CODE = 10100
     }
 
@@ -246,9 +242,6 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     }
 
     override fun showDownloads() = showDownloadsActivity()
-    fun showClipboard() = showClipboardActivity()
-    fun showNotes() = startActivity(Intent(this, NotesActivity::class.java))
-    fun showFileManager() = startActivity(Intent(this, FileManagerActivity::class.java))
     override fun showHistory() = showHistoryActivity()
     override fun showFavorites() = showFavoritesDialog()
     override fun showSettings() = showSettingsDialog()
@@ -328,11 +321,6 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
                         navigate(url)
                     }
                 }
-                hideMenuOverlay()
-            }
-            REQUEST_CODE_CLIPBOARD_ACTIVITY -> if (resultCode == Activity.RESULT_OK) {
-                val url = data?.getStringExtra(ClipboardActivity.KEY_URL_TO_OPEN)
-                if (url != null) navigate(url)
                 hideMenuOverlay()
             }
             REQUEST_CODE_UNKNOWN_APP_SOURCES -> if (autoUpdateModel.needToShowUpdateDlgAgain) {

@@ -85,7 +85,7 @@ Effective Date: August 2026
 Gothwad Browser is designed from the ground up with a 100% private, local-first architecture. We do NOT collect, transmit, store, or sell any of your personal information, browsing habits, IP address, device identifiers, or search history.
 
 2. 100% ON-DEVICE LOCAL PERSISTENCE
-All your data—including Favorites, Bookmarks, Quick Notes, Clipboard History, Download Logs, and Custom Preferences—is stored strictly and exclusively on your local Android TV device storage. 
+All your data—including Favorites, Bookmarks, History, Download Logs, and Custom Preferences—is stored strictly and exclusively on your local Android TV device storage. 
 
 3. NO BACKEND SERVERS OR USER ACCOUNTS
 This browser operates without any proprietary server infrastructure. There is no user registration, no telemetry tracking, and no cloud synchronization service listening in the background.

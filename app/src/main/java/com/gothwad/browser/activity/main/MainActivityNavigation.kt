@@ -415,32 +415,11 @@ internal suspend fun MainActivity.showPopupBlockOptionsInternal() {
 }
 
 fun MainActivity.openFileInNewTab(file: java.io.File) {
-    val ext = file.extension.lowercase(java.util.Locale.ROOT)
-    val url = if (com.gothwad.browser.filemanager.FileViewerContentHelper.isMarkdown(ext) ||
-        com.gothwad.browser.filemanager.FileViewerContentHelper.isCodeFile(ext)) {
-        "internal://fileviewer?path=" + Uri.encode(file.absolutePath)
-    } else {
-        "file://${file.absolutePath}"
-    }
+    val url = "file://${file.absolutePath}"
     openInNewTab(url, tabsModel.tabsStates.size, needToHideMenuOverlay = true, navigateImmediately = true)
 }
 
 fun MainActivity.openFileInApp(file: java.io.File) {
-    val ext = file.extension.lowercase(java.util.Locale.ROOT)
-    when {
-        com.gothwad.browser.filemanager.FileViewerContentHelper.isPdf(ext) -> {
-            com.gothwad.browser.filemanager.PdfViewerDialog(this, file).show()
-        }
-        com.gothwad.browser.filemanager.FileViewerContentHelper.isArchive(ext) -> {
-            if (ext == "apk") {
-                com.gothwad.browser.filemanager.FileManagerOperations.showApkChoiceDialog(this, file)
-            } else {
-                com.gothwad.browser.filemanager.ZipViewerDialog(this, file).show()
-            }
-        }
-        else -> {
-            openFileInNewTab(file)
-        }
-    }
+    openFileInNewTab(file)
 }
 

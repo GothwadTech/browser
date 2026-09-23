@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -18,7 +17,6 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.gothwad.browser.activity.IncognitoModeMainActivity
 import com.gothwad.browser.activity.main.MainActivity
 import com.gothwad.browser.model.HostConfig
-import com.gothwad.browser.notes.clipboard.ClipboardRepository
 import com.gothwad.browser.service.keepalive.BrowserKeepAliveService
 import com.gothwad.browser.singleton.AppDatabase
 import com.gothwad.browser.singleton.FaviconsPool
@@ -102,71 +100,6 @@ class BrowserApp : Application(), Application.ActivityLifecycleCallbacks {
                 BrowserKeepAliveService.start(this@BrowserApp)
             }
         })
-
-        initClipboardListener()
-    }
-
-    private fun initClipboardListener() {
-        try {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
-            clipboard.addPrimaryClipChangedListener {
-                handlePrimaryClipChanged()
-            }
-        } catch (t: Throwable) {
-            Log.e(TAG, "Failed to register OnPrimaryClipChangedListener: ${t.message}")
-        }
-    }
-
-    private fun handlePrimaryClipChanged() {
-        // Android 10+ background restriction & focus check
-        if (!isAppInForeground) {
-            return
-        }
-
-        // Respect incognito mode: do not record if active session is incognito
-        if (isCurrentSessionIncognito()) {
-            return
-        }
-
-        // Prevent feedback loops when the app's own code writes to clipboard
-        if (ClipboardRepository.isInternalClipboardWrite) {
-            return
-        }
-
-        try {
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
-            val clip = clipboard.primaryClip ?: return
-            if (clip.itemCount <= 0) return
-            val clipItem = clip.getItemAt(0) ?: return
-            val rawText = clipItem.coerceToText(this)?.toString() ?: return
-            val text = rawText.trim()
-            if (text.isEmpty()) return
-
-            val now = SystemClock.uptimeMillis()
-            if (text == ClipboardRepository.lastCopiedByAppText && (now - ClipboardRepository.lastCopiedByAppTime < 3000L)) {
-                return
-            }
-
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val repo = ClipboardRepository(this@BrowserApp)
-                    val allItems = repo.getAllItems()
-                    val mostRecent = allItems.firstOrNull()?.text?.trim()
-                    if (mostRecent != null && mostRecent == text) {
-                        return@launch
-                    }
-
-                    repo.recordCopiedText(text)
-                    Log.d(TAG, "Captured native text copy into ClipboardRepository (${text.take(30)}...)")
-                } catch (t: Throwable) {
-                    Log.e(TAG, "Error recording clipboard text: ${t.message}")
-                }
-            }
-        } catch (e: SecurityException) {
-            Log.w(TAG, "Clipboard access denied (SecurityException): ${e.message}")
-        } catch (t: Throwable) {
-            Log.e(TAG, "Error processing primary clip changed: ${t.message}")
-        }
     }
 
     fun isCurrentSessionIncognito(): Boolean {

@@ -28,9 +28,7 @@ fun MainActivity.getHeaderFocusableViews(): List<View> {
         vb.vActionBar.getVoiceSearchButton(),
         vb.ibNewTab,
         vb.flTabsSwitcher,
-        vb.ibNotes,
         vb.ibDownloads,
-        vb.ibFileManager,
         vb.ibBookmarks,
         vb.ibIncognito,
         vb.ibSettings
