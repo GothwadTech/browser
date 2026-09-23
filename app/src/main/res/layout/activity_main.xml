@@ -112,21 +112,7 @@
             android:orientation="horizontal"
             android:clipChildren="false">
 
-            <!-- 0. Menu (3-lines) -->
-            <ImageButton
-                android:id="@+id/ibMenu"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
-                android:background="@drawable/button_bg_selector"
-                android:contentDescription="Menu"
-                android:focusable="true"
-                android:padding="6dp"
-                android:scaleType="fitCenter"
-                android:tint="@color/header_button_icon_tint"
-                android:src="@drawable/ic_menu_24" />
-
-            <!-- 0.5. History -->
+            <!-- 1. History -->
             <ImageButton
                 android:id="@+id/ibHistory"
                 android:layout_width="38dp"
@@ -256,46 +242,18 @@
                 android:tint="@color/header_button_icon_tint"
                 android:src="@drawable/ic_file_download_grey_900" />
 
-            <!-- 9. Bookmark Icon -->
+            <!-- 9. More Options (Three-Dot Menu ⋮ - Mobile Chrome Style) -->
             <ImageButton
-                android:id="@+id/ibBookmarks"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
-                android:background="@drawable/button_bg_selector"
-                android:contentDescription="Bookmarks"
-                android:focusable="true"
-                android:padding="7dp"
-                android:scaleType="fitCenter"
-                android:tint="@color/header_button_icon_tint"
-                android:src="@drawable/ic_star_border_grey_900_36dp" />
-
-            <!-- 12. Incognito Icon -->
-            <ImageButton
-                android:id="@+id/ibIncognito"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
-                android:background="@drawable/button_bg_selector"
-                android:contentDescription="Incognito Mode"
-                android:focusable="true"
-                android:padding="7dp"
-                android:scaleType="fitCenter"
-                android:tint="@color/header_button_icon_tint"
-                android:src="@drawable/ic_incognito" />
-
-            <!-- 13. Settings Icon (At the far right end) -->
-            <ImageButton
-                android:id="@+id/ibSettings"
+                android:id="@+id/ibMenu"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="@string/settings"
+                android:contentDescription="More options"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
                 android:tint="@color/header_button_icon_tint"
-                android:src="@drawable/ic_settings_grey_900_24dp" />
+                android:src="@drawable/ic_more_vert" />
         </LinearLayout>
     </LinearLayout>
 

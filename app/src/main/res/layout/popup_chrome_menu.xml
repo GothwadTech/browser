@@ -2,67 +2,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llChromeMenuRoot"
-    android:layout_width="185dp"
+    android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/menu_popup_bg"
-    android:paddingTop="5dp"
-    android:paddingBottom="6dp"
-    android:elevation="16dp"
+    android:paddingTop="6dp"
+    android:paddingBottom="8dp"
+    android:elevation="24dp"
     android:focusable="false">
 
-    <!-- Top Quick Action Icons Row (App Lock, Page Info, Refresh) -->
+    <!-- Top Quick Action Icons Row (Forward, Star Bookmark, Download, Page Info, Refresh) -->
     <LinearLayout
         android:id="@+id/llTopActionsRow"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="42dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:focusable="false"
         android:paddingStart="8dp"
         android:paddingEnd="8dp">
 
-        <!-- 1. App Lock / Security PIN -->
+        <!-- 1. Forward -->
         <ImageButton
-            android:id="@+id/btnMenuAppLock"
+            android:id="@+id/btnMenuForward"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:background="@drawable/menu_item_selector"
-            android:contentDescription="App Lock Security"
+            android:contentDescription="Forward"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:nextFocusLeft="@+id/btnMenuAppLock"
-            android:nextFocusRight="@+id/btnMenuPageInfo"
+            android:nextFocusLeft="@+id/btnMenuForward"
+            android:nextFocusRight="@+id/btnMenuBookmarkPage"
             android:nextFocusDown="@+id/btnMenuNewTab"
-            android:padding="6dp"
+            android:padding="7dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_lock_security"
+            android:src="@drawable/ic_arrow_forward_grey_900_24dp"
             android:tint="@color/day_night_icon_color" />
 
-        <!-- 2. Page Info & SSL Security Details -->
+        <!-- 2. Bookmark / Star -->
+        <ImageButton
+            android:id="@+id/btnMenuBookmarkPage"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_item_selector"
+            android:contentDescription="Bookmark this page"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusLeft="@+id/btnMenuForward"
+            android:nextFocusRight="@+id/btnMenuDownloadPage"
+            android:nextFocusDown="@+id/btnMenuNewTab"
+            android:padding="7dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star_border_grey_900_36dp"
+            android:tint="@color/day_night_icon_color" />
+
+        <!-- 3. Download Page -->
+        <ImageButton
+            android:id="@+id/btnMenuDownloadPage"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_item_selector"
+            android:contentDescription="Download page"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusLeft="@+id/btnMenuBookmarkPage"
+            android:nextFocusRight="@+id/btnMenuPageInfo"
+            android:nextFocusDown="@+id/btnMenuNewTab"
+            android:padding="7dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_file_download_grey_900"
+            android:tint="@color/day_night_icon_color" />
+
+        <!-- 4. Site Info -->
         <ImageButton
             android:id="@+id/btnMenuPageInfo"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:background="@drawable/menu_item_selector"
             android:contentDescription="Site Info"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:nextFocusLeft="@+id/btnMenuAppLock"
+            android:nextFocusLeft="@+id/btnMenuDownloadPage"
             android:nextFocusRight="@+id/btnMenuRefresh"
             android:nextFocusDown="@+id/btnMenuNewTab"
-            android:padding="6dp"
+            android:padding="7dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_menu_info"
             android:tint="@color/day_night_icon_color" />
 
-        <!-- 3. Refresh Page -->
+        <!-- 5. Refresh Page -->
         <ImageButton
             android:id="@+id/btnMenuRefresh"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="36dp"
             android:layout_weight="1"
             android:background="@drawable/menu_item_selector"
             android:contentDescription="Refresh page"
@@ -71,7 +107,7 @@
             android:nextFocusLeft="@+id/btnMenuPageInfo"
             android:nextFocusRight="@+id/btnMenuRefresh"
             android:nextFocusDown="@+id/btnMenuNewTab"
-            android:padding="6dp"
+            android:padding="7dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_refresh_grey_900_24dp"
             android:tint="@color/day_night_icon_color" />
@@ -80,16 +116,16 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/day_night_divider" />
 
-    <!-- Scrollable Items Container -->
+    <!-- Scrollable Items Container (Mobile Chrome Menu) -->
     <ScrollView
         android:id="@+id/svMenuContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="440dp"
+        android:maxHeight="520dp"
         android:scrollbars="none"
         android:focusable="false"
         android:descendantFocusability="afterDescendants"
@@ -100,28 +136,28 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:focusable="false"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp">
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp">
 
             <!-- 1. New Tab -->
             <LinearLayout
                 android:id="@+id/btnMenuNewTab"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="42dp"
                 android:background="@drawable/menu_item_selector"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:nextFocusUp="@+id/btnMenuAppLock"
+                android:nextFocusUp="@+id/btnMenuBookmarkPage"
                 android:nextFocusDown="@+id/btnMenuIncognito"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_menu_new_tab"
                     android:tint="@color/day_night_icon_color"
                     android:contentDescription="@null" />
@@ -129,19 +165,19 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="14dp"
                     android:text="New tab"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <!-- 2. New Incognito Tab -->
             <LinearLayout
                 android:id="@+id/btnMenuIncognito"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="42dp"
                 android:background="@drawable/menu_item_selector"
                 android:clickable="true"
                 android:focusable="true"
@@ -150,13 +186,13 @@
                 android:nextFocusDown="@+id/btnMenuHistory"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
                     android:id="@+id/ivMenuIncognito"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_incognito"
                     android:tint="@color/day_night_icon_color"
                     android:contentDescription="@null" />
@@ -165,40 +201,40 @@
                     android:id="@+id/tvMenuIncognito"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="14dp"
                     android:text="New Incognito tab"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
                 android:background="@color/day_night_divider" />
 
             <!-- 3. History -->
             <LinearLayout
                 android:id="@+id/btnMenuHistory"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="42dp"
                 android:background="@drawable/menu_item_selector"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:nextFocusUp="@+id/btnMenuIncognito"
-                android:nextFocusDown="@+id/btnMenuShare"
+                android:nextFocusDown="@+id/btnMenuDeleteBrowsingData"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_history_grey_900_36dp"
                     android:tint="@color/day_night_icon_color"
                     android:contentDescription="@null" />
@@ -206,33 +242,183 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="14dp"
                     android:text="History"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- 7. Share... -->
+            <!-- 4. Delete Browsing Data -->
             <LinearLayout
-                android:id="@+id/btnMenuShare"
+                android:id="@+id/btnMenuDeleteBrowsingData"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="42dp"
                 android:background="@drawable/menu_item_selector"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:nextFocusUp="@+id/btnMenuHistory"
-                android:nextFocusDown="@+id/btnMenuDesktop"
+                android:nextFocusDown="@+id/btnMenuDownloads"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_delete"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Delete browsing data"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/day_night_divider" />
+
+            <!-- 5. Downloads -->
+            <LinearLayout
+                android:id="@+id/btnMenuDownloads"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuDeleteBrowsingData"
+                android:nextFocusDown="@+id/btnMenuBookmarks"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_file_download_grey_900"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Downloads"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 6. Bookmarks -->
+            <LinearLayout
+                android:id="@+id/btnMenuBookmarks"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuDownloads"
+                android:nextFocusDown="@+id/btnMenuRecentTabs"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_star_border_grey_900_36dp"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Bookmarks"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 7. Recent Tabs -->
+            <LinearLayout
+                android:id="@+id/btnMenuRecentTabs"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuBookmarks"
+                android:nextFocusDown="@+id/btnMenuShare"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_menu_recent_tabs"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Recent tabs"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/day_night_divider" />
+
+            <!-- 8. Share... -->
+            <LinearLayout
+                android:id="@+id/btnMenuShare"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuRecentTabs"
+                android:nextFocusDown="@+id/btnMenuFindInPage"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_menu_share"
                     android:tint="@color/day_night_icon_color"
                     android:contentDescription="@null" />
@@ -240,32 +426,168 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="14dp"
                     android:text="Share..."
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
-            <!-- 8. Desktop site -->
-            <RelativeLayout
-                android:id="@+id/btnMenuDesktop"
+            <!-- 9. Find in page -->
+            <LinearLayout
+                android:id="@+id/btnMenuFindInPage"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="42dp"
                 android:background="@drawable/menu_item_selector"
                 android:clickable="true"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:nextFocusUp="@+id/btnMenuShare"
-                android:nextFocusDown="@+id/btnMenuHelp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:nextFocusDown="@+id/btnMenuTranslate"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_menu_find"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Find in page"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 10. Translate... -->
+            <LinearLayout
+                android:id="@+id/btnMenuTranslate"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuFindInPage"
+                android:nextFocusDown="@+id/btnMenuReadingMode"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_logo_translate"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Translate..."
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 11. Show Reading Mode -->
+            <LinearLayout
+                android:id="@+id/btnMenuReadingMode"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuTranslate"
+                android:nextFocusDown="@+id/btnMenuInstallShortcut"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_chrome_reading_mode"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Show Reading mode"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 12. Install and create shortcut -->
+            <LinearLayout
+                android:id="@+id/btnMenuInstallShortcut"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuReadingMode"
+                android:nextFocusDown="@+id/btnMenuDesktop"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_chrome_install"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Install and create shortcut"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 13. Desktop Site -->
+            <RelativeLayout
+                android:id="@+id/btnMenuDesktop"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuInstallShortcut"
+                android:nextFocusDown="@+id/btnMenuSettings"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
                     android:id="@+id/ivDesktopIcon"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_menu_desktop"
@@ -278,12 +600,12 @@
                     android:layout_toEndOf="@+id/ivDesktopIcon"
                     android:layout_toStartOf="@+id/cbDesktopSite"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="14dp"
                     android:text="Desktop site"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
+                    android:textSize="14sp" />
 
                 <CheckBox
                     android:id="@+id/cbDesktopSite"
@@ -293,21 +615,21 @@
                     android:layout_centerVertical="true"
                     android:clickable="false"
                     android:focusable="false"
-                    android:buttonTint="@color/day_night_list_focused_background_color" />
+                    android:buttonTint="@color/day_night_focus_stroke" />
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
                 android:background="@color/day_night_divider" />
 
-            <!-- 9. Help & feedback -->
+            <!-- 14. Settings -->
             <LinearLayout
-                android:id="@+id/btnMenuHelp"
+                android:id="@+id/btnMenuSettings"
                 android:layout_width="match_parent"
-                android:layout_height="36dp"
+                android:layout_height="42dp"
                 android:background="@drawable/menu_item_selector"
                 android:clickable="true"
                 android:focusable="true"
@@ -316,12 +638,46 @@
                 android:nextFocusDown="@+id/btnMenuHelp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp">
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_settings_grey_900_24dp"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Settings"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- 15. Help & feedback -->
+            <LinearLayout
+                android:id="@+id/btnMenuHelp"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuSettings"
+                android:nextFocusDown="@+id/btnMenuAppLock"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_menu_help"
                     android:tint="@color/day_night_icon_color"
                     android:contentDescription="@null" />
@@ -329,12 +685,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="Help &amp; feedback"
+                    android:layout_marginStart="14dp"
+                    android:text="Help and feedback"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="13sp" />
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@color/day_night_divider" />
+
+            <!-- 16. App Lock / Default Browser -->
+            <LinearLayout
+                android:id="@+id/btnMenuAppLock"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuHelp"
+                android:nextFocusDown="@+id/btnMenuAppLock"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:id="@+id/ivMenuLockIcon"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_lock_security"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:id="@+id/tvMenuLockText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="App Lock &amp; Security"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
             </LinearLayout>
 
         </LinearLayout>

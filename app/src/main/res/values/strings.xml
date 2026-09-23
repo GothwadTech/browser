@@ -92,6 +92,7 @@
         <item>Crimson Red</item>
     </string-array>
     <string name="voice_search_not_found">Voice search not found</string>
+    <string name="voice_search_not_supported">Voice search is not supported on this device</string>
     <string name="voice_search_listening">Listening…</string>
     <string name="voice_search_processing">Processing…</string>
     <string name="voice_search_speak_now">Speak now into your microphone</string>

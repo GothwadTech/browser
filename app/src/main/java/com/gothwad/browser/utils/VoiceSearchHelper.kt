@@ -6,20 +6,21 @@ import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.app.Activity
 import android.app.Dialog
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.media.AudioFormat
-import android.media.AudioRecord
-import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.speech.RecognitionListener
+import android.speech.RecognitionService
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -30,15 +31,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.gothwad.browser.R
 import com.gothwad.browser.databinding.DialogVoiceSearchBinding
-import org.json.JSONObject
-import java.io.ByteArrayOutputStream
-import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLEncoder
 import java.util.Locale
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import java.util.concurrent.atomic.AtomicBoolean
 
 class VoiceSearchHelper(
     private val activity: Activity,
@@ -54,19 +47,31 @@ class VoiceSearchHelper(
     private var lastRecognizedText: String = ""
     private var activeLanguageModel: String = RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH
     private var activeCallback: Callback? = null
+    private var activeComponent: ComponentName? = null
     private val mainHandler = Handler(Looper.getMainLooper())
 
-    // In-app built-in speech engine components (works on Jio STB, Fire TV, AOSP boxes without Google Play Services)
-    private var isUsingBuiltInEngine: Boolean = false
-    private val isAudioRecording = AtomicBoolean(false)
-    private var activeAudioRecord: AudioRecord? = null
-    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
-
     companion object {
-        // Official open-source Chromium Speech API key for universal cross-device voice recognition
-        private const val CHROMIUM_SPEECH_API_KEY = "AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw"
-        private const val SPEECH_ENDPOINT = "https://www.google.com/speech-api/v2/recognize"
-        private const val AUDIO_SAMPLE_RATE = 16000
+        private const val TAG = "VoiceSearchHelper"
+
+        fun getSpeechErrorDescription(errorCode: Int): String {
+            return when (errorCode) {
+                SpeechRecognizer.ERROR_AUDIO -> "Audio recording error (ERROR_AUDIO, code $errorCode)"
+                SpeechRecognizer.ERROR_CLIENT -> "Client side error (ERROR_CLIENT, code $errorCode)"
+                SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Insufficient permissions (ERROR_INSUFFICIENT_PERMISSIONS, code $errorCode)"
+                SpeechRecognizer.ERROR_NETWORK -> "Network error (ERROR_NETWORK, code $errorCode)"
+                SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network timeout (ERROR_NETWORK_TIMEOUT, code $errorCode)"
+                SpeechRecognizer.ERROR_NO_MATCH -> "No recognition match found (ERROR_NO_MATCH, code $errorCode)"
+                SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "RecognitionService busy (ERROR_RECOGNIZER_BUSY, code $errorCode)"
+                SpeechRecognizer.ERROR_SERVER -> "Server error (ERROR_SERVER, code $errorCode)"
+                SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech input / timeout (ERROR_SPEECH_TIMEOUT, code $errorCode)"
+                10 -> "Too many requests (ERROR_TOO_MANY_REQUESTS, code $errorCode)"
+                11 -> "Server disconnected (ERROR_SERVER_DISCONNECTED, code $errorCode)"
+                12 -> "Language not supported (ERROR_LANGUAGE_NOT_SUPPORTED, code $errorCode)"
+                13 -> "Language unavailable (ERROR_LANGUAGE_UNAVAILABLE, code $errorCode)"
+                14 -> "Cannot check support (ERROR_CANNOT_CHECK_SUPPORT, code $errorCode)"
+                else -> "Unknown error code: $errorCode"
+            }
+        }
     }
 
     interface Callback {
@@ -100,35 +105,115 @@ class VoiceSearchHelper(
             return
         }
 
-        // 2. Multi-tier Universal Speech Engine:
-        // Tier 1: If native SpeechRecognizer service is available on this device, use it.
-        // Tier 2: If native SpeechRecognizer is absent (e.g. Jio STB, Fire TV, AOSP), seamlessly use our
-        //         built-in in-app audio speech engine (NEVER show "Voice search not found" error).
-        val isRecognizerAvailable = try {
+        // 2. Start Multi-Tier Recognition Flow:
+        // Tier 1: System default SpeechRecognizer if available
+        // Tier 2: Discovered RecognitionService component (e.g. Jio VoiceServiceWrapper, OEM services)
+        // Tier 3: Honest "not supported" failure state if no recognition service exists
+        startSpeechRecognitionFlow()
+    }
+
+    private fun startSpeechRecognitionFlow(preferDiscoveredComponent: Boolean = false) {
+        if (isActivityDestroyed()) return
+
+        val defaultAvailable = try {
             SpeechRecognizer.isRecognitionAvailable(activity)
         } catch (e: Exception) {
+            Log.w(TAG, "SpeechRecognizer.isRecognitionAvailable check failed: ${e.message}")
             false
         }
 
-        if (isRecognizerAvailable) {
-            startInAppSpeechRecognition()
+        Log.d(TAG, "startSpeechRecognitionFlow: preferDiscovered=$preferDiscoveredComponent, defaultAvailable=$defaultAvailable")
+
+        // Tier 1: System default SpeechRecognizer
+        if (!preferDiscoveredComponent && defaultAvailable) {
+            val started = startRecognizer(componentName = null)
+            if (started) {
+                Log.d(TAG, "Tier 1: System default SpeechRecognizer started successfully.")
+                return
+            }
+            Log.w(TAG, "Tier 1: Default SpeechRecognizer failed to start. Falling back to Tier 2 discovery.")
+        }
+
+        // Tier 2: Discover any available RecognitionService via PackageManager
+        val discoveredComponent = discoverRecognitionService(activity)
+        if (discoveredComponent != null) {
+            Log.i(TAG, "Tier 2: Discovered RecognitionService component: ${discoveredComponent.flattenToShortString()}")
+            val started = startRecognizer(componentName = discoveredComponent)
+            if (started) {
+                Log.d(TAG, "Tier 2: SpeechRecognizer started with component ${discoveredComponent.flattenToShortString()}")
+                return
+            }
+            Log.w(TAG, "Tier 2: SpeechRecognizer failed with component ${discoveredComponent.flattenToShortString()}")
         } else {
-            startBuiltInAudioVoiceSearch()
+            Log.w(TAG, "Tier 2: No RecognitionService component discovered via PackageManager.")
+        }
+
+        // Tier 3: Honest failure state — Voice search is not supported on this device
+        Log.e(TAG, "Tier 3: Voice search is not supported on this device. Neither default nor discovered RecognitionService is available.")
+        showNotSupportedUi()
+    }
+
+    /**
+     * Queries PackageManager for any installed services declaring the android.speech.RecognitionService intent-filter.
+     * Works generically across all Android devices, detecting carrier/OEM-provided speech services
+     * (e.g. Jio's com.android.app.jio.voiceassist/.VoiceServiceWrapper) even when not configured as the system default.
+     */
+    private fun discoverRecognitionService(context: Context): ComponentName? {
+        try {
+            val pm = context.packageManager ?: return null
+            val intent = Intent(RecognitionService.SERVICE_INTERFACE)
+            val resolveInfos = pm.queryIntentServices(intent, PackageManager.GET_META_DATA)
+
+            if (resolveInfos.isNullOrEmpty()) {
+                Log.d(TAG, "discoverRecognitionService: No services found for ${RecognitionService.SERVICE_INTERFACE}")
+                return null
+            }
+
+            Log.d(TAG, "discoverRecognitionService: Found ${resolveInfos.size} service(s) implementing RecognitionService:")
+            for (info in resolveInfos) {
+                val pkg = info.serviceInfo?.packageName
+                val name = info.serviceInfo?.name
+                Log.d(TAG, "  Candidate: package=$pkg, name=$name")
+            }
+
+            // Prioritize manufacturer/carrier/device-specific services if multiple exist, else use the first available
+            val selected = resolveInfos.firstOrNull { info ->
+                val pkg = info.serviceInfo?.packageName?.lowercase(Locale.ROOT) ?: ""
+                val name = info.serviceInfo?.name?.lowercase(Locale.ROOT) ?: ""
+                pkg.contains("jio") || pkg.contains("voiceassist") || name.contains("voiceservice") ||
+                        pkg.contains("oem") || pkg.contains("tv") || pkg.contains("voice")
+            } ?: resolveInfos.first()
+
+            val serviceInfo = selected.serviceInfo ?: return null
+            return ComponentName(serviceInfo.packageName, serviceInfo.name)
+        } catch (e: Exception) {
+            Log.e(TAG, "discoverRecognitionService error: ${e.message}", e)
+            return null
         }
     }
 
-    private fun startInAppSpeechRecognition() {
-        if (isActivityDestroyed()) return
-        isUsingBuiltInEngine = false
+    private fun startRecognizer(componentName: ComponentName?): Boolean {
+        cleanupRecognizer()
+        showVoiceDialog()
 
-        try {
-            cleanupRecognizer()
-            stopBuiltInAudio()
-            showVoiceDialog()
-
-            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(activity).apply {
-                setRecognitionListener(createRecognitionListener())
+        return try {
+            val recognizer = if (componentName != null) {
+                Log.d(TAG, "Creating SpeechRecognizer explicitly targeting component: ${componentName.flattenToShortString()}")
+                SpeechRecognizer.createSpeechRecognizer(activity, componentName)
+            } else {
+                Log.d(TAG, "Creating default SpeechRecognizer")
+                SpeechRecognizer.createSpeechRecognizer(activity)
             }
+
+            if (recognizer == null) {
+                Log.e(TAG, "SpeechRecognizer.createSpeechRecognizer returned null for component: ${componentName?.flattenToShortString() ?: "default"}")
+                cleanupRecognizer()
+                return false
+            }
+
+            activeComponent = componentName
+            speechRecognizer = recognizer
+            recognizer.setRecognitionListener(createRecognitionListener(componentName))
 
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, activeLanguageModel)
@@ -137,148 +222,78 @@ class VoiceSearchHelper(
                 putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5)
             }
 
-            speechRecognizer?.startListening(intent)
+            recognizer.startListening(intent)
             isListening = true
+            true
         } catch (e: Exception) {
-            e.printStackTrace()
-            // In case of client/binding failure on custom TV boxes, seamlessly switch to built-in audio engine
-            startBuiltInAudioVoiceSearch()
+            Log.e(TAG, "Exception starting SpeechRecognizer (${componentName?.flattenToShortString() ?: "default"}): ${e.message}", e)
+            cleanupRecognizer()
+            false
         }
     }
 
-    /**
-     * In-app independent voice recognition engine that directly records audio from the microphone
-     * and transcribes it via the official Chromium speech-to-text API.
-     * This provides 100% voice search compatibility across Jio STB, Fire TV, and any AOSP Android device.
-     */
-    private fun startBuiltInAudioVoiceSearch() {
-        if (isActivityDestroyed()) return
-        isUsingBuiltInEngine = true
-        cleanupRecognizer()
-        stopBuiltInAudio()
+    private fun createRecognitionListener(component: ComponentName?): RecognitionListener {
+        return object : RecognitionListener {
+            override fun onReadyForSpeech(params: Bundle?) {
+                isListening = true
+                mainHandler.post {
+                    dialogBinding?.tvVoiceStatus?.text = activity.getString(R.string.voice_search_listening)
+                }
+            }
 
-        showVoiceDialog()
+            override fun onBeginningOfSpeech() {
+                isListening = true
+            }
 
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.RECORD_AUDIO)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            showDidNotCatchUi()
-            return
-        }
-
-        val channelConfig = AudioFormat.CHANNEL_IN_MONO
-        val audioFormat = AudioFormat.ENCODING_PCM_16BIT
-        val minBufferSize = AudioRecord.getMinBufferSize(AUDIO_SAMPLE_RATE, channelConfig, audioFormat)
-        val bufferSize = maxOf(minBufferSize, 3200)
-
-        val record = try {
-            AudioRecord(
-                MediaRecorder.AudioSource.MIC,
-                AUDIO_SAMPLE_RATE,
-                channelConfig,
-                audioFormat,
-                bufferSize
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-
-        if (record == null || record.state != AudioRecord.STATE_INITIALIZED) {
-            record?.release()
-            showDidNotCatchUi()
-            return
-        }
-
-        activeAudioRecord = record
-        isAudioRecording.set(true)
-        isListening = true
-
-        try {
-            record.startRecording()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            stopBuiltInAudio()
-            showDidNotCatchUi()
-            return
-        }
-
-        executorService.execute {
-            val audioBuffer = ByteArray(1600) // 100ms chunks
-            val outputStream = ByteArrayOutputStream(64000)
-            var hasDetectedSpeech = false
-            var silenceStartTime = 0L
-            val recordingStartTime = System.currentTimeMillis()
-
-            try {
-                while (isAudioRecording.get() && !isActivityDestroyed()) {
-                    val bytesRead = record.read(audioBuffer, 0, audioBuffer.size)
-                    if (bytesRead > 0) {
-                        outputStream.write(audioBuffer, 0, bytesRead)
-
-                        // Calculate RMS amplitude for real-time visual feedback
-                        var sum = 0.0
-                        val numSamples = bytesRead / 2
-                        for (i in 0 until bytesRead step 2) {
-                            val sample = (audioBuffer[i].toInt() and 0xFF) or (audioBuffer[i + 1].toInt() shl 8)
-                            sum += (sample * sample).toDouble()
-                        }
-                        val rms = if (numSamples > 0) Math.sqrt(sum / numSamples) else 0.0
-
-                        // Dynamic scale feedback for mic button
-                        val normalized = ((rms - 400.0) / 4500.0).coerceIn(0.0, 1.0).toFloat()
-                        val scale = 1.0f + (0.28f * normalized)
-                        mainHandler.post {
-                            dialogBinding?.flMicButton?.scaleX = scale
-                            dialogBinding?.flMicButton?.scaleY = scale
-                        }
-
-                        // Voice Activity Detection (VAD)
-                        val now = System.currentTimeMillis()
-                        if (rms > 1200.0) {
-                            hasDetectedSpeech = true
-                            silenceStartTime = 0L
-                        } else if (hasDetectedSpeech) {
-                            if (silenceStartTime == 0L) {
-                                silenceStartTime = now
-                            } else if (now - silenceStartTime >= 1400L) {
-                                // 1.4s silence after user spoke -> finish capturing
-                                break
-                            }
-                        }
-
-                        // Maximum capture safety timeout (6.5 seconds)
-                        if (now - recordingStartTime >= 6500L) {
-                            break
-                        }
+            override fun onRmsChanged(rmsdB: Float) {
+                mainHandler.post {
+                    dialogBinding?.let { binding ->
+                        val normalized = ((rmsdB + 2f) / 12f).coerceIn(0f, 1f)
+                        val scale = 1.0f + (0.2f * normalized)
+                        binding.flMicButton.scaleX = scale
+                        binding.flMicButton.scaleY = scale
                     }
                 }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                stopBuiltInAudio()
             }
 
-            // Update UI to processing status
-            mainHandler.post {
+            override fun onBufferReceived(buffer: ByteArray?) {}
+
+            override fun onEndOfSpeech() {
+                isListening = false
                 stopPulseAnimation()
-                dialogBinding?.apply {
-                    flMicButton.scaleX = 1.0f
-                    flMicButton.scaleY = 1.0f
-                    tvVoiceStatus.text = activity.getString(R.string.voice_search_processing)
-                    tvVoiceStatus.setTextColor(Color.parseColor("#E3B341"))
-                    tvVoiceHint.text = ""
+                mainHandler.post {
+                    dialogBinding?.apply {
+                        tvVoiceStatus.text = activity.getString(R.string.voice_search_processing)
+                        tvVoiceStatus.setTextColor(Color.parseColor("#E3B341"))
+                        tvVoiceHint.text = ""
+                    }
                 }
             }
 
-            val pcmBytes = outputStream.toByteArray()
-            if (pcmBytes.isNotEmpty() && hasDetectedSpeech) {
-                val transcript = transcribePcmAudio(pcmBytes)
+            override fun onError(error: Int) {
+                isListening = false
+                stopPulseAnimation()
+                val errorDesc = getSpeechErrorDescription(error)
+                Log.e(TAG, "SpeechRecognizer onError: code=$error, description=$errorDesc, component=${component?.flattenToShortString() ?: "default"}")
+
                 mainHandler.post {
-                    if (!transcript.isNullOrBlank()) {
-                        lastRecognizedText = transcript
+                    handleSpeechError(error, component)
+                }
+            }
+
+            override fun onResults(results: Bundle?) {
+                isListening = false
+                stopPulseAnimation()
+
+                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                val recognized = matches?.firstOrNull()?.trim() ?: lastRecognizedText.trim()
+                Log.d(TAG, "SpeechRecognizer onResults: '$recognized'")
+
+                mainHandler.post {
+                    if (recognized.isNotBlank()) {
+                        lastRecognizedText = recognized
                         dialogBinding?.apply {
-                            tvVoiceRecognizedText.text = transcript
+                            tvVoiceRecognizedText.text = recognized
                             tvVoiceStatus.text = activity.getString(R.string.search)
                             tvVoiceStatus.setTextColor(Color.parseColor("#3FB950"))
                             btnVoiceSearch.isEnabled = true
@@ -287,100 +302,70 @@ class VoiceSearchHelper(
 
                         mainHandler.postDelayed({
                             dismissDialog()
-                            activeCallback?.onResult(transcript)
+                            activeCallback?.onResult(recognized)
                         }, 350)
                     } else {
                         showDidNotCatchUi()
                     }
                 }
-            } else {
-                mainHandler.post {
+            }
+
+            override fun onPartialResults(partialResults: Bundle?) {
+                val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                val partial = matches?.firstOrNull()?.trim()
+
+                if (!partial.isNullOrEmpty()) {
+                    lastRecognizedText = partial
+                    mainHandler.post {
+                        dialogBinding?.apply {
+                            tvVoiceRecognizedText.text = partial
+                            btnVoiceSearch.isEnabled = true
+                            btnVoiceSearch.alpha = 1.0f
+                        }
+                        activeCallback?.onPartialResult(partial)
+                    }
+                }
+            }
+
+            override fun onEvent(eventType: Int, params: Bundle?) {}
+        }
+    }
+
+    private fun handleSpeechError(error: Int, failedComponent: ComponentName?) {
+        // If Tier 1 (default recognizer) failed with a client/binding error on a device without standard Google services,
+        // seamlessly attempt Tier 2 discovered RecognitionService before surfacing any error
+        if (failedComponent == null && (error == SpeechRecognizer.ERROR_CLIENT || error == SpeechRecognizer.ERROR_RECOGNIZER_BUSY)) {
+            Log.w(TAG, "Tier 1 default recognizer failed with error $error (${getSpeechErrorDescription(error)}). Attempting Tier 2 discovered RecognitionService fallback.")
+            val discoveredComponent = discoverRecognitionService(activity)
+            if (discoveredComponent != null) {
+                val started = startRecognizer(discoveredComponent)
+                if (started) {
+                    Log.i(TAG, "Successfully failed over to Tier 2 discovered component: ${discoveredComponent.flattenToShortString()}")
+                    return
+                }
+            }
+        }
+
+        when (error) {
+            SpeechRecognizer.ERROR_NO_MATCH,
+            SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> {
+                if (lastRecognizedText.trim().isNotEmpty()) {
+                    val finalSpeech = lastRecognizedText.trim()
+                    dismissDialog()
+                    activeCallback?.onResult(finalSpeech)
+                } else {
                     showDidNotCatchUi()
                 }
             }
-        }
-    }
-
-    private fun transcribePcmAudio(pcmBytes: ByteArray): String? {
-        return try {
-            val locale = Locale.getDefault()
-            val lang = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                locale.toLanguageTag().ifBlank { "en-US" }
-            } else {
-                locale.language ?: "en-US"
-            }
-            val encodedLang = URLEncoder.encode(lang, "UTF-8")
-            val urlString = "$SPEECH_ENDPOINT?client=chromium&lang=$encodedLang&key=$CHROMIUM_SPEECH_API_KEY"
-            val url = URL(urlString)
-            val conn = url.openConnection() as HttpURLConnection
-            conn.requestMethod = "POST"
-            conn.doOutput = true
-            conn.setRequestProperty("Content-Type", "audio/l16; rate=16000")
-            conn.connectTimeout = 7000
-            conn.readTimeout = 7000
-
-            conn.outputStream.use { os ->
-                os.write(pcmBytes)
-                os.flush()
-            }
-
-            val code = conn.responseCode
-            if (code == 200) {
-                val responseText = conn.inputStream.bufferedReader().use { it.readText() }
-                parseChromiumSpeechResponse(responseText)
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
-    }
-
-    private fun parseChromiumSpeechResponse(responseText: String): String? {
-        if (responseText.isBlank()) return null
-        var bestTranscript: String? = null
-        val lines = responseText.split("\n")
-        for (line in lines) {
-            val trimmed = line.trim()
-            if (trimmed.isEmpty()) continue
-            try {
-                val json = JSONObject(trimmed)
-                val results = json.optJSONArray("result") ?: continue
-                for (i in 0 until results.length()) {
-                    val resObj = results.optJSONObject(i) ?: continue
-                    val alternatives = resObj.optJSONArray("alternative") ?: continue
-                    for (j in 0 until alternatives.length()) {
-                        val altObj = alternatives.optJSONObject(j) ?: continue
-                        val transcript = altObj.optString("transcript")
-                        if (!transcript.isNullOrBlank()) {
-                            bestTranscript = transcript.trim()
-                            if (resObj.optBoolean("final", false)) {
-                                return bestTranscript
-                            }
-                        }
-                    }
+            else -> {
+                if (lastRecognizedText.trim().isNotEmpty()) {
+                    val finalSpeech = lastRecognizedText.trim()
+                    dismissDialog()
+                    activeCallback?.onResult(finalSpeech)
+                } else {
+                    showDidNotCatchUi()
                 }
-            } catch (e: Exception) {
-                // Ignore non-JSON line
             }
-        }
-        return bestTranscript
-    }
-
-    private fun stopBuiltInAudio() {
-        isAudioRecording.set(false)
-        try {
-            activeAudioRecord?.let { record ->
-                if (record.recordingState == AudioRecord.RECORDSTATE_RECORDING) {
-                    record.stop()
-                }
-                record.release()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            activeAudioRecord = null
         }
     }
 
@@ -402,7 +387,6 @@ class VoiceSearchHelper(
             setOnDismissListener {
                 stopPulseAnimation()
                 cleanupRecognizer()
-                stopBuiltInAudio()
             }
             setOnKeyListener { _, keyCode, event ->
                 if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
@@ -438,10 +422,7 @@ class VoiceSearchHelper(
         }
 
         binding.flMicButton.setOnClickListener {
-            if (isListening && isUsingBuiltInEngine) {
-                // Stop recording manually and begin processing immediately
-                isAudioRecording.set(false)
-            } else if (!isListening) {
+            if (!isListening) {
                 restartListening()
             }
         }
@@ -451,9 +432,6 @@ class VoiceSearchHelper(
             if (text.isNotEmpty()) {
                 dismissDialog()
                 activeCallback?.onResult(text)
-            } else if (isListening && isUsingBuiltInEngine) {
-                // Trigger immediate processing
-                isAudioRecording.set(false)
             }
         }
 
@@ -479,145 +457,13 @@ class VoiceSearchHelper(
             startPulseAnimation(vPulseRing)
         }
 
-        if (isUsingBuiltInEngine) {
-            startBuiltInAudioVoiceSearch()
+        if (activeComponent != null) {
+            val started = startRecognizer(activeComponent)
+            if (!started) {
+                startSpeechRecognitionFlow(preferDiscoveredComponent = true)
+            }
         } else {
-            try {
-                speechRecognizer?.stopListening()
-                speechRecognizer?.cancel()
-
-                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                    putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, activeLanguageModel)
-                    putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
-                    putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, activity.packageName)
-                    putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5)
-                }
-                speechRecognizer?.startListening(intent)
-                isListening = true
-            } catch (e: Exception) {
-                e.printStackTrace()
-                startBuiltInAudioVoiceSearch()
-            }
-        }
-    }
-
-    private fun createRecognitionListener(): RecognitionListener {
-        return object : RecognitionListener {
-            override fun onReadyForSpeech(params: Bundle?) {
-                isListening = true
-                mainHandler.post {
-                    dialogBinding?.tvVoiceStatus?.text = activity.getString(R.string.voice_search_listening)
-                }
-            }
-
-            override fun onBeginningOfSpeech() {
-                isListening = true
-            }
-
-            override fun onRmsChanged(rmsdB: Float) {
-                mainHandler.post {
-                    dialogBinding?.let { binding ->
-                        val normalized = ((rmsdB + 2f) / 12f).coerceIn(0f, 1f)
-                        val scale = 1.0f + (0.2f * normalized)
-                        binding.flMicButton.scaleX = scale
-                        binding.flMicButton.scaleY = scale
-                    }
-                }
-            }
-
-            override fun onBufferReceived(buffer: ByteArray?) {}
-
-            override fun onEndOfSpeech() {
-                isListening = false
-                stopPulseAnimation()
-            }
-
-            override fun onError(error: Int) {
-                isListening = false
-                stopPulseAnimation()
-
-                mainHandler.post {
-                    handleSpeechError(error)
-                }
-            }
-
-            override fun onResults(results: Bundle?) {
-                isListening = false
-                stopPulseAnimation()
-
-                val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                val recognized = matches?.firstOrNull()?.trim() ?: lastRecognizedText.trim()
-
-                mainHandler.post {
-                    if (recognized.isNotBlank()) {
-                        lastRecognizedText = recognized
-                        dialogBinding?.apply {
-                            tvVoiceRecognizedText.text = recognized
-                            tvVoiceStatus.text = activity.getString(R.string.search)
-                            tvVoiceStatus.setTextColor(Color.parseColor("#3FB950"))
-                            btnVoiceSearch.isEnabled = true
-                            btnVoiceSearch.alpha = 1.0f
-                        }
-
-                        // Slight delay so the user clearly sees what was recognized before searching
-                        mainHandler.postDelayed({
-                            dismissDialog()
-                            activeCallback?.onResult(recognized)
-                        }, 350)
-                    } else {
-                        showDidNotCatchUi()
-                    }
-                }
-            }
-
-            override fun onPartialResults(partialResults: Bundle?) {
-                val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                val partial = matches?.firstOrNull()?.trim()
-
-                if (!partial.isNullOrEmpty()) {
-                    lastRecognizedText = partial
-                    mainHandler.post {
-                        dialogBinding?.apply {
-                            tvVoiceRecognizedText.text = partial
-                            btnVoiceSearch.isEnabled = true
-                            btnVoiceSearch.alpha = 1.0f
-                        }
-                        activeCallback?.onPartialResult(partial)
-                    }
-                }
-            }
-
-            override fun onEvent(eventType: Int, params: Bundle?) {}
-        }
-    }
-
-    private fun handleSpeechError(error: Int) {
-        when (error) {
-            SpeechRecognizer.ERROR_CLIENT,
-            SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> {
-                // Speech recognition service unavailable or client failure on this device (e.g. Jio STB).
-                // Smoothly switch to the in-built voice search engine without any jarring disruption!
-                startBuiltInAudioVoiceSearch()
-            }
-            SpeechRecognizer.ERROR_NO_MATCH,
-            SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> {
-                if (lastRecognizedText.trim().isNotEmpty()) {
-                    val finalSpeech = lastRecognizedText.trim()
-                    dismissDialog()
-                    activeCallback?.onResult(finalSpeech)
-                } else {
-                    showDidNotCatchUi()
-                }
-            }
-            else -> {
-                if (lastRecognizedText.trim().isNotEmpty()) {
-                    val finalSpeech = lastRecognizedText.trim()
-                    dismissDialog()
-                    activeCallback?.onResult(finalSpeech)
-                } else {
-                    showDidNotCatchUi()
-                }
-            }
+            startSpeechRecognitionFlow()
         }
     }
 
@@ -630,6 +476,13 @@ class VoiceSearchHelper(
             tvVoiceHint.text = activity.getString(R.string.voice_search_speak_now)
             btnVoiceRetry.requestFocus()
         }
+    }
+
+    private fun showNotSupportedUi() {
+        dismissDialog()
+        val message = activity.getString(R.string.voice_search_not_supported)
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        activeCallback?.onError(message)
     }
 
     fun launchSystemVoiceSearch(
@@ -651,13 +504,15 @@ class VoiceSearchHelper(
             try {
                 activity.startActivityForResult(intent, requestCode)
             } catch (e: Exception) {
-                e.printStackTrace()
-                startBuiltInAudioVoiceSearch()
+                Log.e(TAG, "Failed to launch system voice search activity: ${e.message}", e)
+                initiateVoiceSearch(activeCallback ?: object : Callback {
+                    override fun onResult(text: String?) {}
+                }, languageModel)
             }
         } else {
-            // NEVER show "Voice search not found" dialog!
-            // Seamlessly fall back to the in-built voice search engine!
-            startBuiltInAudioVoiceSearch()
+            initiateVoiceSearch(activeCallback ?: object : Callback {
+                override fun onResult(text: String?) {}
+            }, languageModel)
         }
     }
 
@@ -724,7 +579,6 @@ class VoiceSearchHelper(
 
     private fun dismissDialog() {
         stopPulseAnimation()
-        stopBuiltInAudio()
         try {
             if (activeDialog?.isShowing == true) {
                 activeDialog?.dismiss()
@@ -755,12 +609,6 @@ class VoiceSearchHelper(
         mainHandler.removeCallbacksAndMessages(null)
         dismissDialog()
         cleanupRecognizer()
-        stopBuiltInAudio()
-        try {
-            executorService.shutdownNow()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
         activeCallback = null
     }
 

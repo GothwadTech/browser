@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.gothwad.browser.Config
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.main.dialogs.BrowserSidebarPopup
+import com.gothwad.browser.activity.main.dialogs.ChromeMenuPopup
 import com.gothwad.browser.activity.main.dialogs.DownloadsSidebarPopup
 import com.gothwad.browser.activity.main.dialogs.FavoritesSidebarPopup
 import com.gothwad.browser.activity.main.dialogs.HistorySidebarPopup
@@ -51,7 +52,7 @@ internal fun MainActivity.toggleMenu() {
 }
 
 internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
-    vb.ibMenu.setOnClickListener { showBrowserSidebar(vb.ibMenu) }
+    vb.ibMenu.setOnClickListener { showChromeMenu(vb.ibMenu) }
     vb.ibHistory.setOnClickListener { showHistoryActivity(vb.ibHistory) }
     vb.ibHome.setOnClickListener {
         if (vb.vNativeHome.visibility == View.VISIBLE) {
@@ -79,9 +80,6 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
     }
     vb.ibRefresh.setOnClickListener { refresh() }
     vb.ibDownloads.setOnClickListener { showDownloads(vb.ibDownloads) }
-    vb.ibBookmarks.setOnClickListener { showFavoritesDialog(vb.ibBookmarks) }
-    vb.ibIncognito.setOnClickListener { toggleIncognitoMode(true) }
-    vb.ibSettings.setOnClickListener { showSettingsDialog() }
 
     // Top Tab Bar Buttons
     vb.ibTopTabSearch.setOnClickListener {
@@ -106,7 +104,6 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
 
     if (incognitoMode) {
         vb.rlActionBar.setBackgroundColor(Color.parseColor("#1F1F1F"))
-        vb.ibIncognito.imageTintList = ColorStateList.valueOf(Color.parseColor("#0494F4"))
     } else {
         applyAppTheme(config.theme.value)
     }
@@ -116,9 +113,8 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
     listOf(
         vb.ibTopTabSearch, vb.ibTopHideBars, vb.ibTopCloseApp,
         vb.ibTopNewTab,
-        vb.ibMenu, vb.ibHistory, vb.ibHome, vb.ibBack, vb.ibForward, vb.ibRefresh,
-        vb.ibNewTab, vb.flTabsSwitcher, vb.ibDownloads,
-        vb.ibBookmarks, vb.ibIncognito, vb.ibSettings
+        vb.ibHistory, vb.ibHome, vb.ibBack, vb.ibForward, vb.ibRefresh,
+        vb.ibNewTab, vb.flTabsSwitcher, vb.ibDownloads, vb.ibMenu
     ).forEach {
         it.isFocusable = true
         it.isFocusableInTouchMode = false
@@ -240,7 +236,7 @@ internal fun MainActivity.onEditHomePageBookmark(favoriteItem: FavoriteItem) {
 internal fun MainActivity.showFavoritesDialog(anchorView: View? = null) {
     FavoritesSidebarPopup(this) { item ->
         item.url?.let { navigate(it) }
-    }.show(anchorView ?: vb.ibBookmarks)
+    }.show(anchorView ?: vb.ibMenu)
     hideMenuOverlay()
 }
 
@@ -256,11 +252,15 @@ internal fun MainActivity.showHistoryActivity(anchorView: View? = null) {
 }
 
 internal fun MainActivity.showSettingsDialog(anchorView: View? = null) {
-    SettingsDialog(this, settingsModel).show(anchorView ?: vb.ibSettings)
+    SettingsDialog(this, settingsModel).show(anchorView ?: vb.ibMenu)
+}
+
+internal fun MainActivity.showChromeMenu(anchorView: View? = null) {
+    ChromeMenuPopup(this).show(anchorView ?: vb.ibMenu)
 }
 
 internal fun MainActivity.showBrowserSidebar(anchorView: View? = null) {
-    BrowserSidebarPopup(this).show(anchorView ?: vb.ibMenu)
+    showChromeMenu(anchorView)
 }
 
 internal fun MainActivity.showDownloads(anchorView: View? = null) {

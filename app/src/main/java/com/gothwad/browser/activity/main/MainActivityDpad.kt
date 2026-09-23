@@ -17,7 +17,6 @@ import com.gothwad.browser.utils.HardwareInputManager
 fun MainActivity.getHeaderFocusableViews(): List<View> {
     val list = mutableListOf<View>()
     val candidateViews = listOf(
-        vb.ibMenu,
         vb.ibHistory,
         vb.ibHome,
         vb.ibBack,
@@ -29,9 +28,7 @@ fun MainActivity.getHeaderFocusableViews(): List<View> {
         vb.ibNewTab,
         vb.flTabsSwitcher,
         vb.ibDownloads,
-        vb.ibBookmarks,
-        vb.ibIncognito,
-        vb.ibSettings
+        vb.ibMenu
     )
     for (v in candidateViews) {
         if (v.isShown && v.visibility == View.VISIBLE) {
@@ -117,15 +114,15 @@ fun MainActivity.handleDpadEvent(event: KeyEvent): Boolean {
             when (keyCode) {
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
                     if (focus == vb.ibTopTabSearch) {
-                        vb.ibMenu.requestFocus()
+                        vb.ibHistory.requestFocus()
                         return true
                     }
                     if (focus == vb.ibTopHideBars) {
-                        vb.ibIncognito.requestFocus()
+                        vb.ibDownloads.requestFocus()
                         return true
                     }
                     if (focus == vb.ibTopCloseApp) {
-                        vb.ibSettings.requestFocus()
+                        vb.ibMenu.requestFocus()
                         return true
                     }
                     val headerViews = getHeaderFocusableViews()
@@ -311,16 +308,16 @@ fun MainActivity.handleDpadEvent(event: KeyEvent): Boolean {
                 }
                 KeyEvent.KEYCODE_DPAD_UP -> {
                     if (vb.llTopTabBar.isVisible && event.repeatCount == 0) {
-                        if (focus == vb.ibMenu) {
+                        if (focus == vb.ibHistory) {
                             vb.ibTopTabSearch.requestFocus()
                             return true
                         }
-                        if (focus == vb.ibSettings) {
-                            vb.ibTopCloseApp.requestFocus()
+                        if (focus == vb.ibDownloads) {
+                            vb.ibTopHideBars.requestFocus()
                             return true
                         }
-                        if (focus == vb.ibIncognito) {
-                            vb.ibTopHideBars.requestFocus()
+                        if (focus == vb.ibMenu) {
+                            vb.ibTopCloseApp.requestFocus()
                             return true
                         }
                         if (vb.rvTopTabs.childCount > 0) {
