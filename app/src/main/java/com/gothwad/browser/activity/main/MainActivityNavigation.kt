@@ -15,6 +15,7 @@ import com.gothwad.browser.R
 import com.gothwad.browser.activity.IncognitoModeMainActivity
 import com.gothwad.browser.model.HostConfig
 import com.gothwad.browser.model.WebTabState
+import com.gothwad.browser.utils.Utils
 import com.gothwad.browser.utils.sameDay
 import com.gothwad.browser.webengine.WebEngine
 import com.gothwad.browser.webengine.WebEngineFactory
@@ -382,8 +383,8 @@ internal fun MainActivity.switchProcess(incognitoMode: Boolean, intentDataToCopy
 internal fun MainActivity.applyScreenOrientationInternal() {
     requestedOrientation = when (config.screenOrientation) {
         Config.ORIENTATION_PORTRAIT -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        Config.ORIENTATION_AUTO -> ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        else -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        Config.ORIENTATION_LANDSCAPE -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        else -> if (Utils.isTV(this)) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE else ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
     }
     updateToolbarLayoutForOrientation()
 }

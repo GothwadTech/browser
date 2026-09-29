@@ -150,10 +150,19 @@ class Config(val prefs: SharedPreferences) {
             prefs.edit().putBoolean(KEEP_SCREEN_ON_KEY, value).apply()
         }
 
+    val screenOrientationObservable = object : ObservableValue<Int>(ORIENTATION_AUTO) {
+        override var value: Int = prefs.getInt(SCREEN_ORIENTATION_KEY, ORIENTATION_AUTO)
+            set(value) {
+                prefs.edit().putInt(SCREEN_ORIENTATION_KEY, value).apply()
+                field = value
+                notifyObservers()
+            }
+    }
+
     var screenOrientation: Int
-        get() = prefs.getInt(SCREEN_ORIENTATION_KEY, ORIENTATION_AUTO)
+        get() = screenOrientationObservable.value
         set(value) {
-            prefs.edit().putInt(SCREEN_ORIENTATION_KEY, value).apply()
+            screenOrientationObservable.value = value
         }
 
     var disableVirtualKeyboard: Boolean

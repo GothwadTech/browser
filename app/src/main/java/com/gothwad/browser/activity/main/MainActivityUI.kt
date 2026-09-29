@@ -193,6 +193,10 @@ internal fun MainActivity.setupSettingsSubscriptions() {
         }
     }
 
+    config.screenOrientationObservable.subscribe(this.lifecycle, false) {
+        applyScreenOrientation()
+    }
+
     viewModel.homePageLinks.subscribe(this) {
         val currentUrl = tabsModel.currentTab.value?.url ?: return@subscribe
         if (Config.HOME_PAGE_URL == currentUrl) {
@@ -351,8 +355,12 @@ internal fun MainActivity.setupDragAndDropListener() {
 }
 
 fun MainActivity.updateToolbarLayoutForOrientation() {
-    val isPortrait = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
-            resources.configuration.screenWidthDp < 600
+    if (!isVbInitialized) return
+
+    val isPortrait = config.screenOrientation == Config.ORIENTATION_PORTRAIT ||
+            (config.screenOrientation != Config.ORIENTATION_LANDSCAPE &&
+                    (resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
+                            resources.configuration.screenWidthDp < 600))
 
     if (isPortrait) {
         // Mobile Portrait Chrome Layout:

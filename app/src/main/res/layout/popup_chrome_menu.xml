@@ -22,7 +22,25 @@
         android:paddingStart="8dp"
         android:paddingEnd="8dp">
 
-        <!-- 1. Forward -->
+        <!-- 1. Back -->
+        <ImageButton
+            android:id="@+id/btnMenuBack"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:background="@drawable/menu_item_selector"
+            android:contentDescription="Back"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:nextFocusLeft="@+id/btnMenuBack"
+            android:nextFocusRight="@+id/btnMenuForward"
+            android:nextFocusDown="@+id/btnMenuNewTab"
+            android:padding="7dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back_grey_900_24dp"
+            android:tint="@color/day_night_icon_color" />
+
+        <!-- 2. Forward -->
         <ImageButton
             android:id="@+id/btnMenuForward"
             android:layout_width="0dp"
@@ -32,7 +50,7 @@
             android:contentDescription="Forward"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:nextFocusLeft="@+id/btnMenuForward"
+            android:nextFocusLeft="@+id/btnMenuBack"
             android:nextFocusRight="@+id/btnMenuBookmarkPage"
             android:nextFocusDown="@+id/btnMenuNewTab"
             android:padding="7dp"
@@ -40,7 +58,7 @@
             android:src="@drawable/ic_arrow_forward_grey_900_24dp"
             android:tint="@color/day_night_icon_color" />
 
-        <!-- 2. Bookmark / Star -->
+        <!-- 3. Bookmark / Star -->
         <ImageButton
             android:id="@+id/btnMenuBookmarkPage"
             android:layout_width="0dp"
@@ -58,7 +76,7 @@
             android:src="@drawable/ic_star_border_grey_900_36dp"
             android:tint="@color/day_night_icon_color" />
 
-        <!-- 3. Download Page -->
+        <!-- 4. Download Page -->
         <ImageButton
             android:id="@+id/btnMenuDownloadPage"
             android:layout_width="0dp"
@@ -69,29 +87,11 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:nextFocusLeft="@+id/btnMenuBookmarkPage"
-            android:nextFocusRight="@+id/btnMenuPageInfo"
-            android:nextFocusDown="@+id/btnMenuNewTab"
-            android:padding="7dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_file_download_grey_900"
-            android:tint="@color/day_night_icon_color" />
-
-        <!-- 4. Site Info -->
-        <ImageButton
-            android:id="@+id/btnMenuPageInfo"
-            android:layout_width="0dp"
-            android:layout_height="36dp"
-            android:layout_weight="1"
-            android:background="@drawable/menu_item_selector"
-            android:contentDescription="Site Info"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:nextFocusLeft="@+id/btnMenuDownloadPage"
             android:nextFocusRight="@+id/btnMenuRefresh"
             android:nextFocusDown="@+id/btnMenuNewTab"
             android:padding="7dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_menu_info"
+            android:src="@drawable/ic_file_download_grey_900"
             android:tint="@color/day_night_icon_color" />
 
         <!-- 5. Refresh Page -->
@@ -104,7 +104,7 @@
             android:contentDescription="Refresh page"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:nextFocusLeft="@+id/btnMenuPageInfo"
+            android:nextFocusLeft="@+id/btnMenuDownloadPage"
             android:nextFocusRight="@+id/btnMenuRefresh"
             android:nextFocusDown="@+id/btnMenuNewTab"
             android:padding="7dp"

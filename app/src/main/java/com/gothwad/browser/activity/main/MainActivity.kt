@@ -81,6 +81,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     internal var linkActionsMenu: PopupMenu? = null
     var currentTabsDialog: TabsRowDialog? = null
     internal var topTabsAdapter: com.gothwad.browser.browser.tabs.TopTabsAdapter? = null
+    val isVbInitialized: Boolean get() = ::vb.isInitialized
 
     internal val progressBarHideRunnable = Runnable {
         val anim = AnimationUtils.loadAnimation(this@MainActivity, android.R.anim.fade_out)
@@ -166,11 +167,11 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         adblockModel = ActiveModelsRepository.get(AdblockModel::class, this)
         tabsModel = ActiveModelsRepository.get(TabsModel::class, this)
         autoUpdateModel = ActiveModelsRepository.get(AutoUpdateModel::class, this)
-        uiHandler = Handler()
+        uiHandler = Handler(android.os.Looper.getMainLooper())
         prefs = getSharedPreferences(BrowserApp.MAIN_PREFS_NAME, Context.MODE_PRIVATE)
-        applyScreenOrientation()
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb.root)
+        applyScreenOrientation()
 
         vb.ivMiniatures.visibility = View.INVISIBLE
         vb.llBottomPanel.visibility = View.GONE

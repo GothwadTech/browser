@@ -100,14 +100,22 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         val currentUrl = currentTab?.url ?: ""
         val isWebPage = currentUrl.isNotEmpty() && currentUrl != Config.HOME_PAGE_URL && currentUrl != Config.HOME_URL_ALIAS
 
-        // Top 5 Quick Action Icons: Forward, Star Bookmark, Download, Page Info, Refresh
+        // Top 5 Quick Action Icons: Back, Forward, Star Bookmark, Download, Refresh
+        val btnBack: ImageButton = contentView.findViewById(R.id.btnMenuBack)
         val btnForward: ImageButton = contentView.findViewById(R.id.btnMenuForward)
         val btnBookmarkPage: ImageButton = contentView.findViewById(R.id.btnMenuBookmarkPage)
         val btnDownloadPage: ImageButton = contentView.findViewById(R.id.btnMenuDownloadPage)
-        val btnPageInfo: ImageButton = contentView.findViewById(R.id.btnMenuPageInfo)
         val btnRefresh: ImageButton = contentView.findViewById(R.id.btnMenuRefresh)
 
-        // 1. Forward
+        // 1. Back
+        val canGoBack = currentTab?.webEngine?.canGoBack() == true
+        btnBack.isEnabled = canGoBack
+        btnBack.alpha = if (canGoBack) 1.0f else 0.4f
+        bindMenuItem(btnBack) {
+            activity.navigateBack()
+        }
+
+        // 2. Forward
         val canGoForward = currentTab?.webEngine?.canGoForward() == true || (!currentTab?.lastUrlBeforeHome.isNullOrEmpty())
         btnForward.isEnabled = canGoForward
         btnForward.alpha = if (canGoForward) 1.0f else 0.4f
@@ -171,16 +179,6 @@ class ChromeMenuPopup(private val activity: MainActivity) {
             } else {
                 activity.showDownloads(activity.vb.ibMenu)
             }
-        }
-
-        // 4. Page Info & SSL Security Details
-        bindMenuItem(btnPageInfo) {
-            val isSecure = currentUrl.startsWith("https://")
-            AlertDialog.Builder(activity)
-                .setTitle(if (isSecure) "🔒 Secure Connection" else "ℹ️ Page Info")
-                .setMessage("URL: ${if (currentUrl.isEmpty()) "Home Page" else currentUrl}\n\nSecurity: ${if (isSecure) "Encrypted Connection (HTTPS / SSL Active)" else "Unencrypted Connection (HTTP)"}\n\nCookies: Active\nJavaScript: Enabled\nDesktop Mode: ${if (config.isDesktopMode()) "ON" else "OFF"}")
-                .setPositiveButton("OK", null)
-                .show()
         }
 
         // 5. Refresh Page
@@ -441,26 +439,28 @@ class ChromeMenuPopup(private val activity: MainActivity) {
     }
 
     fun show(anchorView: View) {
-        val decorView = activity.window.decorView
-        val loc = IntArray(2)
-        anchorView.getLocationInWindow(loc)
-        if (loc[1] == 0) {
-            anchorView.getLocationOnScreen(loc)
-        }
-        val anchorX = loc[0]
-        val anchorY = loc[1]
-        val anchorHeight = anchorView.height
-        val anchorWidth = if (anchorView.width > 0) anchorView.width else (38 * activity.resources.displayMetrics.density).toInt()
-        val anchorBottom = anchorY + anchorHeight
-
         val dm = activity.resources.displayMetrics
         val density = dm.density
-        val screenHeight = if (decorView.height > 0) decorView.height else dm.heightPixels
-        val screenWidth = if (decorView.width > 0) decorView.width else dm.widthPixels
+        val screenWidth = dm.widthPixels
+        val screenHeight = dm.heightPixels
 
-        // Strictly open below the search bar / anchor view
-        val yPos = anchorBottom + (2 * density).toInt()
-        val maxAvailableHeight = (screenHeight - yPos - (16 * density).toInt()).coerceAtLeast((180 * density).toInt())
+        // Get bottom edge of header / action bar where search bar lives
+        val headerLoc = IntArray(2)
+        activity.vb.rlActionBar.getLocationInWindow(headerLoc)
+        val headerBottomY = headerLoc[1] + activity.vb.rlActionBar.height
+
+        val anchorLoc = IntArray(2)
+        anchorView.getLocationInWindow(anchorLoc)
+        val anchorBottom = if (anchorLoc[1] > 0) anchorLoc[1] + anchorView.height else headerBottomY
+        val yPos = maxOf(headerBottomY, anchorBottom) + (2 * density).toInt()
+
+        val anchorWidth = if (anchorView.width > 0) anchorView.width else (38 * density).toInt()
+        val anchorRight = if (anchorLoc[0] > 0) anchorLoc[0] + anchorWidth else screenWidth - (6 * density).toInt()
+
+        // Right-align popup to anchor view with edge padding
+        val xPos = (anchorRight - popupWidth).coerceIn((8 * density).toInt(), (screenWidth - popupWidth - (8 * density).toInt()).coerceAtLeast(0))
+
+        val maxAvailableHeight = (screenHeight - yPos - (20 * density).toInt()).coerceAtLeast((150 * density).toInt())
 
         contentView.measure(
             View.MeasureSpec.makeMeasureSpec(popupWidth, View.MeasureSpec.EXACTLY),
@@ -470,11 +470,9 @@ class ChromeMenuPopup(private val activity: MainActivity) {
 
         popupWindow.width = popupWidth
         popupWindow.height = popupHeight
+        popupWindow.isClippingEnabled = true
 
-        // Right-align popup to anchor view
-        val xPos = (anchorX + anchorWidth - popupWidth).coerceIn(0, (screenWidth - popupWidth).coerceAtLeast(0))
-
-        popupWindow.showAtLocation(decorView, android.view.Gravity.TOP or android.view.Gravity.START, xPos, yPos)
+        popupWindow.showAtLocation(activity.window.decorView, android.view.Gravity.TOP or android.view.Gravity.START, xPos, yPos)
 
         contentView.post {
             contentView.findViewById<View>(R.id.btnMenuNewTab)?.requestFocus()
