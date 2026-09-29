@@ -1,370 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flSettingsRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="#131314">
 
-    <!-- Dimmed Outside touch area to close -->
-    <View
-        android:id="@+id/vSettingsBackdrop"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="false" />
-
-    <!-- Right Side Drawer Panel with Front 2 Corners Rounded -->
+    <!-- ========================================================================= -->
+    <!-- PAGE 1: CATEGORIES DIRECTORY (CHROME SETTINGS BUBBLE STYLE)               -->
+    <!-- ========================================================================= -->
     <LinearLayout
-        android:id="@+id/llSettingsPanel"
+        android:id="@+id/llSettingsPageCategories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:background="@drawable/bg_tv_right_sidebar"
-        android:elevation="16dp"
-        android:clickable="true"
-        android:focusable="false"
+        android:background="#131314"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="16dp">
+        android:visibility="visible">
 
-        <!-- ========================================================================= -->
-        <!-- PAGE 1: CATEGORIES DIRECTORY (17 GRANULAR SECTIONS)                       -->
-        <!-- ========================================================================= -->
+        <!-- Top Header App Bar -->
         <LinearLayout
-            android:id="@+id/llSettingsPageCategories"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible">
+            android:layout_height="64dp"
+            android:background="#131314"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="24dp">
 
-            <!-- Top Header -->
+            <ImageButton
+                android:id="@+id/ibCloseSettings"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_google_circle_btn"
+                android:clickable="true"
+                android:contentDescription="Close Settings"
+                android:focusable="true"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_arrow_back_grey_900_24dp"
+                android:tint="#E3E3E3" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/settings"
+                android:textColor="#E3E3E3"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_gothwad_logo" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#282A2D" />
+
+        <!-- Scrollable Categories in Google Bubble Style -->
+        <ScrollView
+            android:id="@+id/svSettingsCategories"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#131314"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp">
+                android:layout_gravity="center_horizontal"
+                android:maxWidth="820dp"
+                android:orientation="vertical"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="48dp">
 
-                <ImageButton
-                    android:id="@+id/ibCloseSettings"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@drawable/bg_tv_side_back_btn"
-                    android:clickable="true"
-                    android:contentDescription="Close Settings"
-                    android:focusable="true"
-                    android:padding="6dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_arrow_back_grey_900_24dp"
-                    android:tint="@color/selector_tv_side_back_icon" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="1"
-                    android:text="@string/settings"
-                    android:textColor="@color/day_night_text_color_contrast"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
+                <!-- ============================================================= -->
+                <!-- GROUP 1: BASICS                                               -->
+                <!-- ============================================================= -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/tv_accent_badge_bg"
-                    android:paddingStart="6dp"
-                    android:paddingTop="2dp"
-                    android:paddingEnd="6dp"
-                    android:paddingBottom="2dp"
-                    android:text="Preferences"
-                    android:textColor="#38BDF8"
-                    android:textSize="10sp"
+                    android:paddingStart="8dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"
+                    android:text="Basics"
+                    android:textColor="#8AB4F8"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_gothwad_logo" />
-            </LinearLayout>
-
-            <!-- Scrollable Categories List -->
-            <ScrollView
-                android:id="@+id/svSettingsCategories"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:fillViewport="true"
-                android:scrollbars="none">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/bg_google_bubble_card"
                     android:orientation="vertical"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="8dp">
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
 
-                    <!-- 1. Display & UI Scale -->
+                    <!-- 1. Search Engine -->
                     <LinearLayout
-                        android:id="@+id/itemCatDisplayScale"
+                        android:id="@+id/itemCatSearchEngine"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:nextFocusUp="@id/ibCloseSettings"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_menu_new_tab"
-                            android:tint="@color/selector_tv_side_item_icon" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:duplicateParentState="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Display &amp; UI Scale"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Scale UI (1%-100%), top tab bar"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
-                    </LinearLayout>
-
-                    <!-- 2. Web Page Zoom -->
-                    <LinearLayout
-                        android:id="@+id/itemCatWebZoom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_zoom_in_gray_24dp"
-                            android:tint="@color/selector_tv_side_item_icon" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:duplicateParentState="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Web Page Zoom"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Preset zoom (75%-200%) &amp; stepper"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
-                    </LinearLayout>
-
-                    <!-- 3. Themes & Appearance -->
-                    <LinearLayout
-                        android:id="@+id/itemCatThemes"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_general"
-                            android:tint="@color/selector_tv_side_item_icon" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:duplicateParentState="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Themes &amp; Appearance"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="AMOLED Black, Midnight, Dark web"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
-                    </LinearLayout>
-
-                    <!-- 4. Media & Playback -->
-                    <LinearLayout
-                        android:id="@+id/itemCatMediaPlayback"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_file_video"
-                            android:tint="@color/selector_tv_side_item_icon" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:duplicateParentState="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Media &amp; Playback"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Autoplay video, keep screen active"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
-                    </LinearLayout>
-
-                    <!-- 5. Search Engine -->
-                    <LinearLayout
-                        android:id="@+id/itemCatSearchEngine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -372,12 +127,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_search_white"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -387,44 +142,256 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Search Engine"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
                                 android:text="Google, DuckDuckGo, Bing, Custom"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
 
-                    <!-- 6. Home Page & Startup -->
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 2. Display & UI Scale -->
                     <LinearLayout
-                        android:id="@+id/itemCatHomePage"
+                        android:id="@+id/itemCatDisplayScale"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_menu_new_tab"
+                            android:tint="@color/selector_google_item_icon" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:duplicateParentState="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
+                                android:text="Display &amp; UI Scale"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:duplicateParentState="true"
+                                android:text="Scale UI (1%-100%), top tab bar"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
+                            android:tint="@color/selector_google_item_chevron" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 3. Web Page Zoom -->
+                    <LinearLayout
+                        android:id="@+id/itemCatWebZoom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_zoom_in_gray_24dp"
+                            android:tint="@color/selector_google_item_icon" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:duplicateParentState="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
+                                android:text="Web Page Zoom"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:duplicateParentState="true"
+                                android:text="Preset zoom (75%-200%) &amp; stepper"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
+                            android:tint="@color/selector_google_item_chevron" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 4. Themes & Appearance -->
+                    <LinearLayout
+                        android:id="@+id/itemCatThemes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_settings_general"
+                            android:tint="@color/selector_google_item_icon" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:duplicateParentState="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
+                                android:text="Themes &amp; Appearance"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:duplicateParentState="true"
+                                android:text="AMOLED Black, Midnight, Dark web"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
+                            android:tint="@color/selector_google_item_chevron" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 5. Home Page & Startup -->
+                    <LinearLayout
+                        android:id="@+id/itemCatHomePage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -432,12 +399,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_home_grey_900_24dp"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -447,177 +414,80 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Home Page &amp; Startup"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="Speed dial, blank, custom start URL"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="New tab grid, custom URL, shortcuts"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
+                </LinearLayout>
 
-                    <!-- 7. User Agent & Identity -->
-                    <LinearLayout
-                        android:id="@+id/itemCatUserAgent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                <!-- ============================================================= -->
+                <!-- GROUP 2: PRIVACY & SECURITY                                   -->
+                <!-- ============================================================= -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="8dp"
+                    android:text="Privacy &amp; Security"
+                    android:textColor="#8AB4F8"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_menu_desktop"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_google_bubble_card"
+                    android:orientation="vertical"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:duplicateParentState="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="User Agent &amp; Identity"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Desktop Chrome, Firefox, Mobile UA"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
-                    </LinearLayout>
-
-                    <!-- 8. Web Engine & Rendering -->
-                    <LinearLayout
-                        android:id="@+id/itemCatWebEngine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_browser"
-                            android:tint="@color/selector_tv_side_item_icon" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_weight="1"
-                            android:duplicateParentState="true"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="Web Engine &amp; Rendering"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:duplicateParentState="true"
-                                android:text="System WebView engine &amp; debug mode"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
-                        </LinearLayout>
-
-                        <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
-                    </LinearLayout>
-
-                    <!-- 9. Ad & Tracker Blocker -->
+                    <!-- 6. Ad & Tracker Blocker -->
                     <LinearLayout
                         android:id="@+id/itemCatAdBlock"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
-                            android:src="@drawable/ic_block_popups"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:src="@drawable/ic_settings_privacy"
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -627,44 +497,52 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Ad &amp; Tracker Blocker"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="EasyList filter rules &amp; updates"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Filters &amp; Rules"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
 
-                    <!-- 10. App Security & PIN -->
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 7. App Lock & PIN Security -->
                     <LinearLayout
                         android:id="@+id/itemCatAppLock"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -672,12 +550,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_lock_security"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -687,57 +565,65 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="App Lock &amp; PIN Security"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="4-digit master passcode security"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Master Passcode"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
 
-                    <!-- 11. Cache & Storage -->
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 8. Cache & Storage -->
                     <LinearLayout
                         android:id="@+id/itemCatCacheStorage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
-                            android:src="@drawable/ic_delete"
-                            android:tint="#EF4444" />
+                            android:src="@drawable/ic_settings_tools"
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -747,44 +633,271 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Cache &amp; Storage"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="Clear cookies, cache &amp; sessions"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Clear cache, cookies, data &amp; history"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <!-- ============================================================= -->
+                <!-- GROUP 3: BROWSING & MEDIA                                     -->
+                <!-- ============================================================= -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="8dp"
+                    android:text="Browsing &amp; Media"
+                    android:textColor="#8AB4F8"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_google_bubble_card"
+                    android:orientation="vertical"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
+
+                    <!-- 9. Web Engine & Rendering -->
+                    <LinearLayout
+                        android:id="@+id/itemCatWebEngine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_settings_browser"
+                            android:tint="@color/selector_google_item_icon" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:duplicateParentState="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
+                                android:text="Web Engine &amp; Rendering"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:duplicateParentState="true"
+                                android:text="Browser Core"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
+                            android:tint="@color/selector_google_item_chevron" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 10. User Agent & Identity -->
+                    <LinearLayout
+                        android:id="@+id/itemCatUserAgent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_menu_desktop"
+                            android:tint="@color/selector_google_item_icon" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:duplicateParentState="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
+                                android:text="User Agent &amp; Identity"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:duplicateParentState="true"
+                                android:text="Desktop / Mobile Mode"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
+                            android:tint="@color/selector_google_item_chevron" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 11. Media & Playback -->
+                    <LinearLayout
+                        android:id="@+id/itemCatMediaPlayback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_file_video"
+                            android:tint="@color/selector_google_item_icon" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:duplicateParentState="true"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:duplicateParentState="true"
+                                android:text="Media &amp; Playback"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:duplicateParentState="true"
+                                android:text="Autoplay video, keep screen active"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:contentDescription="@null"
+                            android:duplicateParentState="true"
+                            android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
+                            android:tint="@color/selector_google_item_chevron" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
 
                     <!-- 12. Quick Tools & Utilities -->
                     <LinearLayout
                         android:id="@+id/itemCatQuickTools"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -792,12 +905,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_settings_tools"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -807,57 +920,80 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Quick Tools &amp; Utilities"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="History, bookmarks, clipboard, rotate"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Toolbox &amp; Actions"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
+                </LinearLayout>
 
-                    <!-- 13. Remote & Joystick Navigation -->
+                <!-- ============================================================= -->
+                <!-- GROUP 4: CONTROLS & DEVICES                                   -->
+                <!-- ============================================================= -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="8dp"
+                    android:text="Controls &amp; Devices"
+                    android:textColor="#8AB4F8"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_google_bubble_card"
+                    android:orientation="vertical"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
+
+                    <!-- 13. Remote & Joystick -->
                     <LinearLayout
                         android:id="@+id/itemCatRemoteNav"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
-                            android:src="@drawable/gamepad_circle_up_24px"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:src="@drawable/ic_settings_remote"
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -867,44 +1003,52 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Remote &amp; Joystick"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="D-pad axis mapping, joystick controls"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Navigation Controls"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
 
                     <!-- 14. Virtual Cursor & Physics -->
                     <LinearLayout
                         android:id="@+id/itemCatCursorPhysics"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -912,12 +1056,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_move_remote"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -927,44 +1071,52 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Virtual Cursor &amp; Physics"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="Pointer style, size, speed &amp; physics"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Pointer Controls"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
 
-                    <!-- 15. Keyboard & Mouse Setup -->
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 15. Keyboard & Mouse -->
                     <LinearLayout
                         android:id="@+id/itemCatKeyboardMouse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -972,12 +1124,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_settings_keyboard_mouse"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -987,44 +1139,52 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="Keyboard &amp; Mouse"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="Airtel STB click fix, device status"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Hardware Devices"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
 
-                    <!-- 16. Shortcuts Reference -->
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="56dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="#282A2D" />
+
+                    <!-- 16. Keyboard Shortcuts -->
                     <LinearLayout
                         android:id="@+id/itemCatShortcuts"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -1032,12 +1192,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_settings_shortcuts"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -1046,45 +1206,68 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
-                                android:text="Shortcuts Reference"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:text="Keyboard Shortcuts"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="TV remote &amp; keyboard action guide"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Navigation &amp; Keys"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
+                </LinearLayout>
+
+                <!-- ============================================================= -->
+                <!-- GROUP 5: ABOUT                                                -->
+                <!-- ============================================================= -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="8dp"
+                    android:text="About"
+                    android:textColor="#8AB4F8"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_google_bubble_card"
+                    android:orientation="vertical"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
 
                     <!-- 17. About & Version -->
                     <LinearLayout
                         android:id="@+id/itemCatAbout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="54dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_tv_side_item"
+                        android:minHeight="58dp"
+                        android:background="@drawable/bg_google_bubble_item"
                         android:clickable="true"
                         android:focusable="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp">
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp">
 
                         <ImageView
                             android:layout_width="24dp"
@@ -1092,12 +1275,12 @@
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_settings_about"
-                            android:tint="@color/selector_tv_side_item_icon" />
+                            android:tint="@color/selector_google_item_icon" />
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -1107,109 +1290,125 @@
                                 android:layout_height="wrap_content"
                                 android:duplicateParentState="true"
                                 android:text="About &amp; Version"
-                                android:textColor="@color/selector_tv_side_item_text"
-                                android:textSize="14sp"
+                                android:textColor="@color/selector_google_item_title"
+                                android:textSize="15sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
                                 android:duplicateParentState="true"
-                                android:text="App info, build flavor &amp; updates"
-                                android:textColor="#94A3B8"
-                                android:textSize="11sp" />
+                                android:text="Build Information"
+                                android:textColor="@color/selector_google_item_subtitle"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <ImageView
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
                             android:contentDescription="@null"
                             android:duplicateParentState="true"
                             android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                            android:tint="@color/selector_tv_side_item_chevron" />
+                            android:tint="@color/selector_google_item_chevron" />
                     </LinearLayout>
-
                 </LinearLayout>
-            </ScrollView>
-        </LinearLayout>
 
-        <!-- ========================================================================= -->
-        <!-- PAGE 2: CATEGORY DETAIL VIEW                                             -->
-        <!-- ========================================================================= -->
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!-- ========================================================================= -->
+    <!-- PAGE 2: CATEGORY DETAIL VIEW                                             -->
+    <!-- ========================================================================= -->
+    <LinearLayout
+        android:id="@+id/llSettingsPageDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#131314"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!-- Category Detail Header with Back Button -->
         <LinearLayout
-            android:id="@+id/llSettingsPageDetail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:layout_height="64dp"
+            android:background="#131314"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="20dp"
+            android:paddingEnd="24dp">
 
-            <!-- Category Detail Header with Back Button -->
+            <ImageButton
+                android:id="@+id/btnSettingsBackToCategories"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_google_circle_btn"
+                android:clickable="true"
+                android:contentDescription="Back to Categories"
+                android:focusable="true"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_arrow_back_grey_900_24dp"
+                android:tint="#E3E3E3" />
+
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingBottom="12dp">
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/btnSettingsBackToCategories"
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/bg_tv_side_back_btn"
-                    android:clickable="true"
-                    android:contentDescription="Back to Categories"
-                    android:focusable="true"
-                    android:padding="8dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_arrow_back_grey_900_24dp"
-                    android:tint="@color/selector_tv_side_back_icon" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvSettingsDetailTitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:text="General &amp; Themes"
+                    android:textColor="#E3E3E3"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvSettingsDetailTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="General &amp; Themes"
-                        android:textColor="@color/day_night_text_color_contrast"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvSettingsDetailBadge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Preferences"
-                        android:textColor="#38BDF8"
-                        android:textSize="11sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_gothwad_logo" />
+                <TextView
+                    android:id="@+id/tvSettingsDetailBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Preferences"
+                    android:textColor="#8AB4F8"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="8dp"
-                android:background="#1E293B" />
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_gothwad_logo" />
+        </LinearLayout>
 
-            <!-- Detail Scrollable Frame Container -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#282A2D" />
+
+        <!-- Detail Frame Container (Centered max width) -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#131314">
+
             <FrameLayout
                 android:id="@+id/flTabsContent"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-        </LinearLayout>
-
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:maxWidth="820dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="32dp" />
+        </FrameLayout>
     </LinearLayout>
+
 </FrameLayout>

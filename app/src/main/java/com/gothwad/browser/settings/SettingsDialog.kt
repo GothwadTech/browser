@@ -85,20 +85,17 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
 
         contentView = LayoutInflater.from(context).inflate(R.layout.dialog_settings, rootContainer, true)
 
-        val dm = context.resources.displayMetrics
-        val popupWidth = (dm.widthPixels * 0.26f).toInt()
-
         popupWindow = PopupWindow(
             rootContainer,
-            popupWidth,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
             true
         ).apply {
-            isOutsideTouchable = true
+            isOutsideTouchable = false
             isFocusable = true
-            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            elevation = 24f
-            animationStyle = R.style.SideDrawerAnimation
+            setBackgroundDrawable(ColorDrawable(Color.parseColor("#131314")))
+            elevation = 0f
+            animationStyle = android.R.style.Animation_Dialog
             setOnDismissListener {
                 mainView?.save()
             }
@@ -278,7 +275,7 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
         mainView?.save()
         llSettingsPageDetail.visibility = View.GONE
         llSettingsPageCategories.visibility = View.VISIBLE
-        val focusTarget = lastFocusedCategoryItem ?: itemCatDisplayScale
+        val focusTarget = lastFocusedCategoryItem ?: itemCatSearchEngine
         focusTarget.post {
             focusTarget.requestFocus()
         }
@@ -286,30 +283,15 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
 
     fun show(anchorView: View? = null) {
         val decorView = activity?.window?.decorView ?: return
-        val header = activity.findViewById<View>(R.id.rlActionBar) ?: anchorView ?: decorView
 
-        val loc = IntArray(2)
-        header.getLocationInWindow(loc)
-        if (loc[1] == 0) {
-            header.getLocationOnScreen(loc)
-        }
-        val headerBottom = loc[1] + header.height
+        popupWindow.width = ViewGroup.LayoutParams.MATCH_PARENT
+        popupWindow.height = ViewGroup.LayoutParams.MATCH_PARENT
+        popupWindow.isClippingEnabled = true
 
-        val screenWidth = if (decorView.width > 0) decorView.width else context.resources.displayMetrics.widthPixels
-        val screenHeight = if (decorView.height > 0) decorView.height else context.resources.displayMetrics.heightPixels
-
-        val popupWidth = com.gothwad.browser.activity.main.dialogs.SidebarHelper.calculateSidebarWidth(activity)
-        val popupHeight = (screenHeight - headerBottom).coerceAtLeast(100)
-
-        popupWindow.width = popupWidth
-        popupWindow.height = popupHeight
-        popupWindow.isClippingEnabled = false
-
-        val xPos = screenWidth - popupWidth
-        popupWindow.showAtLocation(decorView, android.view.Gravity.TOP or android.view.Gravity.START, xPos, headerBottom)
+        popupWindow.showAtLocation(decorView, android.view.Gravity.FILL, 0, 0)
 
         contentView.post {
-            val focusTarget = lastFocusedCategoryItem ?: itemCatDisplayScale
+            val focusTarget = lastFocusedCategoryItem ?: itemCatSearchEngine
             focusTarget.requestFocus()
         }
     }
