@@ -3,44 +3,58 @@
   <color name="default_url_color">#FFFFFF</color>
   <color name="selected_link_bkg">#2563EB</color>
 
-  <color name="top_bar_background">#181818</color>
-  <color name="top_bar_background2">#202020</color>
+  <color name="top_bar_background">#202124</color>
+  <color name="top_bar_background2">#292A2D</color>
 
   <color name="day_night_text_color">#CCCCCC</color>
   <color name="day_night_text_color_contrast">#FFFFFF</color>
-  <color name="day_night_text_secondary">#9E9E9E</color>
-  <color name="day_night_background_color">#121212</color>
-  <color name="day_night_surface_color">#1E1E1E</color>
-  <color name="day_night_surface_subtle">#262626</color>
-  <color name="day_night_card_stroke">#2E2E2E</color>
-  <color name="day_night_divider">#2A2A2A</color>
-  <color name="day_night_input_bg">#222222</color>
-  <color name="day_night_focus_bg">#2D2D2D</color>
-  <color name="day_night_focus_stroke">#3B82F6</color>
+  <color name="day_night_text_secondary">#9AA0A6</color>
+  <color name="day_night_background_color">#202124</color>
+  <color name="day_night_surface_color">#292A2D</color>
+  <color name="day_night_surface_subtle">#303134</color>
+  <color name="day_night_card_stroke">#3C4043</color>
+  <color name="day_night_divider">#3C4043</color>
+  <color name="day_night_input_bg">#292A2D</color>
+  <color name="day_night_focus_bg">#1A3860</color>
+  <color name="day_night_focus_stroke">#8AB4F8</color>
 
-  <color name="day_night_list_header_background_color">#222222</color>
-  <color name="day_night_list_focused_background_color">#2563EB</color>
-  <color name="day_night_list_divider_color">#2A2A2A</color>
+  <color name="day_night_list_header_background_color">#202124</color>
+  <color name="day_night_list_focused_background_color">#1A3860</color>
+  <color name="day_night_list_divider_color">#3C4043</color>
 
-  <color name="button_background">#242424</color>
-  <color name="button_background_focused">#2563EB</color>
-  <color name="button_background_pressed">#333333</color>
-  <color name="button_background_disabled">#1A1A1A</color>
-  <color name="button_corner">#303030</color>
+  <color name="button_background">#292A2D</color>
+  <color name="button_background_focused">#1A3860</color>
+  <color name="button_background_pressed">#35373B</color>
+  <color name="button_background_disabled">#202124</color>
+  <color name="button_corner">#3C4043</color>
 
   <color name="day_night_icon_color">#FFFFFF</color>
-  <color name="day_night_disabled_icon_color">#757575</color>
+  <color name="day_night_disabled_icon_color">#80868B</color>
 
-  <color name="badge_bg">#242424</color>
-  <color name="badge_stroke">#333333</color>
+  <color name="badge_bg">#292A2D</color>
+  <color name="badge_stroke">#3C4043</color>
 
-  <color name="progressbar_tint">#3B82F6</color>
+  <color name="progressbar_tint">#8AB4F8</color>
 
   <color name="web_tab_text_color">#FFFFFF</color>
-  <color name="web_tab_selected_text_color">#3B82F6</color>
+  <color name="web_tab_selected_text_color">#8AB4F8</color>
 
-  <color name="settings_tab_color">#222222</color>
-  <color name="settings_tab_color_focused">#2563EB</color>
-  <color name="settings_tab_color_activated">#2563EB</color>
-  <color name="settings_tab_activated_underline_color">#3B82F6</color>
+  <color name="settings_tab_color">#292A2D</color>
+  <color name="settings_tab_color_focused">#1A3860</color>
+  <color name="settings_tab_color_activated">#1A3860</color>
+  <color name="settings_tab_activated_underline_color">#8AB4F8</color>
+
+  <!-- Google Design System Theme Colors (Dark: #202124) -->
+  <color name="google_bg">#202124</color>
+  <color name="google_surface">#292A2D</color>
+  <color name="google_card_bg">#292A2D</color>
+  <color name="google_card_stroke">#3C4043</color>
+  <color name="google_divider">#3C4043</color>
+  <color name="google_text_primary">#FFFFFF</color>
+  <color name="google_text_secondary">#9AA0A6</color>
+  <color name="google_accent">#8AB4F8</color>
+  <color name="google_item_focused_bg">#1A3860</color>
+  <color name="google_item_focused_stroke">#8AB4F8</color>
+  <color name="google_circle_btn_bg">#303134</color>
+  <color name="google_circle_btn_focused">#1A3860</color>
 </resources>

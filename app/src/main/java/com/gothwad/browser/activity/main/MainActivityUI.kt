@@ -143,14 +143,14 @@ fun MainActivity.exitAppCompletely() {
 fun getThemeBackgroundColor(context: android.content.Context, theme: Config.Theme): Int {
     return when (theme) {
         Config.Theme.BLACK_AMOLED -> Color.BLACK
-        Config.Theme.BLACK_CHARCOAL -> Color.parseColor("#181818")
-        Config.Theme.BLACK_MIDNIGHT -> Color.parseColor("#0F172A")
+        Config.Theme.BLACK_CHARCOAL,
+        Config.Theme.BLACK_MIDNIGHT -> Color.parseColor("#202124")
         Config.Theme.WHITE_PURE -> Color.WHITE
         Config.Theme.WHITE_WARM -> Color.parseColor("#FAF8F5")
-        Config.Theme.WHITE_COOL -> Color.parseColor("#F1F5F9")
+        Config.Theme.WHITE_COOL -> Color.parseColor("#F1F3F4")
         Config.Theme.SYSTEM -> {
             val isNight = (context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES
-            if (isNight) Color.parseColor("#181818") else Color.parseColor("#F1F5F9")
+            if (isNight) Color.parseColor("#202124") else Color.parseColor("#F1F3F4")
         }
     }
 }

@@ -2,14 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <solid android:color="#1A3860" />
-            <stroke android:width="2dp" android:color="#8AB4F8" />
+            <solid android:color="@color/google_item_focused_bg" />
+            <stroke android:width="2dp" android:color="@color/google_item_focused_stroke" />
             <corners android:radius="12dp" />
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="#3C4043" />
+            <solid android:color="@color/google_divider" />
             <corners android:radius="12dp" />
         </shape>
     </item>

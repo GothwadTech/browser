@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_focused="true" android:color="#D3E3FD" />
-    <item android:state_pressed="true" android:color="#D3E3FD" />
-    <item android:color="#9AA0A6" />
+    <item android:state_focused="true" android:color="@color/google_text_secondary" />
+    <item android:state_pressed="true" android:color="@color/google_text_secondary" />
+    <item android:color="@color/google_text_secondary" />
 </selector>
 

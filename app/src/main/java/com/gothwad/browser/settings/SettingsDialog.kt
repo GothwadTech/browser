@@ -85,6 +85,9 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
 
         contentView = LayoutInflater.from(context).inflate(R.layout.dialog_settings, rootContainer, true)
 
+        val bg = androidx.core.content.ContextCompat.getColor(context, R.color.google_bg)
+        rootContainer.setBackgroundColor(bg)
+
         popupWindow = PopupWindow(
             rootContainer,
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -93,7 +96,7 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
         ).apply {
             isOutsideTouchable = false
             isFocusable = true
-            setBackgroundDrawable(ColorDrawable(Color.parseColor("#131314")))
+            setBackgroundDrawable(ColorDrawable(bg))
             elevation = 0f
             animationStyle = android.R.style.Animation_Dialog
             setOnDismissListener {

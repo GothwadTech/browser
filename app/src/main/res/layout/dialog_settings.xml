@@ -3,7 +3,7 @@
     android:id="@+id/flSettingsRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#131314">
+    android:background="@color/google_bg">
 
     <!-- ========================================================================= -->
     <!-- PAGE 1: CATEGORIES DIRECTORY (PURE CHROME SETTINGS STYLE - NO ROW ICONS)  -->
@@ -12,7 +12,7 @@
         android:id="@+id/llSettingsPageCategories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#131314"
+        android:background="@color/google_bg"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="#131314"
+            android:background="@color/google_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp"
@@ -37,7 +37,7 @@
                 android:padding="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_arrow_back_grey_900_24dp"
-                android:tint="#E3E3E3" />
+                android:tint="@color/google_text_primary" />
 
             <TextView
                 android:layout_width="0dp"
@@ -45,7 +45,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="@string/settings"
-                android:textColor="#E3E3E3"
+                android:textColor="@color/google_text_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -53,7 +53,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#282A2D" />
+            android:background="@color/google_divider" />
 
         <!-- Scrollable Categories in Google Bubble Style -->
         <ScrollView
@@ -61,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#131314"
+            android:background="@color/google_bg"
             android:fillViewport="true"
             android:scrollbars="vertical">
 
@@ -86,7 +86,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="8dp"
                     android:text="Basics"
-                    android:textColor="#8AB4F8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -139,7 +139,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 2. Display & UI Scale -->
                     <LinearLayout
@@ -181,7 +181,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 3. Web Page Zoom -->
                     <LinearLayout
@@ -223,7 +223,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 4. Themes & Appearance -->
                     <LinearLayout
@@ -265,7 +265,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 5. Home Page & Startup -->
                     <LinearLayout
@@ -313,7 +313,7 @@
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
                     android:text="Privacy &amp; Security"
-                    android:textColor="#8AB4F8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -365,7 +365,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 7. App Lock & PIN Security -->
                     <LinearLayout
@@ -407,7 +407,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 8. Cache & Storage -->
                     <LinearLayout
@@ -455,7 +455,7 @@
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
                     android:text="Browsing &amp; Engine"
-                    android:textColor="#8AB4F8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -507,7 +507,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 10. Web Engine & Rendering -->
                     <LinearLayout
@@ -549,7 +549,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 11. Media Playback & Video -->
                     <LinearLayout
@@ -591,7 +591,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 12. Quick Tools & Utilities -->
                     <LinearLayout
@@ -639,7 +639,7 @@
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
                     android:text="Controls &amp; Devices"
-                    android:textColor="#8AB4F8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -691,7 +691,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 14. Virtual Cursor & Physics -->
                     <LinearLayout
@@ -733,7 +733,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 15. Keyboard & Mouse -->
                     <LinearLayout
@@ -775,7 +775,7 @@
                         android:layout_height="1dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
-                        android:background="#282A2D" />
+                        android:background="@color/google_divider" />
 
                     <!-- 16. Keyboard Shortcuts -->
                     <LinearLayout
@@ -823,7 +823,7 @@
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
                     android:text="About"
-                    android:textColor="#8AB4F8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -882,7 +882,7 @@
         android:id="@+id/llSettingsPageDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#131314"
+        android:background="@color/google_bg"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -890,7 +890,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="64dp"
-            android:background="#131314"
+            android:background="@color/google_bg"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp"
@@ -907,7 +907,7 @@
                 android:padding="10dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_arrow_back_grey_900_24dp"
-                android:tint="#E3E3E3" />
+                android:tint="@color/google_text_primary" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -921,7 +921,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Setting"
-                    android:textColor="#E3E3E3"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -931,7 +931,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="Preferences"
-                    android:textColor="#8AB4F8"
+                    android:textColor="@color/google_accent"
                     android:textSize="11sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -940,14 +940,14 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#282A2D" />
+            android:background="@color/google_divider" />
 
         <!-- Detail Frame Container (Centered max width) -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#131314">
+            android:background="@color/google_bg">
 
             <FrameLayout
                 android:id="@+id/flTabsContent"
