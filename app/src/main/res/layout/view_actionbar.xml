@@ -7,20 +7,20 @@
   <RelativeLayout
       android:id="@+id/flUrl"
       android:layout_width="match_parent"
-      android:layout_height="38dp"
+      android:layout_height="35dp"
       android:layout_gravity="center_vertical"
       android:background="@drawable/chrome_omnibox_bg">
 
     <!-- Lock Icon / Search Engine Icon at start of search bar -->
     <ImageView
         android:id="@+id/ivLockIcon"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="6dp"
         android:background="@drawable/mic_btn_bg_selector"
-        android:padding="5dp"
+        android:padding="2dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_logo_google"
         android:focusable="true"
@@ -30,16 +30,16 @@
     <!-- Microphone Icon at the end of search bar (Rounded Shape) -->
     <ImageButton
         android:id="@+id/ibVoiceSearch"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="6dp"
         android:background="@drawable/mic_btn_bg_selector"
         android:contentDescription="@string/voice_search"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:padding="5dp"
+        android:padding="2dp"
         android:scaleType="fitCenter"
         android:tint="@color/day_night_icon_color"
         android:src="@drawable/ic_mic_none_grey_900_36dp" />
@@ -58,14 +58,14 @@
         android:imeOptions="actionSearch"
         android:importantForAutofill="no"
         android:inputType="textFilter|textNoSuggestions|textUri"
-        android:paddingStart="4dp"
+        android:paddingStart="6dp"
         android:paddingEnd="6dp"
         android:singleLine="true"
         android:maxLines="1"
         android:textColor="@color/day_night_text_color_contrast"
         android:textColorHint="@color/day_night_text_secondary"
         android:textCursorDrawable="@null"
-        android:textSize="13.5sp" />
+        android:textSize="13sp" />
   </RelativeLayout>
 </merge>
 

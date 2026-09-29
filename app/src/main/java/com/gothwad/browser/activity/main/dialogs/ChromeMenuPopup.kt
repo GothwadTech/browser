@@ -444,29 +444,51 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         val screenWidth = dm.widthPixels
         val screenHeight = dm.heightPixels
 
-        // Get bottom edge of header / action bar where search bar lives
+        val screenWidthDp = activity.resources.configuration.screenWidthDp
+        val screenHeightDp = activity.resources.configuration.screenHeightDp
+
         val headerLoc = IntArray(2)
         activity.vb.rlActionBar.getLocationInWindow(headerLoc)
         val headerBottomY = headerLoc[1] + activity.vb.rlActionBar.height
 
         val anchorLoc = IntArray(2)
         anchorView.getLocationInWindow(anchorLoc)
-        val anchorBottom = if (anchorLoc[1] > 0) anchorLoc[1] + anchorView.height else headerBottomY
-        val yPos = maxOf(headerBottomY, anchorBottom) + (2 * density).toInt()
 
-        val anchorWidth = if (anchorView.width > 0) anchorView.width else (38 * density).toInt()
+        // Space available below header in dp
+        val spaceBelowHeaderDp = (screenHeight - headerBottomY) / density
+
+        // If screen has plenty of vertical space (tablet or TV in landscape where height >= 750dp and spaceBelowHeaderDp >= 550dp),
+        // open below header. On mobile / phone where space is tight,
+        // open starting from top of header/screen so it covers the 3-dot button and extends down the full screen length for all options.
+        val isTabletWithAmpleHeight = screenWidthDp >= 600 && screenHeightDp >= 750 && spaceBelowHeaderDp >= 550 &&
+                activity.config.screenOrientation != Config.ORIENTATION_PORTRAIT
+
+        val yPos = if (isTabletWithAmpleHeight) {
+            headerBottomY + (2 * density).toInt()
+        } else {
+            // Mobile: Start from the very top of the header / status bar area
+            maxOf((4 * density).toInt(), headerLoc[1])
+        }
+
+        val anchorWidth = if (anchorView.width > 0) anchorView.width else (36 * density).toInt()
         val anchorRight = if (anchorLoc[0] > 0) anchorLoc[0] + anchorWidth else screenWidth - (6 * density).toInt()
 
         // Right-align popup to anchor view with edge padding
         val xPos = (anchorRight - popupWidth).coerceIn((8 * density).toInt(), (screenWidth - popupWidth - (8 * density).toInt()).coerceAtLeast(0))
 
-        val maxAvailableHeight = (screenHeight - yPos - (20 * density).toInt()).coerceAtLeast((150 * density).toInt())
+        val maxAvailableHeight = (screenHeight - yPos - (14 * density).toInt()).coerceAtLeast((150 * density).toInt())
 
         contentView.measure(
             View.MeasureSpec.makeMeasureSpec(popupWidth, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(maxAvailableHeight, View.MeasureSpec.AT_MOST)
         )
-        val popupHeight = contentView.measuredHeight.coerceAtMost(maxAvailableHeight)
+
+        // On mobile, extend down to the full screen length for all options
+        val popupHeight = if (!isTabletWithAmpleHeight) {
+            maxAvailableHeight.coerceAtMost(maxOf(contentView.measuredHeight, (screenHeight * 0.85f).toInt()))
+        } else {
+            contentView.measuredHeight.coerceAtMost(maxAvailableHeight)
+        }
 
         popupWindow.width = popupWidth
         popupWindow.height = popupHeight

@@ -364,19 +364,19 @@ fun MainActivity.updateToolbarLayoutForOrientation() {
 
     if (isPortrait) {
         // Mobile Portrait Chrome Layout:
-        // Hide individual action buttons to give search/address bar full space
+        // Hide individual navigation/action buttons to give search/address bar space
         vb.ibHistory.visibility = View.GONE
         vb.ibBack.visibility = View.GONE
         vb.ibForward.visibility = View.GONE
         vb.ibRefresh.visibility = View.GONE
-        vb.ibNewTab.visibility = View.GONE
         vb.ibDownloads.visibility = View.GONE
 
         // Hide desktop-style top tabs bar in portrait (tabs managed via flTabsSwitcher badge & 3-dot menu)
         vb.llTopTabBar.visibility = View.GONE
 
-        // Pure Chrome Mobile Header: Home, Search Bar, Tab count badge, 3-dot Menu
+        // Pure Chrome Mobile Header: Home, Search Bar, Plus (+ Add Tab), Tab count badge, 3-dot Menu
         vb.ibHome.visibility = View.VISIBLE
+        vb.ibNewTab.visibility = View.VISIBLE
         vb.flTabsSwitcher.visibility = View.VISIBLE
         vb.ibMenu.visibility = View.VISIBLE
     } else {

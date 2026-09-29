@@ -107,17 +107,19 @@
         <LinearLayout
             android:id="@+id/llMainToolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="52dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             android:clipChildren="false">
 
             <!-- 1. History -->
             <ImageButton
                 android:id="@+id/ibHistory"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="History"
                 android:focusable="true"
@@ -129,9 +131,9 @@
             <!-- 1. Home -->
             <ImageButton
                 android:id="@+id/ibHome"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="@string/navigate_home"
                 android:focusable="true"
@@ -143,9 +145,9 @@
             <!-- 2. Back -->
             <ImageButton
                 android:id="@+id/ibBack"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="@string/navigate_back"
                 android:focusable="true"
@@ -157,9 +159,9 @@
             <!-- 3. Forward -->
             <ImageButton
                 android:id="@+id/ibForward"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="@string/navigate_forward"
                 android:focusable="true"
@@ -171,9 +173,9 @@
             <!-- 4. Reload -->
             <ImageButton
                 android:id="@+id/ibRefresh"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="6dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="@string/refresh_page"
                 android:focusable="true"
@@ -186,16 +188,16 @@
             <com.gothwad.browser.activity.main.view.ActionBar
                 android:id="@+id/vActionBar"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="6dp" />
 
             <!-- 6. Plus Icon (New Tab) -->
             <ImageButton
                 android:id="@+id/ibNewTab"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="@string/open_new_tab"
                 android:focusable="true"
@@ -207,9 +209,9 @@
             <!-- 7. Tab Icon (Chrome-style Tab Switcher Rounded Square Badge with Tab Count) -->
             <FrameLayout
                 android:id="@+id/flTabsSwitcher"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="6dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="Tabs Overview"
                 android:focusable="true"
@@ -217,8 +219,8 @@
 
                 <TextView
                     android:id="@+id/tvTabCountBadge"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:background="@drawable/chrome_tab_count_badge"
                     android:gravity="center"
@@ -231,13 +233,13 @@
             <!-- 8. Download Icon -->
             <ImageButton
                 android:id="@+id/ibDownloads"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:layout_marginEnd="3dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="Downloads"
                 android:focusable="true"
-                android:padding="7dp"
+                android:padding="6dp"
                 android:scaleType="fitCenter"
                 android:tint="@color/header_button_icon_tint"
                 android:src="@drawable/ic_file_download_grey_900" />
@@ -245,8 +247,8 @@
             <!-- 9. More Options (Three-Dot Menu ⋮ - Mobile Chrome Style) -->
             <ImageButton
                 android:id="@+id/ibMenu"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:background="@drawable/button_bg_selector"
                 android:contentDescription="More options"
                 android:focusable="true"
