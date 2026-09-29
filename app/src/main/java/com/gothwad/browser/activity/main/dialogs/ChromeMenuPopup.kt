@@ -48,7 +48,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
 
     init {
         contentView = LayoutInflater.from(activity).inflate(R.layout.popup_chrome_menu, null)
-        popupWidth = (250 * activity.resources.displayMetrics.density).toInt()
+        popupWidth = (270 * activity.resources.displayMetrics.density).toInt()
         popupWindow = PopupWindow(
             contentView,
             popupWidth,
@@ -204,6 +204,13 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         }
         bindMenuItem(contentView.findViewById(R.id.btnMenuIncognito)) {
             activity.toggleIncognitoMode(andSwitchProcess = true)
+        }
+
+        // 2b. Add tab to new group (Tabs Overview / Switcher)
+        contentView.findViewById<View>(R.id.btnMenuAddTabGroup)?.let { btn ->
+            bindMenuItem(btn) {
+                activity.showTabsRowDialog()
+            }
         }
 
         // 3. History
@@ -434,12 +441,40 @@ class ChromeMenuPopup(private val activity: MainActivity) {
     }
 
     fun show(anchorView: View) {
-        val density = activity.resources.displayMetrics.density
-        val anchorWidth = if (anchorView.width > 0) anchorView.width else (38 * density).toInt()
-        val xOffset = anchorWidth - popupWidth
-        val yOffset = (2 * density).toInt()
+        val decorView = activity.window.decorView
+        val loc = IntArray(2)
+        anchorView.getLocationInWindow(loc)
+        if (loc[1] == 0) {
+            anchorView.getLocationOnScreen(loc)
+        }
+        val anchorX = loc[0]
+        val anchorY = loc[1]
+        val anchorHeight = anchorView.height
+        val anchorWidth = if (anchorView.width > 0) anchorView.width else (38 * activity.resources.displayMetrics.density).toInt()
+        val anchorBottom = anchorY + anchorHeight
 
-        popupWindow.showAsDropDown(anchorView, xOffset, yOffset)
+        val dm = activity.resources.displayMetrics
+        val density = dm.density
+        val screenHeight = if (decorView.height > 0) decorView.height else dm.heightPixels
+        val screenWidth = if (decorView.width > 0) decorView.width else dm.widthPixels
+
+        // Strictly open below the search bar / anchor view
+        val yPos = anchorBottom + (2 * density).toInt()
+        val maxAvailableHeight = (screenHeight - yPos - (16 * density).toInt()).coerceAtLeast((180 * density).toInt())
+
+        contentView.measure(
+            View.MeasureSpec.makeMeasureSpec(popupWidth, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(maxAvailableHeight, View.MeasureSpec.AT_MOST)
+        )
+        val popupHeight = contentView.measuredHeight.coerceAtMost(maxAvailableHeight)
+
+        popupWindow.width = popupWidth
+        popupWindow.height = popupHeight
+
+        // Right-align popup to anchor view
+        val xPos = (anchorX + anchorWidth - popupWidth).coerceIn(0, (screenWidth - popupWidth).coerceAtLeast(0))
+
+        popupWindow.showAtLocation(decorView, android.view.Gravity.TOP or android.view.Gravity.START, xPos, yPos)
 
         contentView.post {
             contentView.findViewById<View>(R.id.btnMenuNewTab)?.requestFocus()

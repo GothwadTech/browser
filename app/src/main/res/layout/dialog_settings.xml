@@ -6,7 +6,7 @@
     android:background="#131314">
 
     <!-- ========================================================================= -->
-    <!-- PAGE 1: CATEGORIES DIRECTORY (CHROME SETTINGS BUBBLE STYLE)               -->
+    <!-- PAGE 1: CATEGORIES DIRECTORY (CHROME MOBILE SETTINGS STYLE - NO ROW ICONS)-->
     <!-- ========================================================================= -->
     <LinearLayout
         android:id="@+id/llSettingsPageCategories"
@@ -118,21 +118,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_search_white"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -169,7 +160,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -186,21 +177,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_menu_new_tab"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -237,7 +219,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -254,21 +236,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_zoom_in_gray_24dp"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -305,7 +278,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -322,21 +295,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_general"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -373,7 +337,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -390,21 +354,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_home_grey_900_24dp"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -473,21 +428,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_privacy"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -524,7 +470,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -541,21 +487,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_lock_security"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -592,7 +529,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -609,21 +546,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_tools"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -692,21 +620,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_browser"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -743,7 +662,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -760,21 +679,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_menu_desktop"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -811,7 +721,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -828,21 +738,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_file_video"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -879,7 +780,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -896,21 +797,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_tools"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -979,21 +871,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_remote"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -1030,7 +913,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -1047,21 +930,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_move_remote"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -1098,7 +972,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -1115,21 +989,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_keyboard_mouse"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -1166,7 +1031,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginStart="56dp"
+                        android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:background="#282A2D" />
 
@@ -1183,21 +1048,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_shortcuts"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">
@@ -1266,21 +1122,12 @@
                         android:orientation="horizontal"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:contentDescription="@null"
-                            android:duplicateParentState="true"
-                            android:src="@drawable/ic_settings_about"
-                            android:tint="@color/selector_google_item_icon" />
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
                             android:layout_weight="1"
                             android:duplicateParentState="true"
                             android:orientation="vertical">

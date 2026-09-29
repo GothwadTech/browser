@@ -151,7 +151,7 @@ class Config(val prefs: SharedPreferences) {
         }
 
     var screenOrientation: Int
-        get() = prefs.getInt(SCREEN_ORIENTATION_KEY, ORIENTATION_LANDSCAPE)
+        get() = prefs.getInt(SCREEN_ORIENTATION_KEY, ORIENTATION_AUTO)
         set(value) {
             prefs.edit().putInt(SCREEN_ORIENTATION_KEY, value).apply()
         }

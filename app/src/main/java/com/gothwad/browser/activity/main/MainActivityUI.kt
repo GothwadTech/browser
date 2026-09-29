@@ -52,6 +52,7 @@ internal fun MainActivity.toggleMenu() {
 }
 
 internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
+    updateToolbarLayoutForOrientation()
     vb.ibMenu.setOnClickListener { showChromeMenu(vb.ibMenu) }
     vb.ibHistory.setOnClickListener { showHistoryActivity(vb.ibHistory) }
     vb.ibHome.setOnClickListener {
@@ -348,4 +349,42 @@ internal fun MainActivity.setupDragAndDropListener() {
     vb.flWebViewContainer.setOnDragListener(dragListener)
     vb.vNativeHome.setOnDragListener(dragListener)
 }
+
+fun MainActivity.updateToolbarLayoutForOrientation() {
+    val isPortrait = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
+            resources.configuration.screenWidthDp < 600
+
+    if (isPortrait) {
+        // Mobile Portrait Chrome Layout:
+        // Hide individual action buttons to give search/address bar full space
+        vb.ibHistory.visibility = View.GONE
+        vb.ibBack.visibility = View.GONE
+        vb.ibForward.visibility = View.GONE
+        vb.ibRefresh.visibility = View.GONE
+        vb.ibNewTab.visibility = View.GONE
+        vb.ibDownloads.visibility = View.GONE
+
+        // Hide desktop-style top tabs bar in portrait (tabs managed via flTabsSwitcher badge & 3-dot menu)
+        vb.llTopTabBar.visibility = View.GONE
+
+        // Pure Chrome Mobile Header: Home, Search Bar, Tab count badge, 3-dot Menu
+        vb.ibHome.visibility = View.VISIBLE
+        vb.flTabsSwitcher.visibility = View.VISIBLE
+        vb.ibMenu.visibility = View.VISIBLE
+    } else {
+        // Landscape / TV Mode:
+        vb.ibHistory.visibility = View.VISIBLE
+        vb.ibHome.visibility = View.VISIBLE
+        vb.ibBack.visibility = View.VISIBLE
+        vb.ibForward.visibility = View.VISIBLE
+        vb.ibRefresh.visibility = View.VISIBLE
+        vb.ibNewTab.visibility = View.VISIBLE
+        vb.flTabsSwitcher.visibility = View.VISIBLE
+        vb.ibDownloads.visibility = View.VISIBLE
+        vb.ibMenu.visibility = View.VISIBLE
+
+        vb.llTopTabBar.visibility = if (config.showTopTabBar.value) View.VISIBLE else View.GONE
+    }
+}
+
 

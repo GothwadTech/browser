@@ -385,6 +385,7 @@ internal fun MainActivity.applyScreenOrientationInternal() {
         Config.ORIENTATION_AUTO -> ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         else -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
     }
+    updateToolbarLayoutForOrientation()
 }
 
 internal fun MainActivity.toggleAdBlockForTab() {

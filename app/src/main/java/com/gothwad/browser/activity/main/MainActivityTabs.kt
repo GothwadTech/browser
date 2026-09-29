@@ -35,10 +35,14 @@ fun MainActivity.setupTopTabBar() {
     }
 
     val isTopTabBarEnabled = config.showTopTabBar.value
-    vb.llTopTabBar.visibility = if (isTopTabBarEnabled) View.VISIBLE else View.GONE
+    val isPortrait = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
+            resources.configuration.screenWidthDp < 600
+    vb.llTopTabBar.visibility = if (isTopTabBarEnabled && !isPortrait) View.VISIBLE else View.GONE
 
     config.showTopTabBar.subscribe(this) { isEnabled ->
-        vb.llTopTabBar.visibility = if (isEnabled) View.VISIBLE else View.GONE
+        val portrait = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
+                resources.configuration.screenWidthDp < 600
+        vb.llTopTabBar.visibility = if (isEnabled && !portrait) View.VISIBLE else View.GONE
     }
 }
 

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/llChromeMenuRoot"
-    android:layout_width="250dp"
+    android:layout_width="270dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/menu_popup_bg"
@@ -183,7 +183,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:nextFocusUp="@+id/btnMenuNewTab"
-                android:nextFocusDown="@+id/btnMenuHistory"
+                android:nextFocusDown="@+id/btnMenuAddTabGroup"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingStart="12dp"
@@ -203,6 +203,40 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="14dp"
                     android:text="New Incognito tab"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Add tab to new group -->
+            <LinearLayout
+                android:id="@+id/btnMenuAddTabGroup"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/menu_item_selector"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusUp="@+id/btnMenuIncognito"
+                android:nextFocusDown="@+id/btnMenuHistory"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_view_grid"
+                    android:tint="@color/day_night_icon_color"
+                    android:contentDescription="@null" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:text="Add tab to new group"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:textColor="@color/day_night_text_color_contrast"

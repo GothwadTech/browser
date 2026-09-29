@@ -400,4 +400,9 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         super.onAttachedToWindow()
         setupWindowCallbacks()
     }
+
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        updateToolbarLayoutForOrientation()
+    }
 }
