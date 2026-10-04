@@ -153,6 +153,41 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
         ibCloseSettings.setOnClickListener { dismiss() }
         btnSettingsBackToCategories.setOnClickListener { showCategoriesPage() }
 
+        contentView.findViewById<View>(R.id.ibSettingsHelp)?.setOnClickListener {
+            openAbout(itemCatAbout)
+        }
+
+        val etSearch = contentView.findViewById<android.widget.EditText>(R.id.etSearchSettings)
+        val allCategoryItems = listOf(
+            itemCatSearchEngine to "Search Engine",
+            itemCatDisplayScale to "Display Scale Orientation",
+            itemCatWebZoom to "Web Page Zoom Magnification",
+            itemCatThemes to "Themes Appearance Dark Mode",
+            itemCatMediaPlayback to "Media Autoplay Video",
+            itemCatHomePage to "Home Page Startup",
+            itemCatUserAgent to "User Agent Identity Desktop Mobile",
+            itemCatWebEngine to "Web Engine Rendering Chromium",
+            itemCatAdBlock to "AdBlock Ad Blocking Filter",
+            itemCatAppLock to "App Lock PIN Security",
+            itemCatCacheStorage to "Cache Storage Cookies Clear Data",
+            itemCatQuickTools to "Quick Tools Toolbar Shortcuts",
+            itemCatRemoteNav to "Remote Navigation D-pad Controls",
+            itemCatCursorPhysics to "Virtual Cursor Speed Acceleration",
+            itemCatKeyboardMouse to "Keyboard Mouse Hardware Input",
+            itemCatShortcuts to "Keyboard Shortcuts Custom Bindings",
+            itemCatAbout to "About Gothwad Browser Version Info"
+        )
+        etSearch?.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val q = s?.toString()?.trim() ?: ""
+                for ((view, text) in allCategoryItems) {
+                    view.visibility = if (q.isBlank() || text.contains(q, ignoreCase = true)) View.VISIBLE else View.GONE
+                }
+            }
+            override fun afterTextChanged(s: android.text.Editable?) {}
+        })
+
         bindCategoryItem(itemCatDisplayScale) {
             openMainCategory(itemCatDisplayScale, "Display & UI Scale", "Display & Layout", SettingsCategory.DISPLAY_SCALE)
         }

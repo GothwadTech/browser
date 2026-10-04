@@ -1,53 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/llSearchSuggestionRoot"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:background="@drawable/bg_search_suggestion_item"
-    android:clickable="true"
-    android:focusable="true"
-    android:paddingStart="16dp"
-    android:paddingEnd="8dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <!-- Left: History / Clock Icon -->
-    <ImageView
-        android:id="@+id/ivSuggestionIcon"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:src="@drawable/ic_history_grey_900_36dp"
-        android:tint="@color/day_night_text_secondary"
-        android:scaleType="fitCenter"
-        android:contentDescription="History query" />
-
-    <!-- Middle: Search Query or URL Text -->
-    <TextView
-        android:id="@+id/tvSuggestionText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textSize="15sp"
-        android:textColor="@color/day_night_text_color_contrast"
-        tools:text="plato apk" />
-
-    <!-- Right: Insert Arrow ↖ (fills query into search bar) -->
-    <ImageButton
-        android:id="@+id/ibInsertQuery"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_arrow_insert"
-        android:tint="@color/day_night_text_secondary"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:contentDescription="Insert into search bar"
+    <LinearLayout
+        android:id="@+id/llSearchSuggestionRoot"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_search_suggestion_item"
+        android:clickable="true"
         android:focusable="true"
-        android:clickable="true" />
+        android:paddingStart="16dp"
+        android:paddingEnd="12dp">
 
+        <!-- Left: History / Clock Icon -->
+        <ImageView
+            android:id="@+id/ivSuggestionIcon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_history_grey_900_36dp"
+            android:tint="#9AA0A6"
+            android:scaleType="fitCenter"
+            android:contentDescription="History query" />
+
+        <!-- Middle: Query text -->
+        <TextView
+            android:id="@+id/tvSuggestionText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="15sp"
+            android:textColor="#E3E3E3"
+            tools:text="mawara.ink -mawartoto" />
+
+        <!-- Right: Insert Arrow ↖ -->
+        <ImageButton
+            android:id="@+id/ibInsertQuery"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_insert"
+            android:tint="#9AA0A6"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:contentDescription="Insert into search bar"
+            android:focusable="true"
+            android:clickable="true" />
+    </LinearLayout>
+
+    <!-- Cut Line / Gap Separator between items ("bg kata hua huta h ak line ka gap sa") -->
+    <View
+        android:id="@+id/vSuggestionDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#131314" />
 </LinearLayout>

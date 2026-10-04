@@ -46,18 +46,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:duplicateParentState="true"
-                android:src="@drawable/ic_menu_new_tab"
-                android:tint="@color/selector_tv_setting_item_icon" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -103,17 +95,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_zoom_in_gray_24dp"
-                    android:tint="#38BDF8" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -274,17 +259,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_search_white"
-                    android:tint="#38BDF8" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -611,17 +589,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_settings_general"
-                    android:tint="#38BDF8" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:text="@string/theme"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
@@ -672,17 +643,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_file_video"
-                android:tint="#38BDF8" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/allow_autoplay_media"
@@ -709,17 +673,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_clock_cyan"
-                android:tint="#38BDF8" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/toggle_keep_screen_on"
@@ -767,17 +724,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_search_white"
-                    android:tint="#38BDF8" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:text="@string/choose_default_search_engine"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
@@ -859,17 +809,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_home_grey_900_24dp"
-                    android:tint="#38BDF8" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:text="@string/home_page"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
@@ -959,17 +902,10 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:duplicateParentState="true"
-                    android:src="@drawable/ic_gothwad_logo" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:layout_marginEnd="12dp"
                     android:layout_weight="1"
                     android:duplicateParentState="true"
@@ -994,14 +930,6 @@
                         android:textColor="#94A3B8"
                         android:textSize="11sp" />
                 </LinearLayout>
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:contentDescription="@null"
-                    android:duplicateParentState="true"
-                    android:src="@drawable/ic_keyboard_arrow_right_grey_900_18dp"
-                    android:tint="@color/selector_tv_side_item_chevron" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -1038,17 +966,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_menu_desktop"
-                    android:tint="#38BDF8" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:text="@string/choose_user_agent_string"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
@@ -1158,17 +1079,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_settings_tools"
-                android:tint="#38BDF8" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/web_engine_debug"
@@ -1219,18 +1133,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:duplicateParentState="true"
-                android:src="@drawable/ic_block_popups"
-                android:tint="@color/selector_tv_setting_item_icon" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
@@ -1354,18 +1260,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:duplicateParentState="true"
-                android:src="@drawable/ic_lock_security"
-                android:tint="@color/selector_tv_setting_item_icon" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
@@ -1443,17 +1341,10 @@
             android:orientation="horizontal"
             android:padding="16dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_delete"
-                android:tint="#EF4444" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -1500,17 +1391,10 @@
             android:orientation="horizontal"
             android:padding="16dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_clock_cyan"
-                android:tint="#38BDF8" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -1551,17 +1435,10 @@
             android:orientation="horizontal"
             android:padding="16dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_delete"
-                android:tint="#F59E0B" />
-
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -1793,17 +1670,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_settings_keyboard_mouse"
-                android:tint="#38BDF8" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/disable_virtual_keyboard"
@@ -1830,17 +1700,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/gamepad_circle_up_24px"
-                android:tint="#38BDF8" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/navigate_with_joystick_axes"
@@ -1888,17 +1751,10 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_move_remote"
-                android:tint="#38BDF8" />
-
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="0dp"
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/toggle_enable_virtual_cursor"
@@ -2143,17 +1999,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_settings_keyboard_mouse"
-                    android:tint="@color/selector_tv_setting_item_icon" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -2398,18 +2247,10 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="@null"
-                    android:duplicateParentState="true"
-                    android:src="@drawable/ic_settings_keyboard_mouse"
-                    android:tint="@color/selector_tv_setting_item_icon" />
-
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="0dp"
                     android:layout_weight="1"
                     android:duplicateParentState="true"
                     android:text="Disable On-Screen Virtual Keyboard"

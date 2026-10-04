@@ -72,6 +72,10 @@ class SearchOverlayView @JvmOverloads constructor(
             onVoiceSearchRequested?.invoke()
         }
 
+        vb.ibSearchLens.setOnClickListener {
+            onVoiceSearchRequested?.invoke()
+        }
+
         vb.etSearchInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                 actionId == EditorInfo.IME_ACTION_GO ||

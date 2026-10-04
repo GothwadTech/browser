@@ -5,114 +5,124 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/search_screen_bg"
+    android:background="#131314"
     android:clickable="true"
     android:focusable="true">
 
-    <!-- Top Header Bar -->
+    <!-- Top Unified Search Capsule Pill (Exactly Matching Screenshot: '+' inside pill on left, mic & lens on right) -->
     <LinearLayout
-        android:id="@+id/llSearchHeader"
+        android:id="@+id/llSearchUnifiedPill"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_search_pill_chrome"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="8dp"
         android:paddingEnd="12dp">
 
-        <!-- 1. Plus / Close / Back Icon -->
+        <!-- 1. Left: '+' Icon INSIDE the pill -->
         <ImageButton
             android:id="@+id/ibSearchBack"
             android:layout_width="38dp"
             android:layout_height="38dp"
-            android:background="@drawable/button_bg_selector"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_add"
-            android:tint="@color/header_button_icon_tint"
+            android:tint="#C4C7C5"
             android:scaleType="fitCenter"
-            android:padding="7dp"
+            android:padding="8dp"
             android:contentDescription="Close search"
             android:focusable="true"
             android:clickable="true" />
 
-        <!-- 2. Search Input Box (Pill / Capsule with #1B1B1B background) -->
-        <RelativeLayout
-            android:id="@+id/rlSearchPill"
+        <!-- 2. Middle: Search Input Text Box -->
+        <EditText
+            android:id="@+id/etSearchInput"
             android:layout_width="0dp"
-            android:layout_height="38dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/chrome_omnibox_bg">
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="Search Google or type URL"
+            android:imeOptions="actionSearch"
+            android:inputType="textFilter|textNoSuggestions|textUri"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="#E3E3E3"
+            android:textColorHint="#9AA0A6"
+            android:textCursorDrawable="@null"
+            android:textSize="15sp" />
 
-            <!-- Search input edit text -->
-            <EditText
-                android:id="@+id/etSearchInput"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_toStartOf="@+id/llSearchPillActions"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="@string/url_prompt"
-                android:imeOptions="actionSearch"
-                android:inputType="textFilter|textNoSuggestions|textUri"
-                android:paddingStart="14dp"
-                android:paddingEnd="4dp"
-                android:singleLine="true"
-                android:maxLines="1"
-                android:textColor="@color/day_night_text_color_contrast"
-                android:textColorHint="@color/day_night_text_secondary"
-                android:textCursorDrawable="@null"
-                android:textSize="14sp" />
+        <!-- 3. Right: Clear 'X', Voice Search (Mic), Google Lens -->
+        <LinearLayout
+            android:id="@+id/llSearchPillActions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/llSearchPillActions"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingEnd="4dp">
+            <!-- Clear 'X' -->
+            <ImageButton
+                android:id="@+id/ibSearchClear"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_close_grey_900_24dp"
+                android:tint="#9AA0A6"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="Clear query"
+                android:visibility="gone"
+                android:clickable="true"
+                android:focusable="true" />
 
-                <!-- Clear query button -->
-                <ImageButton
-                    android:id="@+id/ibSearchClear"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_close_grey_900_24dp"
-                    android:tint="@color/day_night_text_secondary"
-                    android:padding="6dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="Clear query"
-                    android:visibility="gone"
-                    android:clickable="true"
-                    android:focusable="true" />
+            <!-- Mic Icon -->
+            <ImageButton
+                android:id="@+id/ibSearchVoice"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_mic_none_grey_900_36dp"
+                android:tint="#C4C7C5"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="@string/voice_search"
+                android:clickable="true"
+                android:focusable="true" />
 
-                <!-- Voice search / Mic icon -->
-                <ImageButton
-                    android:id="@+id/ibSearchVoice"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/mic_btn_bg_selector"
-                    android:src="@drawable/ic_mic_none_grey_900_36dp"
-                    android:tint="@color/day_night_text_secondary"
-                    android:padding="5dp"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="@string/voice_search"
-                    android:clickable="true"
-                    android:focusable="true" />
-            </LinearLayout>
-        </RelativeLayout>
+            <!-- Google Lens / Camera Icon -->
+            <ImageButton
+                android:id="@+id/ibSearchLens"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="4dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_google_lens"
+                android:tint="#C4C7C5"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:contentDescription="Google Lens"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Bottom Search Results Card Container (Background #1B1B1B, Rounded Top & Bottom Corners) -->
+    <!-- Bottom Search Results Card Container (Background #1B1B1B, 24dp Rounded Corners, Cut Lines Between Items) -->
     <FrameLayout
         android:id="@+id/flSearchResultsContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/bg_search_results_card"
         android:elevation="2dp"
         android:clipToOutline="true">
@@ -121,10 +131,8 @@
             android:id="@+id/rvSearchSuggestions"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
+            android:scrollbars="none"
             android:overScrollMode="ifContentScrolls"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
             android:clipToPadding="false" />
 
         <!-- Empty state helper -->
@@ -134,9 +142,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Type to search or browse history"
-            android:textColor="@color/day_night_text_secondary"
+            android:textColor="#9AA0A6"
             android:textSize="14sp"
             android:visibility="gone" />
     </FrameLayout>
-
 </LinearLayout>

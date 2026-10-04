@@ -24,7 +24,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingStart="20dp"
-            android:paddingEnd="24dp">
+            android:paddingEnd="20dp">
 
             <ImageButton
                 android:id="@+id/ibCloseSettings"
@@ -48,7 +48,64 @@
                 android:textColor="@color/google_text_primary"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/ibSettingsHelp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/button_bg_selector"
+                android:clickable="true"
+                android:contentDescription="Help"
+                android:focusable="true"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_menu_help"
+                android:tint="@color/day_night_text_secondary" />
         </LinearLayout>
+
+        <!-- Search Settings Pill (Screenshot 4) -->
+        <FrameLayout
+            android:id="@+id/flSearchSettingsPill"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/chrome_omnibox_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_search"
+                    android:tint="@color/day_night_text_secondary"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@null" />
+
+                <EditText
+                    android:id="@+id/etSearchSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="12dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="Search settings"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:textColor="@color/day_night_text_color_contrast"
+                    android:textColorHint="@color/day_night_text_secondary"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"
