@@ -133,6 +133,8 @@ class ActionBar @JvmOverloads constructor(
             } else false
         }
 
+        vb.etUrl.setOnClickListener { enterExtendedAddressBarMode() }
+        vb.flUrl.setOnClickListener { enterExtendedAddressBarMode() }
         vb.etUrl.onFocusChangeListener = etUrlFocusChangeListener
         vb.etUrl.setOnKeyListener(etUrlKeyListener)
         vb.etUrl.setOnEditorActionListener { _, actionId, event ->
@@ -222,7 +224,6 @@ class ActionBar @JvmOverloads constructor(
     }
 
     private fun enterExtendedAddressBarMode() {
-        if (extendedAddressBarMode) return
         extendedAddressBarMode = true
         TransitionManager.beginDelayedTransition(this)
         callback?.onExtendedAddressBarMode()

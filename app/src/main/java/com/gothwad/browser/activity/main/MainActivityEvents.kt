@@ -95,6 +95,12 @@ internal fun MainActivity.hideSoftwareKeyboardIfVisible(): Boolean {
 
 internal fun MainActivity.handleBackNavigation() {
     Log.d("MainActivity", "handleBackNavigation")
+    if (vb.vSearchOverlay.isVisible) {
+        vb.vSearchOverlay.hide()
+        vb.vActionBar.dismissExtendedAddressBarMode()
+        return
+    }
+
     if (tabsModel.currentTab.value?.webEngine?.isVirtualCursorMode() == false) {
         tabsModel.currentTab.value?.webEngine?.setVirtualCursorMode(true)
         backNavigationEventsAdapter.gameControllersLongPressBForBackNavigation = false

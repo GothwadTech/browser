@@ -82,6 +82,18 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
     vb.ibRefresh.setOnClickListener { refresh() }
     vb.ibDownloads.setOnClickListener { showDownloads(vb.ibDownloads) }
 
+    vb.vSearchOverlay.onPerformSearch = { query ->
+        vb.vActionBar.dismissExtendedAddressBarMode()
+        search(query)
+    }
+    vb.vSearchOverlay.onVoiceSearchRequested = {
+        vb.vSearchOverlay.hide()
+        initiateVoiceSearch()
+    }
+    vb.vSearchOverlay.onCloseRequested = {
+        vb.vActionBar.dismissExtendedAddressBarMode()
+    }
+
     // Top Tab Bar Buttons
     vb.ibTopTabSearch.setOnClickListener {
         TabSearchSidebarPopup(

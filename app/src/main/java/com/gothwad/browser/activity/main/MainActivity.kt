@@ -246,8 +246,13 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     override fun showHistory() = showHistoryActivity()
     override fun showFavorites() = showFavoritesDialog()
     override fun showSettings() = showSettingsDialog()
-    override fun onExtendedAddressBarMode() { vb.llBottomPanel.visibility = View.INVISIBLE }
-    override fun onUrlInputDone() {}
+    override fun onExtendedAddressBarMode() {
+        val currentText = (vb.vActionBar.getUrlEditText() as? android.widget.EditText)?.text?.toString() ?: ""
+        vb.vSearchOverlay.show(currentText)
+    }
+    override fun onUrlInputDone() {
+        vb.vSearchOverlay.hide()
+    }
     override fun toggleHeader() = toggleMenu()
     override fun onSearchEngineIconClicked(anchorView: View) {
         SearchEngineMenuPopup(this).show(anchorView)

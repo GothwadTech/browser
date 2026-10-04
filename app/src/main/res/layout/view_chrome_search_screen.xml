@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llSearchScreenRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/search_screen_bg"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Top Header Bar -->
+    <LinearLayout
+        android:id="@+id/llSearchHeader"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="12dp">
+
+        <!-- 1. Plus / Close / Back Icon -->
+        <ImageButton
+            android:id="@+id/ibSearchBack"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:background="@drawable/button_bg_selector"
+            android:src="@drawable/ic_add"
+            android:tint="@color/header_button_icon_tint"
+            android:scaleType="fitCenter"
+            android:padding="7dp"
+            android:contentDescription="Close search"
+            android:focusable="true"
+            android:clickable="true" />
+
+        <!-- 2. Search Input Box (Pill / Capsule with #1B1B1B background) -->
+        <RelativeLayout
+            android:id="@+id/rlSearchPill"
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/chrome_omnibox_bg">
+
+            <!-- Search input edit text -->
+            <EditText
+                android:id="@+id/etSearchInput"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/llSearchPillActions"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/url_prompt"
+                android:imeOptions="actionSearch"
+                android:inputType="textFilter|textNoSuggestions|textUri"
+                android:paddingStart="14dp"
+                android:paddingEnd="4dp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:textColor="@color/day_night_text_color_contrast"
+                android:textColorHint="@color/day_night_text_secondary"
+                android:textCursorDrawable="@null"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/llSearchPillActions"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingEnd="4dp">
+
+                <!-- Clear query button -->
+                <ImageButton
+                    android:id="@+id/ibSearchClear"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_close_grey_900_24dp"
+                    android:tint="@color/day_night_text_secondary"
+                    android:padding="6dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="Clear query"
+                    android:visibility="gone"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Voice search / Mic icon -->
+                <ImageButton
+                    android:id="@+id/ibSearchVoice"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/mic_btn_bg_selector"
+                    android:src="@drawable/ic_mic_none_grey_900_36dp"
+                    android:tint="@color/day_night_text_secondary"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/voice_search"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!-- Bottom Search Results Card Container (Background #1B1B1B, Rounded Top & Bottom Corners) -->
+    <FrameLayout
+        android:id="@+id/flSearchResultsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_search_results_card"
+        android:elevation="2dp"
+        android:clipToOutline="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSearchSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:overScrollMode="ifContentScrolls"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:clipToPadding="false" />
+
+        <!-- Empty state helper -->
+        <TextView
+            android:id="@+id/tvEmptySuggestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Type to search or browse history"
+            android:textColor="@color/day_night_text_secondary"
+            android:textSize="14sp"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</LinearLayout>

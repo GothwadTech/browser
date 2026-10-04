@@ -345,4 +345,12 @@
         android:focusableInTouchMode="false"
         />
 
+    <!-- Full-screen Chrome Search Screen Overlay -->
+    <com.gothwad.browser.activity.main.view.search.SearchOverlayView
+        android:id="@+id/vSearchOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="18dp"
+        android:visibility="gone" />
+
 </RelativeLayout>
