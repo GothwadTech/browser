@@ -94,6 +94,20 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
         vb.vActionBar.dismissExtendedAddressBarMode()
     }
 
+    vb.vChromeTabSwitcher.onTabSelectListener = { tab ->
+        switchToTab(tab)
+    }
+    vb.vChromeTabSwitcher.onTabCloseListener = { tab ->
+        closeTab(tab)
+        vb.vChromeTabSwitcher.updateTabs(tabsModel.tabsStates, tabsModel.currentTab.value)
+    }
+    vb.vChromeTabSwitcher.onNewTabListener = {
+        openInNewTab(settingsModel.homePage, tabsModel.tabsStates.size, needToHideMenuOverlay = false, navigateImmediately = true)
+    }
+    vb.vChromeTabSwitcher.onCloseAllTabsListener = {
+        closeAllTabs()
+    }
+
     // Top Tab Bar Buttons
     vb.ibTopTabSearch.setOnClickListener {
         TabSearchSidebarPopup(

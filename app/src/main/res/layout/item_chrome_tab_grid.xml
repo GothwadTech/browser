@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llTabCardRoot"
+    android:layout_width="match_parent"
+    android:layout_height="210dp"
+    android:orientation="vertical"
+    android:background="@drawable/bg_tab_card_normal"
+    android:clickable="true"
+    android:focusable="true"
+    android:clipToOutline="true"
+    android:elevation="2dp">
+
+    <!-- Card Header -->
+    <LinearLayout
+        android:id="@+id/llTabCardHeader"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="6dp"
+        android:background="@drawable/bg_tab_header_normal">
+
+        <!-- Favicon -->
+        <ImageView
+            android:id="@+id/ivTabFavicon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_tab_default_favicon"
+            android:contentDescription="Favicon" />
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTabTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/day_night_text_color_contrast"
+            tools:text="Account home" />
+
+        <!-- Close 'X' Button -->
+        <ImageButton
+            android:id="@+id/btnTabClose"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_close_grey_900_24dp"
+            android:tint="@color/day_night_text_secondary"
+            android:scaleType="fitCenter"
+            android:padding="5dp"
+            android:contentDescription="Close tab"
+            android:focusable="true"
+            android:clickable="true" />
+    </LinearLayout>
+
+    <!-- Webpage Thumbnail Preview -->
+    <FrameLayout
+        android:id="@+id/flThumbnailContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/search_card_bg">
+
+        <ImageView
+            android:id="@+id/ivTabThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="Tab preview" />
+
+        <!-- Fallback Placeholder when thumbnail is null -->
+        <LinearLayout
+            android:id="@+id/llThumbnailPlaceholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/ivPlaceholderIcon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_tab_default_favicon"
+                android:tint="@color/day_night_text_secondary"
+                android:scaleType="fitCenter"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvPlaceholderDomain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textColor="@color/day_night_text_secondary"
+                android:textSize="12sp"
+                tools:text="google.com" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

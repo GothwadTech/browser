@@ -95,6 +95,11 @@ internal fun MainActivity.hideSoftwareKeyboardIfVisible(): Boolean {
 
 internal fun MainActivity.handleBackNavigation() {
     Log.d("MainActivity", "handleBackNavigation")
+    if (vb.vChromeTabSwitcher.isVisible) {
+        vb.vChromeTabSwitcher.hide()
+        return
+    }
+
     if (vb.vSearchOverlay.isVisible) {
         vb.vSearchOverlay.hide()
         vb.vActionBar.dismissExtendedAddressBarMode()

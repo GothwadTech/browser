@@ -353,4 +353,12 @@
         android:elevation="18dp"
         android:visibility="gone" />
 
+    <!-- Full-screen Chrome Tab Switcher (Tab Grid) Overlay -->
+    <com.gothwad.browser.activity.main.view.tabs.ChromeTabSwitcherOverlay
+        android:id="@+id/vChromeTabSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="19dp"
+        android:visibility="gone" />
+
 </RelativeLayout>

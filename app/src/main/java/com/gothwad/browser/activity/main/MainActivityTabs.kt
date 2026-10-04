@@ -2,6 +2,7 @@ package com.gothwad.browser.activity.main
 
 import android.content.Intent
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gothwad.browser.activity.main.dialogs.TabsSidebarPopup
 import com.gothwad.browser.browser.tabs.TabsRowDialog
@@ -61,27 +62,18 @@ fun MainActivity.refreshTopTabs() {
 }
 
 fun MainActivity.showTabsRowDialog() {
-    TabsSidebarPopup(
-        activity = this,
-        onTabSelected = { tab ->
-            switchToTab(tab)
-        },
-        onNewTabRequested = {
-            openInNewTab(settingsModel.homePage, tabsModel.tabsStates.size, needToHideMenuOverlay = false, navigateImmediately = true)
-        },
-        onCloseTabRequested = { tab ->
-            closeTab(tab)
-        },
-        onCloseAllTabsRequested = {
-            closeAllTabs()
-        }
-    ).show(vb.flTabsSwitcher)
+    val tabs = tabsModel.tabsStates
+    val activeTab = tabsModel.currentTab.value
+    vb.vChromeTabSwitcher.show(tabs, activeTab)
 }
 
 fun MainActivity.updateTabCountBadge() {
     val count = tabsModel.tabsStates.size
     vb.tvTabCountBadge.text = if (count > 0) count.toString() else "1"
     refreshTopTabs()
+    if (vb.vChromeTabSwitcher.isVisible) {
+        vb.vChromeTabSwitcher.updateTabs(tabsModel.tabsStates, tabsModel.currentTab.value)
+    }
 }
 
 fun MainActivity.closeAllTabs() {

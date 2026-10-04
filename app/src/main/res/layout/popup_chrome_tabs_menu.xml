@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llTabsMenuRoot"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/menu_popup_bg"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:elevation="16dp">
+
+    <!-- 1. New tab -->
+    <LinearLayout
+        android:id="@+id/btnTabsMenuNewTab"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@drawable/menu_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_add"
+            android:tint="@color/day_night_icon_color"
+            android:contentDescription="New tab" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="New tab"
+            android:textColor="@color/day_night_text_color_contrast"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 2. New Incognito tab -->
+    <LinearLayout
+        android:id="@+id/btnTabsMenuIncognito"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@drawable/menu_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_incognito"
+            android:tint="@color/day_night_icon_color"
+            android:contentDescription="New Incognito tab" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="New Incognito tab"
+            android:textColor="@color/day_night_text_color_contrast"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 3. New tab group -->
+    <LinearLayout
+        android:id="@+id/btnTabsMenuNewGroup"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@drawable/menu_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_view_grid"
+            android:tint="@color/day_night_icon_color"
+            android:contentDescription="New tab group" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="New tab group"
+            android:textColor="@color/day_night_text_color_contrast"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 4. Close all tabs -->
+    <LinearLayout
+        android:id="@+id/btnTabsMenuCloseAll"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@drawable/menu_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_close_grey_900_24dp"
+            android:tint="@color/day_night_icon_color"
+            android:contentDescription="Close all tabs" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Close all tabs"
+            android:textColor="@color/day_night_text_color_contrast"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 5. Select tabs -->
+    <LinearLayout
+        android:id="@+id/btnTabsMenuSelectTabs"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@drawable/menu_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_check_box_outline"
+            android:tint="@color/day_night_icon_color"
+            android:contentDescription="Select tabs" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Select tabs"
+            android:textColor="@color/day_night_text_color_contrast"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 6. Delete browsing data -->
+    <LinearLayout
+        android:id="@+id/btnTabsMenuDeleteBrowsingData"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@drawable/menu_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_delete"
+            android:tint="@color/day_night_icon_color"
+            android:contentDescription="Delete browsing data" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Delete browsing data"
+            android:textColor="@color/day_night_text_color_contrast"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <!-- 7. Settings -->
+    <LinearLayout
+        android:id="@+id/btnTabsMenuSettings"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@drawable/menu_item_selector"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_settings_grey_900_24dp"
+            android:tint="@color/day_night_icon_color"
+            android:contentDescription="Settings" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/settings"
+            android:textColor="@color/day_night_text_color_contrast"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>
