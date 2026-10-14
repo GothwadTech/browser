@@ -93,6 +93,11 @@ USED_COL=$(grep -rhoE '@color/[a-zA-Z0-9_]+|(android\.)?R\.color\.[a-zA-Z0-9_]+'
 missing_col=$(comm -23 <(printf '%s\n' "$USED_COL") <(printf '%s\n' "$COL_RES" | sort -u))
 report "no dangling colour references" "$missing_col"
 
+# CDATA inside a <string> is a hard aapt2 failure ("Can not extract resource from ParsedResource"),
+# so escaped entities are the only legal way to carry & or < in a resource.
+cdata=$(grep -rn 'CDATA' app/src/main/res/values* app/common/src/main/res/values* 2>/dev/null || true)
+report "no CDATA in resource values" "$cdata"
+
 # user-visible text must stay emoji-free (translatable, and readable on every TV font)
 emoji=$(grep -rnP '"[^"]*[\x{2600}-\x{27BF}]|"[^"]*\xf0\x9f' app/src/main/res/values/strings.xml 2>/dev/null || true)
 report "no emoji in user-visible strings" "$emoji"

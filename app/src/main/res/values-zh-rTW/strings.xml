@@ -76,7 +76,7 @@
     <string name="downloads">下載</string>
     <string name="downloads_notifications_description">下載狀態通知</string>
     <string name="main">主要</string>
-    <string name="version_and_updates"><![CDATA[版本 & 更新]]></string>
+    <string name="version_and_updates">版本 &amp; 更新</string>
     <string name="version_s">版本：%s</string>
     <string name="build_flavor_s">建構變體：%1$s · %2$s</string>
     <string name="support_the_author">支持作者</string>

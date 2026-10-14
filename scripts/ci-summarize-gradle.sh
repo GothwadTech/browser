@@ -16,9 +16,14 @@ out="${GITHUB_STEP_SUMMARY:-/dev/stdout}"
   if [[ ! -s "$log" ]]; then
     echo "_No Gradle output was captured (\`$log\` missing or empty) — the step failed before piping to it._"
   else
-    echo '**Compiler errors**'
+    echo '**Compiler errors (Kotlin)**'
     echo '```'
     grep -E '^e: ' "$log" | head -60 || true
+    echo '```'
+
+    echo '**Resource compiler errors (aapt2)**'
+    echo '```'
+    grep -E ' error: |error: failed' "$log" | head -40 || true
     echo '```'
 
     echo '**What went wrong**'
@@ -64,6 +69,7 @@ if [[ -s "$log" ]]; then
   digest=$(
     {
       grep -E '^e: ' "$log" | head -12
+      grep -E ' error: |^[[:space:]]*error:' "$log" | head -20
       awk '/^FAILURE: Build (failed|completion failed)/{p=1} p{print} /Get more help/{p=0}' "$log" | head -14
       grep -E '^> Task .*FAILED$' "$log" | head -6
     } | head -32

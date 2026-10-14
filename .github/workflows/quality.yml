@@ -53,7 +53,7 @@ jobs:
       - name: Unit tests (app + common)
         run: |
           set -o pipefail
-          ./gradlew :app:common:testDebugUnitTest testDebugUnitTest --no-daemon --stacktrace 2>&1 | tee gradle.log
+          ./gradlew :app:common:testDebugUnitTest testDebugUnitTest --no-daemon --continue --stacktrace 2>&1 | tee gradle.log
 
       # The raw log lives behind an endpoint a sandboxed runner often cannot reach, and a red X
       # with no message teaches nobody anything: put the useful lines in the job summary.
@@ -97,7 +97,7 @@ jobs:
       - name: Compile debug
         run: |
           set -o pipefail
-          ./gradlew :app:compileDebugKotlin :app:common:compileDebugKotlin --no-daemon --stacktrace 2>&1 | tee gradle.log
+          ./gradlew :app:compileDebugKotlin :app:common:compileDebugKotlin --no-daemon --continue --stacktrace 2>&1 | tee gradle.log
 
       - name: Publish the failure in the job summary
         if: failure()

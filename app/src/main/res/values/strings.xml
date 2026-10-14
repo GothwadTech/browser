@@ -103,7 +103,7 @@
     <string name="downloads">Downloads</string>
     <string name="downloads_notifications_description">Notifications regarding downloads statuses</string>
     <string name="main">Main</string>
-    <string name="version_and_updates"><![CDATA[Version & updates]]></string>
+    <string name="version_and_updates">Version &amp; updates</string>
     <string name="version_s">Version: %s</string>
     <string name="build_flavor_s">Build flavor: %1$s · %2$s</string>
     <string name="support_the_author">Support the author</string>

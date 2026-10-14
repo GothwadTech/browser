@@ -508,7 +508,7 @@ class Config(val prefs: SharedPreferences) {
             am.getMemoryInfo(info)
             val totalMb = if (info.totalMem > 0) info.totalMem / (1024L * 1024L) else 0L
             maxLiveTabsDefault = when {
-                info.lowRamDevice || totalMb in 1..1536 -> 3
+                info.isLowRamDevice || totalMb in 1..1536 -> 3
                 totalMb in 1537..2816 -> 4
                 totalMb > 2816 -> DEFAULT_MAX_LIVE_TABS
                 else -> DEFAULT_MAX_LIVE_TABS
