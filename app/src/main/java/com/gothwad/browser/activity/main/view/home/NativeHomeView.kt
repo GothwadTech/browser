@@ -17,9 +17,11 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
@@ -60,11 +62,6 @@ class NativeHomeView @JvmOverloads constructor(
     private var statsScope: CoroutineScope? = null
     private var statsJob: Job? = null
     private var tickCounter = 0L
-
-    companion object {
-        private const val DASHBOARD_TICK_MS = 1000L
-        private const val STORAGE_TICK_EVERY = 5L
-    }
 
     init {
         orientation = VERTICAL
@@ -306,7 +303,7 @@ class NativeHomeView @JvmOverloads constructor(
                         storagePercent = storage?.third ?: -1
                     )
                 }
-                if (!isShown || !::rvBookmarks.isInitialized) return@withContext
+                if (!isShown || !::rvBookmarks.isInitialized) return@launch
                 applyDashboardSnapshot(snapshot)
             }
         } catch (e: Throwable) {
@@ -961,6 +958,9 @@ class NativeHomeView @JvmOverloads constructor(
     }
 
     companion object {
+        private const val DASHBOARD_TICK_MS = 1000L
+        private const val STORAGE_TICK_EVERY = 5L
+
         private const val PREFS_NAME = "native_home_shortcuts_v11"
         private const val KEY_BOOKMARKS = "bookmarks_json"
 
