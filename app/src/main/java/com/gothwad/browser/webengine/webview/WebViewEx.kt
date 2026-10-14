@@ -110,6 +110,13 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
         return callback.onRenderProcessGone(view, didCrash)
     }
 
+    /**
+     * Per-tab desktop-mode state, pushed in by `WebViewWebEngine` (null = follow the global
+     * default). Everything that used to read `config.isDesktopMode()` here now reads this, so the
+     * zoom / UA of a backgrounded tab can no longer leak into the tab being displayed.
+     */
+    var desktopModeOverride: Boolean? = null
+
     init {
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
         overScrollMode = View.OVER_SCROLL_IF_CONTENT_SCROLLS
@@ -455,13 +462,6 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
             callback.onScrollChange(t, oldt, dy)
         }
     }
-
-    /**
-     * Per-tab desktop-mode state, pushed in by `WebViewWebEngine` (null = follow the global
-     * default). Everything that used to read `config.isDesktopMode()` here now reads this, so the
-     * zoom / UA of a backgrounded tab can no longer leak into the tab being displayed.
-     */
-    var desktopModeOverride: Boolean? = null
 
     fun isDesktopModeEnabled(): Boolean {
         return desktopModeOverride ?: config.isDesktopMode()
