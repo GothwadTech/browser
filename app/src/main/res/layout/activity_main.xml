@@ -274,14 +274,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rlActionBar"
-        android:layout_alignParentBottom="true" />
+        android:layout_above="@+id/llBottomPanel" />
 
     <com.gothwad.browser.activity.main.view.home.NativeHomeView
         android:id="@+id/vNativeHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rlActionBar"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/llBottomPanel"
         android:background="@color/top_bar_background"
         android:visibility="gone" />
 
@@ -290,6 +290,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rlActionBar"
+        android:layout_above="@+id/llBottomPanel"
         android:visibility="gone"
         android:scaleType="fitXY"
         tools:ignore="ContentDescription" />
@@ -302,6 +303,7 @@
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:layout_below="@+id/rlActionBar"
+        android:layout_above="@+id/llBottomPanel"
         android:layout_alignWithParentIfMissing="true"
         android:visibility="gone">
         <ImageView
@@ -317,12 +319,98 @@
             android:text="@string/open_a_new_tab_here" />
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Phone / compact-width Chrome bottom toolbar: Back · Home · Tabs · Menu.
+         Hidden on TV / tablet / landscape, where the top header carries all controls. -->
+    <LinearLayout
         android:id="@+id/llBottomPanel"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="56dp"
         android:layout_alignParentBottom="true"
-        android:visibility="gone" />
+        android:background="@color/top_bar_background"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/ibBottomBack"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_selector"
+            android:contentDescription="@string/navigate_back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back_grey_900_24dp"
+            android:tint="@color/header_button_icon_tint" />
+
+        <ImageButton
+            android:id="@+id/ibBottomHome"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_selector"
+            android:contentDescription="@string/navigate_home"
+            android:focusable="true"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_home_grey_900_24dp"
+            android:tint="@color/header_button_icon_tint" />
+
+        <ImageButton
+            android:id="@+id/ibBottomNewTab"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_selector"
+            android:contentDescription="@string/open_new_tab"
+            android:focusable="true"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_add"
+            android:tint="@color/header_button_icon_tint" />
+
+        <FrameLayout
+            android:id="@+id/flBottomTabsSwitcher"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_selector"
+            android:clickable="true"
+            android:contentDescription="@string/tabs_overview"
+            android:focusable="true">
+
+            <TextView
+                android:id="@+id/tvBottomTabCountBadge"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:background="@drawable/chrome_tab_count_badge"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/header_button_icon_tint"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <ImageButton
+            android:id="@+id/ibBottomMenu"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_bg_selector"
+            android:contentDescription="@string/menu_actions"
+            android:focusable="true"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_more_vert"
+            android:tint="@color/header_button_icon_tint" />
+    </LinearLayout>
     
     <com.gothwad.browser.activity.main.view.CursorMenuView
         android:id="@+id/vCursorMenu"

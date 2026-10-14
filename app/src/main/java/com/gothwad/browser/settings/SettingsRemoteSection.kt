@@ -155,7 +155,7 @@ object SettingsRemoteSection {
 
             val nameTv = TextView(context).apply {
                 text = dev.name
-                setTextColor(Color.WHITE)
+                setTextColor(ContextCompat.getColor(context, R.color.google_text_primary))
                 textSize = 14f
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
             }

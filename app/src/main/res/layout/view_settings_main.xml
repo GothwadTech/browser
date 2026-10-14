@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🖥️ Display &amp; UI Scaling"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -106,7 +106,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/ui_scale_title"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/ui_scale_desc"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/google_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -128,7 +128,7 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="3dp"
-                    android:textColor="#38BDF8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     tools:text="100%" />
@@ -220,7 +220,7 @@
                 android:background="@drawable/bg_tv_tab_pill"
                 android:focusable="true"
                 android:text="@string/apply_ui_scale"
-                android:textColor="#38BDF8"
+                android:textColor="@color/google_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -241,7 +241,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🔍 Web Page Zoom Controls"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -270,7 +270,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/web_page_zoom_title"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -279,7 +279,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/web_page_zoom_desc"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/google_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -292,7 +292,7 @@
                     android:paddingTop="3dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="3dp"
-                    android:textColor="#38BDF8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     tools:text="100%" />
@@ -569,7 +569,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🎨 Themes &amp; Appearance"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -594,7 +594,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:text="@string/theme"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -625,7 +625,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🎬 Media &amp; Playback"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -650,7 +650,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/allow_autoplay_media"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -680,7 +680,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/toggle_keep_screen_on"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -706,7 +706,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🔎 Search Engine Settings"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -729,7 +729,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:text="@string/choose_default_search_engine"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -755,7 +755,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/url"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="13sp" />
 
                 <EditText
@@ -771,7 +771,7 @@
                     android:inputType="textUri"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textColorHint="#64748B" />
             </LinearLayout>
         </LinearLayout>
@@ -792,7 +792,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🏠 Home Page &amp; Startup"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -814,7 +814,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:text="@string/home_page"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -840,7 +840,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/custom_home_page_url"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="13sp" />
 
                 <EditText
@@ -856,7 +856,7 @@
                     android:inputType="textUri"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textColorHint="#64748B" />
             </LinearLayout>
 
@@ -872,7 +872,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/home_page_links"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="13sp" />
 
                 <Spinner
@@ -927,7 +927,7 @@
                         android:layout_marginTop="2dp"
                         android:duplicateParentState="true"
                         android:text="Make Gothwad Browser your system default browser"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/google_text_secondary"
                         android:textSize="11sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -949,7 +949,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🌐 User Agent &amp; Identity"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -971,7 +971,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:text="@string/choose_user_agent_string"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -997,7 +997,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/user_agent_string"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="13sp" />
 
                 <EditText
@@ -1013,7 +1013,7 @@
                     android:inputType="textUri"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textColorHint="#64748B" />
             </LinearLayout>
         </LinearLayout>
@@ -1034,7 +1034,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="⚙️ Web Engine &amp; Rendering"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1052,7 +1052,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/web_browser_engine_temporary_setting"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -1063,6 +1063,37 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_tv_tab_pill"
                 android:dropDownWidth="300dp"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- Safe Browsing (Chrome parity, added in the 2026-10 audit pass) -->
+        <LinearLayout
+            android:id="@+id/llSafeBrowsing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="54dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/bg_tv_setting_item"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:text="@string/safe_browsing_title"
+                android:textColor="@color/google_text_primary"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/scSafeBrowsing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:focusable="true" />
         </LinearLayout>
 
@@ -1086,7 +1117,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/web_engine_debug"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -1112,7 +1143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🛡️ Ad &amp; Tracker Blocker"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1167,7 +1198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
                 android:text="Filter List URL (EasyList format):"
-                android:textColor="#94A3B8"
+                android:textColor="@color/google_text_secondary"
                 android:textSize="13sp" />
 
             <EditText
@@ -1182,7 +1213,7 @@
                 android:inputType="textUri"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textColorHint="#64748B"
                 android:textSize="13sp" />
 
@@ -1217,7 +1248,7 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     android:text="Update Now"
-                    android:textColor="#38BDF8"
+                    android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -1239,7 +1270,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🔒 App Security &amp; PIN Lock"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1296,7 +1327,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="No PIN set (Set 4-digit PIN to enable)"
-                android:textColor="#94A3B8"
+                android:textColor="@color/google_text_secondary"
                 android:textSize="13sp" />
 
             <Button
@@ -1308,7 +1339,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:text="Change PIN"
-                android:textColor="#38BDF8"
+                android:textColor="@color/google_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -1329,7 +1360,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🗑️ Cache &amp; Storage"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1353,7 +1384,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Clear Browser Cache &amp; Cookies"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -1362,7 +1393,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="Frees up internal TV storage and resets temporary web engine sessions."
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -1403,7 +1434,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Record Browsing History"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -1413,7 +1444,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="Automatically save visited websites to your local history. When turned off, history tracking is paused."
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -1447,7 +1478,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Clear Browsing History"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -1456,7 +1487,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="Delete all visited page records and search history from this device."
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -1490,7 +1521,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="⚡ Quick Tools &amp; Utilities"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1652,7 +1683,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🎮 Remote &amp; Joystick Navigation"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1677,7 +1708,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/disable_virtual_keyboard"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -1707,7 +1738,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/navigate_with_joystick_axes"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp" />
 
             <androidx.appcompat.widget.SwitchCompat
@@ -1733,7 +1764,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="🖱️ Virtual Cursor &amp; Physics"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1758,7 +1789,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:text="@string/toggle_enable_virtual_cursor"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -1782,7 +1813,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/cursor_style"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -1809,7 +1840,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cursor_size"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -1821,7 +1852,7 @@
                     android:paddingTop="2dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="2dp"
-                    android:textColor="#38BDF8"
+                    android:textColor="@color/google_accent"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="100%" />
@@ -1848,7 +1879,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cursor_max_speed"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -1860,7 +1891,7 @@
                     android:paddingTop="2dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="2dp"
-                    android:textColor="#38BDF8"
+                    android:textColor="@color/google_accent"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="100%" />
@@ -1887,7 +1918,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cursor_acceleration"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/google_text_primary"
                     android:textSize="14sp" />
 
                 <TextView
@@ -1899,7 +1930,7 @@
                     android:paddingTop="2dp"
                     android:paddingEnd="8dp"
                     android:paddingBottom="2dp"
-                    android:textColor="#38BDF8"
+                    android:textColor="@color/google_accent"
                     android:textSize="12sp"
                     android:textStyle="bold"
                     tools:text="100%" />
@@ -1930,7 +1961,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="⌨️ Keyboard &amp; Mouse Settings"
-            android:textColor="#38BDF8"
+            android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -1947,7 +1978,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="🔌 Connected Input Devices (Auto-Detect)"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/google_text_primary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -1958,7 +1989,7 @@
                 android:layout_marginTop="6dp"
                 android:lineSpacingExtra="4dp"
                 android:text="Scanning for USB / Bluetooth devices..."
-                android:textColor="#94A3B8"
+                android:textColor="@color/google_text_secondary"
                 android:textSize="13sp" />
 
             <LinearLayout
@@ -1978,7 +2009,7 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:text="🔄 Refresh Device List"
-                android:textColor="#38BDF8"
+                android:textColor="@color/google_accent"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -2010,7 +2041,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/hardware_mouse_pointer_title"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -2019,7 +2050,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="@string/hardware_mouse_pointer_desc"
-                        android:textColor="#94A3B8"
+                        android:textColor="@color/google_text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
 
@@ -2056,7 +2087,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Pointer Size (Min 30% to Max 300%):"
-                        android:textColor="#E2E8F0"
+                        android:textColor="@color/google_text_secondary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
@@ -2065,7 +2096,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="100% (Normal)"
-                        android:textColor="#38BDF8"
+                        android:textColor="@color/google_accent"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -2086,7 +2117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="Quick Size Presets:"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
 
                 <LinearLayout
@@ -2104,7 +2135,7 @@
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
                         android:text="30% Mini"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
                     <Button
@@ -2116,7 +2147,7 @@
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
                         android:text="60% Small"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
                     <Button
@@ -2128,7 +2159,7 @@
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
                         android:text="100% Default"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
                     <Button
@@ -2140,7 +2171,7 @@
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
                         android:text="150% Large"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
                     <Button
@@ -2151,7 +2182,7 @@
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
                         android:text="250% Huge"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
                 </LinearLayout>
 
@@ -2168,7 +2199,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/hardware_mouse_pointer_style"
-                        android:textColor="#E2E8F0"
+                        android:textColor="@color/google_text_secondary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
@@ -2200,7 +2231,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/hardware_mouse_preview"
-                            android:textColor="#F8FAFC"
+                            android:textColor="@color/google_text_primary"
                             android:textSize="13sp"
                             android:textStyle="bold" />
 
@@ -2209,7 +2240,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="Real-time rendered hardware cursor preview (scales smoothly from mini to huge)"
-                            android:textColor="#64748B"
+                            android:textColor="@color/google_text_secondary"
                             android:textSize="11sp" />
                     </LinearLayout>
 

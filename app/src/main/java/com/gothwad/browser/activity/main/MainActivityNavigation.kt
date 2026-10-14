@@ -108,6 +108,12 @@ internal fun MainActivity.updateBackForwardButtons(canGoBack: Boolean, canGoForw
     vb.ibBack.isFocusable = true
     vb.ibBack.alpha = if (canGoBack) 1.0f else 0.4f
 
+    // The phone layout owns its own Back button in the bottom toolbar - keep it in sync,
+    // otherwise it stays visually enabled on the home screen where there is nothing to go back to.
+    vb.ibBottomBack.isEnabled = true
+    vb.ibBottomBack.isFocusable = true
+    vb.ibBottomBack.alpha = if (canGoBack) 1.0f else 0.4f
+
     vb.ibForward.isEnabled = true
     vb.ibForward.isFocusable = true
     vb.ibForward.alpha = if (canGoForward) 1.0f else 0.4f
@@ -143,7 +149,7 @@ internal fun MainActivity.showHomeScreen() {
         canGoForward = !currentTab?.lastUrlBeforeHome.isNullOrEmpty()
     )
     showMenuOverlay()
-    vb.ibHome.requestFocus()
+    requestHeaderFocus()
 }
 
 internal fun MainActivity.switchToTab(newTab: WebTabState) {
@@ -159,7 +165,7 @@ internal fun MainActivity.switchToTab(newTab: WebTabState) {
             canGoForward = !newTab.lastUrlBeforeHome.isNullOrEmpty()
         )
         showMenuOverlay()
-        vb.ibHome.requestFocus()
+        requestHeaderFocus()
     } else {
         vb.vNativeHome.visibility = View.GONE
         vb.flWebViewContainer.visibility = View.VISIBLE
@@ -278,7 +284,7 @@ internal fun MainActivity.onWebViewUpdated(tab: WebTabState) {
         showMenuOverlay()
         val current = currentFocus
         if (current == null || (!isToolbarView(current) && !vb.vNativeHome.hasFocus())) {
-            vb.ibHome.post { vb.ibHome.requestFocus() }
+            vb.ibHome.post { requestHeaderFocus() }
         }
     } else {
         updateBackForwardButtons(

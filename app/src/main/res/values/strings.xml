@@ -287,4 +287,35 @@
     <string name="search_settings">Search Settings</string>
     <string name="menu_actions">Actions</string>
     <string name="connection_is_secure">Connection is secure</string>
+    <!-- ==== Added in the 2026-10 audit pass (phone Chrome UI, find-in-page, search overlay) ==== -->
+    <string name="tabs_overview">Tabs</string>
+    <string name="bottom_toolbar_new_tab">New tab</string>
+    <string name="bottom_toolbar_more_options">More options</string>
+    <string name="search_or_type_url">Search or type URL</string>
+    <string name="search_suggestions_empty">Type to search or pick from your recent pages</string>
+    <string name="close_search">Close search</string>
+    <string name="clear_query">Clear query</string>
+    <string name="voice_search_hint">Search by voice</string>
+    <string name="find_in_page">Find in page</string>
+    <string name="find_in_page_hint">Search on this page</string>
+    <string name="find_next">Next match</string>
+    <string name="find_previous">Previous match</string>
+    <string name="find_done">Done</string>
+    <string name="find_no_matches">No matches</string>
+    <string name="find_matches_of">Of</string>
+    <string name="translate_this_page">Translate this page</string>
+    <string name="translate_unsupported">Only http/https pages can be translated</string>
+    <string name="translate_failed">Could not open the translated page</string>
+    <string name="reading_mode_toggled_on">Simplified view enabled</string>
+    <string name="reading_mode_toggled_off">Simplified view disabled</string>
+    <string name="reading_mode_unavailable">Simplified view is not available on this page</string>
+    <string name="bookmark_added">Bookmark added: %1$s</string>
+    <string name="bookmark_already_exists">Already in bookmarks</string>
+    <string name="bookmark_no_page">No open page to bookmark</string>
+    <string name="shortcut_created">Shortcut added to the Home screen</string>
+    <string name="desktop_site_on">Desktop site enabled</string>
+    <string name="desktop_site_off">Mobile site enabled</string>
+    <string name="page_download_started">Saving this page\'s HTML\u2026</string>
+    <string name="safe_browsing_title">Safe Browsing protection</string>
+    <string name="safe_browsing_desc">Ask the WebView engine to check navigation and downloads against Google\'s Safe Browsing lists, like Chrome does. Disabling it is faster on very slow networks but unsafe.</string>
 </resources>

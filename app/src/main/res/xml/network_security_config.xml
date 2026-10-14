@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A browser must be able to open plain http:// sites, so cleartext stays allowed for web
+     content. Everything the app itself calls (update checks, ad-block filter lists) is pinned to
+     TLS so a network attacker cannot swap the filter list or the APK download URL. -->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">github.com</domain>
+        <domain includeSubdomains="true">objects.githubusercontent.com</domain>
+        <domain includeSubdomains="true">easylist.to</domain>
+        <domain includeSubdomains="true">gothwad.com</domain>
+    </domain-config>
+</network-security-config>

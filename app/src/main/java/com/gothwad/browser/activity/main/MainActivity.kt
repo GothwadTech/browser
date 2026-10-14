@@ -3,11 +3,9 @@ package com.gothwad.browser.activity.main
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -72,6 +70,8 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     internal lateinit var uiHandler: Handler
     internal var isFullscreen: Boolean = false
     internal lateinit var prefs: SharedPreferences
+    private val connectivityManager: ConnectivityManager?
+        get() = getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
     internal val config = AppContext.provideConfig()
     internal val voiceSearchHelper = VoiceSearchHelper(this, VOICE_SEARCH_REQUEST_CODE, MY_PERMISSIONS_REQUEST_VOICE_SEARCH_PERMISSIONS)
     internal var lastCommonRequestsCode = COMMON_REQUESTS_START_CODE
@@ -95,13 +95,19 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         vb.progressBarGeneric.visibility = View.GONE
     }
 
-    private val mConnectivityChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val activeNetwork = cm.activeNetworkInfo
-            val isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting
-            val tab = tabsModel.currentTab.value ?: return
-            tab.webEngine.setNetworkAvailable(isConnected)
+    /**
+     * `android.net.conn.CONNECTIVITY_CHANGE` is deprecated since API 28 and `activeNetworkInfo`
+     * since API 29; on many TV boxes and on Android 14+ the broadcast is delayed or not delivered
+     * at all, which left the WebView believing it was still offline (offline error pages, no
+     * retry after reconnecting). A NetworkCallback is the supported, push-based replacement and
+     * also costs less than a broadcast round-trip on low-end hardware.
+     */
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+
+    private val onNetworkStateChanged = {
+        val tab = tabsModel.currentTab.value
+        if (tab != null) {
+            tab.webEngine.setNetworkAvailable(com.gothwad.browser.utils.Utils.isNetworkConnected(this))
         }
     }
 
@@ -262,6 +268,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     }
 
     override fun onDestroy() {
+        unregisterNetworkCallback()
         voiceSearchHelper.destroy()
         if (::tabsModel.isInitialized) {
             tabsModel.onDetachActivity()
@@ -282,7 +289,14 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         if (::tabsModel.isInitialized) {
             tabsModel.onTrimMemory()
         }
-        if (level >= TRIM_MEMORY_RUNNING_LOW || level >= TRIM_MEMORY_MODERATE) {
+        // Only drop the icon cache when memory is genuinely tight. `level >= TRIM_MEMORY_RUNNING_LOW`
+        // also matched TRIM_MEMORY_UI_HIDDEN, so the whole pool was cleared on every backgrounding,
+        // making every tab re-fetch/decode its favicons on return (visible flicker + wasted CPU).
+        if (level == TRIM_MEMORY_RUNNING_CRITICAL ||
+            level == TRIM_MEMORY_COMPLETE ||
+            level == TRIM_MEMORY_MODERATE ||
+            level == TRIM_MEMORY_BACKGROUND
+        ) {
             FaviconsPool.clear()
         }
     }
@@ -354,13 +368,41 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         super.onResume()
         applySoftInputMode()
         HardwareMousePointerManager.applyToWindow(window)
-        val intentFilter = IntentFilter("android.net.conn.CONNECTIVITY_CHANGE")
-        registerReceiver(mConnectivityChangeReceiver, intentFilter)
+        registerNetworkCallback()
+        onNetworkStateChanged()
         tabsModel.currentTab.value?.webEngine?.onResume()
     }
 
+    private fun registerNetworkCallback() {
+        if (networkCallback != null) return
+        val cm = connectivityManager ?: return
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: android.net.Network) = onNetworkStateChanged()
+            override fun onLost(network: android.net.Network) = onNetworkStateChanged()
+            override fun onCapabilitiesChanged(
+                network: android.net.Network,
+                capabilities: android.net.NetworkCapabilities
+            ) = onNetworkStateChanged()
+        }
+        try {
+            cm.registerDefaultNetworkCallback(callback)
+            networkCallback = callback
+        } catch (e: Exception) {
+            Log.w(TAG, "Could not register default network callback", e)
+        }
+    }
+
+    private fun unregisterNetworkCallback() {
+        val callback = networkCallback ?: return
+        networkCallback = null
+        try {
+            connectivityManager?.unregisterNetworkCallback(callback)
+        } catch (e: Exception) {
+            Log.w(TAG, "Could not unregister default network callback", e)
+        }
+    }
+
     override fun onPause() {
-        unregisterReceiver(mConnectivityChangeReceiver)
         tabsModel.currentTab.value?.let { tab ->
             tab.webEngine.onPause()
             tab.onPause()
@@ -393,7 +435,13 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         super.attachBaseContext(newBase)
     }
 
-    fun focusDefaultNavigationElement() { vb.ibMenu.requestFocus() }
+    fun focusDefaultNavigationElement() {
+        if (isBottomToolbarVisible()) {
+            vb.ibBottomMenu.requestFocus()
+        } else {
+            vb.ibMenu.requestFocus()
+        }
+    }
     fun showHome() { showHomeScreen() }
     fun handleBack() { handleBackNavigation() }
     fun handleMenu() { showBrowserSidebar() }

@@ -76,6 +76,8 @@ class Config(val prefs: SharedPreferences) {
         const val KEEP_ALIVE_IN_BACKGROUND_KEY = "keep_alive_in_background"
         const val MAX_LIVE_TABS_KEY = "max_live_tabs"
         const val SAVE_HISTORY_KEY = "save_history"
+    const val TRANSLATE_TARGET_LANGUAGE_KEY = "translate_target_language"
+    const val SAFE_BROWSING_KEY = "safe_browsing_enabled"
         /**
          * Maximum number of tab WebViews kept fully live in memory simultaneously.
          * Default is 6: balanced for typical Android TV boxes (1.5GB - 3GB RAM) to allow
@@ -330,6 +332,23 @@ class Config(val prefs: SharedPreferences) {
         get() = getEffectiveZoom(isDesktopMode())
         set(value) {
             setEffectiveZoom(isDesktopMode(), value)
+        }
+
+    /** Target language code for "Translate this page" ("" = device language). */
+    var translateTargetLanguage: String
+        get() = prefs.getString(TRANSLATE_TARGET_LANGUAGE_KEY, "") ?: ""
+        set(value) {
+            prefs.edit().putString(TRANSLATE_TARGET_LANGUAGE_KEY, value).apply()
+        }
+
+    /**
+     * Chrome-like Safe Browsing checks for navigations and downloads. Enabled by default; it can
+     * be turned off for debugging or on very constrained devices where the extra lookups hurt.
+     */
+    var safeBrowsingEnabled: Boolean
+        get() = prefs.getBoolean(SAFE_BROWSING_KEY, true)
+        set(value) {
+            prefs.edit().putBoolean(SAFE_BROWSING_KEY, value).apply()
         }
 
     /** Whether to record visited URLs and searches into local history. */

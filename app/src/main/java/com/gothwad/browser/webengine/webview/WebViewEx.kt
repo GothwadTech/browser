@@ -132,11 +132,17 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
             allowContentAccess = true
             cacheMode = WebSettings.LOAD_DEFAULT
             setRenderPriority(WebSettings.RenderPriority.HIGH)
+            // Chrome keeps Safe Browsing on; it was previously pinned to `false` while the
+            // README advertised "securest browser". Now it follows a real setting (default on).
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                safeBrowsingEnabled = false
+                safeBrowsingEnabled = config.safeBrowsingEnabled
             }
+            // Offscreen pre-rasterization is only worth its memory on the tab the user is
+            // actually looking at. Keeping it on for every background tab cost an extra painted
+            // buffer per tab, which is exactly what 1-2 GB TV boxes cannot spare; it is toggled
+            // with attach/detach below.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                offscreenPreRaster = true
+                offscreenPreRaster = false
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
@@ -406,6 +412,26 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
         lastPointerY = event.y.toInt()
 
         return super.onTouchEvent(event)
+    }
+
+    /**
+     * Only the visible tab pre-rasters. `TabsModel` keeps several tab WebViews alive at once, so
+     * `offscreenPreRaster` used to allocate a paint buffer for each of them; on low-RAM TV boxes
+     * that extra memory was the difference between smooth tab switching and the renderer being
+     * killed.
+     */
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            settings.offscreenPreRaster = true
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            settings.offscreenPreRaster = false
+        }
+        super.onDetachedFromWindow()
     }
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {

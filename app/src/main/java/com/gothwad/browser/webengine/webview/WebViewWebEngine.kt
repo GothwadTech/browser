@@ -286,7 +286,18 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
             WebEngineFactory.registerProvider(WebEngineProvider("WebView", object : WebEngineProviderCallback {
                 override suspend fun initialize(context: Context, webViewContainer: CursorLayout) {}
                 override fun createWebEngine(tab: WebTabState): WebEngine = WebViewWebEngine(tab)
-                override suspend fun clearCache(ctx: Context) { WebView(ctx).clearCache(true) }
+                override suspend fun clearCache(ctx: Context) = withContext(Dispatchers.Main) {
+                    // The on-disk cache is shared per app, so a throwaway WebView is the only
+                    // documented way to clear it for every live tab. It must be destroyed
+                    // afterwards: previously each "Clear cache" leaked a whole renderer instance
+                    // (tens of MB), on exactly the low-RAM devices this setting exists for.
+                    val wv = WebView(ctx)
+                    try {
+                        wv.clearCache(true)
+                    } finally {
+                        wv.destroy()
+                    }
+                }
                 override fun onThemeSettingUpdated(value: Config.Theme) {}
                 override fun getWebEngineVersionString(): String {
                     val pkg = WebViewCompat.getCurrentWebViewPackage(AppContext.get())

@@ -29,26 +29,79 @@ import com.gothwad.browser.utils.Utils
 import com.gothwad.browser.utils.VoiceSearchHelper
 import com.gothwad.browser.webengine.WebEngineFactory
 
+/**
+ * True on hand-sized (phone) layouts, where the browser must look like stock Chrome for
+ * Android: an address pill on top and Back / Home / New tab / Tabs / Menu on the bottom bar.
+ * TV, and any layout that is not a real touchscreen phone, keeps the full top header because
+ * D-pad focus navigation needs those buttons visible at the top.
+ */
+fun MainActivity.isCompactChromeLayout(): Boolean {
+    if (!isVbInitialized) return false
+    if (Utils.isTV(this)) return false
+    val smallestWidth = resources.configuration.smallestScreenWidthDp
+    return smallestWidth in 1..599
+}
+
+/** Whether the Chrome-style bottom toolbar is currently the active navigation row. */
+fun MainActivity.isBottomToolbarVisible(): Boolean =
+    isCompactChromeLayout() && vb.llBottomPanel.visibility == View.VISIBLE
+
 internal fun MainActivity.showMenuOverlay() {
     if (isFullscreen) return
     vb.vActionBar.dismissExtendedAddressBarMode()
     vb.rlActionBar.visibility = View.VISIBLE
     vb.rlActionBar.translationY = 0f
+    if (isCompactChromeLayout()) {
+        vb.llBottomPanel.visibility = View.VISIBLE
+    }
 }
 
+@Suppress("UNUSED_PARAMETER")
 internal fun MainActivity.hideMenuOverlay(hideBottomButtons: Boolean = true) {
     if (isFullscreen) {
         vb.rlActionBar.visibility = View.GONE
+        vb.llBottomPanel.visibility = View.GONE
     } else {
         vb.rlActionBar.visibility = View.VISIBLE
         vb.rlActionBar.translationY = 0f
+        // Phone layout keeps its bottom toolbar persistent, exactly like stock Chrome does while
+        // the address bar is not being edited. Hiding it would strand a touch-only user with no
+        // way to get the header back (the header-recovery path is D-pad driven).
+        if (isCompactChromeLayout()) {
+            vb.llBottomPanel.visibility = View.VISIBLE
+        }
     }
 }
 
 internal fun MainActivity.toggleMenu() {
     if (isFullscreen) return
-    vb.rlActionBar.visibility = View.VISIBLE
-    vb.rlActionBar.translationY = 0f
+    if (isCompactChromeLayout()) {
+        // Nothing to collapse on a phone: the header holds the only address bar.
+        showMenuOverlay()
+        return
+    }
+    if (vb.rlActionBar.visibility == View.VISIBLE) {
+        // TV/tablet: collapse the header for a full-bleed page. UP from the page, or BACK,
+        // brings it back (see focusHeaderViewNearX() / handleBackNavigation()).
+        vb.rlActionBar.visibility = View.GONE
+        vb.llBottomPanel.visibility = View.GONE
+    } else {
+        showMenuOverlay()
+    }
+}
+
+/**
+ * Focus the first control that is actually visible in the current layout. Never focus a button
+ * that the compact/expanded layout switched off — a `requestFocus()` on a GONE view silently
+ * drops focus on the floor and the D-pad stops responding.
+ */
+fun MainActivity.requestHeaderFocus() {
+    val candidates = if (isBottomToolbarVisible()) {
+        listOf(vb.ibBottomHome, vb.ibBottomBack, vb.flBottomTabsSwitcher, vb.ibBottomMenu)
+    } else {
+        listOf(vb.ibHome, vb.ibHistory, vb.ibBack, vb.flTabsSwitcher, vb.ibMenu)
+    }
+    candidates.firstOrNull { it.isShown }?.requestFocus()
 }
 
 internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
@@ -81,6 +134,22 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
     }
     vb.ibRefresh.setOnClickListener { refresh() }
     vb.ibDownloads.setOnClickListener { showDownloads(vb.ibDownloads) }
+
+    // Chrome-style bottom toolbar (phone / compact-width layouts only)
+    vb.ibBottomBack.setOnClickListener { navigateBack() }
+    vb.ibBottomHome.setOnClickListener {
+        if (vb.vNativeHome.visibility == View.VISIBLE) {
+            vb.vNativeHome.scrollToTop()
+        } else {
+            showHomeScreen()
+        }
+    }
+    vb.ibBottomNewTab.setOnClickListener {
+        openInNewTab(settingsModel.homePage, tabsModel.tabsStates.size, needToHideMenuOverlay = false, navigateImmediately = true)
+    }
+    vb.flBottomTabsSwitcher.setOnClickListener { showTabsRowDialog() }
+    vb.tvBottomTabCountBadge.setOnClickListener { showTabsRowDialog() }
+    vb.ibBottomMenu.setOnClickListener { showChromeMenu(vb.ibBottomMenu) }
 
     vb.vSearchOverlay.onPerformSearch = { query ->
         vb.vActionBar.dismissExtendedAddressBarMode()
@@ -141,7 +210,8 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
         vb.ibTopTabSearch, vb.ibTopHideBars, vb.ibTopCloseApp,
         vb.ibTopNewTab,
         vb.ibHistory, vb.ibHome, vb.ibBack, vb.ibForward, vb.ibRefresh,
-        vb.ibNewTab, vb.flTabsSwitcher, vb.ibDownloads, vb.ibMenu
+        vb.ibNewTab, vb.flTabsSwitcher, vb.ibDownloads, vb.ibMenu,
+        vb.ibBottomBack, vb.ibBottomHome, vb.ibBottomNewTab, vb.flBottomTabsSwitcher, vb.ibBottomMenu
     ).forEach {
         it.isFocusable = true
         it.isFocusableInTouchMode = false
@@ -383,42 +453,35 @@ internal fun MainActivity.setupDragAndDropListener() {
 fun MainActivity.updateToolbarLayoutForOrientation() {
     if (!isVbInitialized) return
 
-    val isPortrait = config.screenOrientation == Config.ORIENTATION_PORTRAIT ||
-            (config.screenOrientation != Config.ORIENTATION_LANDSCAPE &&
-                    (resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
-                            resources.configuration.screenWidthDp < 600))
-
-    if (isPortrait) {
-        // Mobile Portrait Chrome Layout:
-        // Hide individual navigation/action buttons to give search/address bar space
+    if (isCompactChromeLayout()) {
+        // ---- Stock Chrome phone layout ----
+        // Top row: the address pill only (site-security / search-engine icon, text, mic).
+        // Bottom row: Back, Home, New tab, Tabs (count badge), Menu.
+        vb.llTopTabBar.visibility = View.GONE
         vb.ibHistory.visibility = View.GONE
+        vb.ibHome.visibility = View.GONE
         vb.ibBack.visibility = View.GONE
         vb.ibForward.visibility = View.GONE
         vb.ibRefresh.visibility = View.GONE
+        vb.ibNewTab.visibility = View.GONE
+        vb.flTabsSwitcher.visibility = View.GONE
         vb.ibDownloads.visibility = View.GONE
-
-        // Hide desktop-style top tabs bar in portrait (tabs managed via flTabsSwitcher badge & 3-dot menu)
-        vb.llTopTabBar.visibility = View.GONE
-
-        // Pure Chrome Mobile Header: Home, Search Bar, Plus (+ Add Tab), Tab count badge, 3-dot Menu
-        vb.ibHome.visibility = View.VISIBLE
-        vb.ibNewTab.visibility = View.VISIBLE
-        vb.flTabsSwitcher.visibility = View.VISIBLE
-        vb.ibMenu.visibility = View.VISIBLE
-    } else {
-        // Landscape / TV Mode:
-        vb.ibHistory.visibility = View.VISIBLE
-        vb.ibHome.visibility = View.VISIBLE
-        vb.ibBack.visibility = View.VISIBLE
-        vb.ibForward.visibility = View.VISIBLE
-        vb.ibRefresh.visibility = View.VISIBLE
-        vb.ibNewTab.visibility = View.VISIBLE
-        vb.flTabsSwitcher.visibility = View.VISIBLE
-        vb.ibDownloads.visibility = View.VISIBLE
-        vb.ibMenu.visibility = View.VISIBLE
-
-        vb.llTopTabBar.visibility = if (config.showTopTabBar.value) View.VISIBLE else View.GONE
+        vb.ibMenu.visibility = View.GONE
+        vb.llBottomPanel.visibility = View.VISIBLE
+        vb.rlActionBar.visibility = if (isFullscreen) View.GONE else View.VISIBLE
+        return
     }
+
+    // ---- TV / tablet layout: everything stays in the top header for D-pad focus ----
+    vb.llBottomPanel.visibility = View.GONE
+    vb.ibHistory.visibility = View.VISIBLE
+    vb.ibHome.visibility = View.VISIBLE
+    vb.ibBack.visibility = View.VISIBLE
+    vb.ibForward.visibility = View.VISIBLE
+    vb.ibRefresh.visibility = View.VISIBLE
+    vb.ibNewTab.visibility = View.VISIBLE
+    vb.flTabsSwitcher.visibility = View.VISIBLE
+    vb.ibDownloads.visibility = View.VISIBLE
+    vb.ibMenu.visibility = View.VISIBLE
+    vb.llTopTabBar.visibility = if (config.showTopTabBar.value) View.VISIBLE else View.GONE
 }
-
-

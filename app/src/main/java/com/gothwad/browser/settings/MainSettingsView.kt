@@ -31,6 +31,7 @@ class MainSettingsView @JvmOverloads constructor(
         SettingsGeneralSection.initDefaultBrowserUI(context, vb, onDismissDialog, activity)
         SettingsDisplaySection.initDisplayAndZoomSettingsUI(context, vb, config, onDismissDialog, activity)
         SettingsEngineSection.initWebBrowserEngineSettingsUI(context, vb, config, activity)
+        SettingsEngineSection.initSafeBrowsingUI(context, vb, config)
         SettingsEngineSection.initHomePageAndSearchEngineConfigUI(context, vb, config, settingsModel)
         SettingsEngineSection.initUAStringConfigUI(context, vb, config, settingsModel)
         SettingsEngineSection.initAdBlockConfigUI(context, vb, config, adblockModel, activity)

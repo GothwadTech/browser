@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#131314"
+    android:background="@color/day_night_background_color"
     android:clickable="true"
     android:focusable="true">
 
@@ -24,17 +24,17 @@
         android:paddingStart="8dp"
         android:paddingEnd="12dp">
 
-        <!-- 1. Left: '+' Icon INSIDE the pill -->
+        <!-- 1. Left: back arrow (closes the search screen, like stock Chrome) -->
         <ImageButton
             android:id="@+id/ibSearchBack"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_add"
-            android:tint="#C4C7C5"
+            android:src="@drawable/ic_arrow_back_grey_900_24dp"
+            android:tint="@color/day_night_icon_color"
             android:scaleType="fitCenter"
             android:padding="8dp"
-            android:contentDescription="Close search"
+            android:contentDescription="@string/close_search"
             android:focusable="true"
             android:clickable="true" />
 
@@ -48,7 +48,7 @@
             android:layout_marginEnd="6dp"
             android:background="@null"
             android:gravity="center_vertical"
-            android:hint="Search Google or type URL"
+            android:hint="@string/search_or_type_url"
             android:imeOptions="actionSearch"
             android:inputType="textFilter|textNoSuggestions|textUri"
             android:paddingStart="4dp"
@@ -97,20 +97,6 @@
                 android:clickable="true"
                 android:focusable="true" />
 
-            <!-- Google Lens / Camera Icon -->
-            <ImageButton
-                android:id="@+id/ibSearchLens"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="4dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_google_lens"
-                android:tint="#C4C7C5"
-                android:padding="7dp"
-                android:scaleType="fitCenter"
-                android:contentDescription="Google Lens"
-                android:clickable="true"
-                android:focusable="true" />
         </LinearLayout>
     </LinearLayout>
 
@@ -141,8 +127,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Type to search or browse history"
-            android:textColor="#9AA0A6"
+            android:text="@string/search_suggestions_empty"
+            android:textColor="@color/day_night_text_secondary"
             android:textSize="14sp"
             android:visibility="gone" />
     </FrameLayout>

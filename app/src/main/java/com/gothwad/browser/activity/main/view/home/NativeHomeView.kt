@@ -18,6 +18,12 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.recyclerview.widget.RecyclerView
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.main.MainActivity
@@ -47,8 +53,17 @@ class NativeHomeView @JvmOverloads constructor(
     private val tickerRunnable = object : Runnable {
         override fun run() {
             updateDashboardCardsLive()
-            tickerHandler.postDelayed(this, 1000L)
+            tickerHandler.postDelayed(this, DASHBOARD_TICK_MS)
         }
+    }
+
+    private var statsScope: CoroutineScope? = null
+    private var statsJob: Job? = null
+    private var tickCounter = 0L
+
+    companion object {
+        private const val DASHBOARD_TICK_MS = 1000L
+        private const val STORAGE_TICK_EVERY = 5L
     }
 
     init {
@@ -231,74 +246,128 @@ class NativeHomeView @JvmOverloads constructor(
 
     private fun startDashboardTicker() {
         tickerHandler.removeCallbacks(tickerRunnable)
-        tickerHandler.postDelayed(tickerRunnable, 1000L)
+        tickerHandler.postDelayed(tickerRunnable, DASHBOARD_TICK_MS)
     }
 
     private fun stopDashboardTicker() {
         tickerHandler.removeCallbacks(tickerRunnable)
+        statsJob?.cancel()
+        statsJob = null
     }
 
+    /**
+     * The stats cards used to read ActivityManager (an IPC), StatFs (a syscall) and TrafficStats
+     * once per second *on the UI thread*, which is precisely what makes a 1 GB TV box stutter
+     * while the home screen is up. Sampling now happens on a worker thread, storage only every
+     * 5th tick (it does not change per second), and a slow sample never stacks up behind the
+     * next tick.
+     */
     private fun updateDashboardCardsLive() {
         try {
             if (!::rvBookmarks.isInitialized || rvBookmarks.isComputingLayout) return
             if (bookmarksAdapter == null) return
             if (bookmarkItems.size < 6) return
             if (!bookmarkItems[0].isHeader || bookmarkItems[0].title != "Gothwad Browser") return
+            if (!isShown) return
+            val scope = statsScope ?: return
+            if (statsJob?.isActive == true) return
 
-            SystemMonitorHelper.updateNetworkSpeed()
-            val netInfo = SystemMonitorHelper.getNetworkInfo(context)
-            val ramStats = SystemMonitorHelper.getRamStats(context)
-            val storageStats = SystemMonitorHelper.getStorageStats()
+            tickCounter++
+            val sampleStorage = tickCounter % STORAGE_TICK_EVERY == 0L
 
-            val ramUsedStr = SystemMonitorHelper.formatBytes(ramStats.usedBytes)
-            val ramTotalStr = SystemMonitorHelper.formatBytes(ramStats.totalBytes)
-
-            val storageFreeStr = SystemMonitorHelper.formatBytes(storageStats.freeBytes)
-            val storageUsedStr = SystemMonitorHelper.formatBytes(storageStats.usedBytes)
-            val storageTotalStr = SystemMonitorHelper.formatBytes(storageStats.totalBytes)
-
-            // Pos 1: TIME
-            bookmarkItems[1] = bookmarkItems[1].copy(
-                title = SystemMonitorHelper.getFormattedTime(),
-                subtitleText = SystemMonitorHelper.getTimeSubtitle()
-            )
-            // Pos 2: CALENDAR
-            bookmarkItems[2] = bookmarkItems[2].copy(
-                title = SystemMonitorHelper.getFormattedDate(),
-                subtitleText = SystemMonitorHelper.getCalendarSubtitle()
-            )
-            // Pos 3: NETWORK
-            bookmarkItems[3] = bookmarkItems[3].copy(
-                title = netInfo.first,
-                subtitleText = netInfo.second
-            )
-            // Pos 4: RAM
-            bookmarkItems[4] = bookmarkItems[4].copy(
-                title = "RAM: $ramUsedStr / $ramTotalStr (${ramStats.usedPercent}%)",
-                subtitleText = "⚡ Click to Boost RAM"
-            )
-            // Pos 5: STORAGE
-            bookmarkItems[5] = bookmarkItems[5].copy(
-                title = "Disk: $storageFreeStr Free",
-                subtitleText = "Used: $storageUsedStr / $storageTotalStr (${storageStats.usedPercent}%)"
-            )
-
-            if (!rvBookmarks.isComputingLayout) {
-                bookmarksAdapter?.notifyItemRangeChanged(1, 5, "STATS_PAYLOAD")
+            statsJob = scope.launch {
+                val snapshot = withContext(Dispatchers.Default) {
+                    SystemMonitorHelper.updateNetworkSpeed()
+                    val net = SystemMonitorHelper.getNetworkInfo(context)
+                    val ram = SystemMonitorHelper.getRamStats(context)
+                    val storage = if (sampleStorage) {
+                        val stats = SystemMonitorHelper.getStorageStats()
+                        Triple(
+                            SystemMonitorHelper.formatBytes(stats.freeBytes),
+                            SystemMonitorHelper.formatBytes(stats.usedBytes),
+                            stats.usedPercent
+                        )
+                    } else null
+                    DashboardSnapshot(
+                        timeTitle = SystemMonitorHelper.getFormattedTime(),
+                        timeSubtitle = SystemMonitorHelper.getTimeSubtitle(),
+                        dateTitle = SystemMonitorHelper.getFormattedDate(),
+                        dateSubtitle = SystemMonitorHelper.getCalendarSubtitle(),
+                        networkTitle = net.first,
+                        networkSubtitle = net.second,
+                        ramTitle = "RAM: ${SystemMonitorHelper.formatBytes(ram.usedBytes)} / " +
+                                "${SystemMonitorHelper.formatBytes(ram.totalBytes)} (${ram.usedPercent}%)",
+                        ramPercent = ram.usedPercent,
+                        storageFree = storage?.first ?: "",
+                        storageUsed = storage?.second ?: "",
+                        storagePercent = storage?.third ?: -1
+                    )
+                }
+                if (!isShown || !::rvBookmarks.isInitialized) return@withContext
+                applyDashboardSnapshot(snapshot)
             }
         } catch (e: Throwable) {
             // Ignore any transient update errors
         }
     }
 
+    private fun applyDashboardSnapshot(snapshot: DashboardSnapshot) {
+        if (bookmarkItems.size < 6) return
+        // Pos 1: TIME, 2: CALENDAR, 3: NETWORK, 4: RAM, 5: STORAGE
+        bookmarkItems[1] = bookmarkItems[1].copy(
+            title = snapshot.timeTitle,
+            subtitleText = snapshot.timeSubtitle
+        )
+        bookmarkItems[2] = bookmarkItems[2].copy(
+            title = snapshot.dateTitle,
+            subtitleText = snapshot.dateSubtitle
+        )
+        bookmarkItems[3] = bookmarkItems[3].copy(
+            title = snapshot.networkTitle,
+            subtitleText = snapshot.networkSubtitle
+        )
+        bookmarkItems[4] = bookmarkItems[4].copy(
+            title = snapshot.ramTitle,
+            subtitleText = "Tap for memory & storage details"
+        )
+        if (snapshot.storageFree.isNotEmpty()) {
+            bookmarkItems[5] = bookmarkItems[5].copy(
+                title = "Disk: ${snapshot.storageFree} Free",
+                subtitleText = "Used: ${snapshot.storageUsed} (${snapshot.storagePercent}%)"
+            )
+        }
+        if (!rvBookmarks.isComputingLayout) {
+            bookmarksAdapter?.notifyItemRangeChanged(1, 5, "STATS_PAYLOAD")
+        }
+    }
+
+    private data class DashboardSnapshot(
+        val timeTitle: String,
+        val timeSubtitle: String,
+        val dateTitle: String,
+        val dateSubtitle: String,
+        val networkTitle: String,
+        val networkSubtitle: String,
+        val ramTitle: String,
+        val ramPercent: Int,
+        val storageFree: String,
+        val storageUsed: String,
+        val storagePercent: Int
+    )
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        if (statsScope == null) {
+            statsScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+        }
         startDashboardTicker()
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         stopDashboardTicker()
+        statsScope?.cancel()
+        statsScope = null
     }
 
     override fun onWindowVisibilityChanged(visibility: Int) {
