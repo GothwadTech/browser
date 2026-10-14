@@ -114,8 +114,20 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
      * Per-tab desktop-mode state, pushed in by `WebViewWebEngine` (null = follow the global
      * default). Everything that used to read `config.isDesktopMode()` here now reads this, so the
      * zoom / UA of a backgrounded tab can no longer leak into the tab being displayed.
+     *
+     * Declared above `init {}` on purpose: the init block reads it while computing the effective
+     * user agent, and Kotlin runs property initializers in declaration order. Assigning it applies
+     * the mode, which is why there is no separate `setDesktopModeOverride()` function — a function
+     * with that name clashes with the JVM setter this property generates.
      */
     var desktopModeOverride: Boolean? = null
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            applyDesktopMode()
+        }
 
     init {
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
@@ -465,14 +477,6 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
 
     fun isDesktopModeEnabled(): Boolean {
         return desktopModeOverride ?: config.isDesktopMode()
-    }
-
-    fun setDesktopModeOverride(enabled: Boolean?) {
-        if (desktopModeOverride == enabled) {
-            return
-        }
-        desktopModeOverride = enabled
-        applyDesktopMode()
     }
 
     fun applyDesktopMode() {

@@ -101,11 +101,13 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
         pageZoomController?.zoomBy(zoomBy) ?: webView?.zoomBy(zoomBy)
     }
 
-    private var desktopModeOverride: Boolean? = null
+    // Named so it does not collide with the JVM setter of a `desktopModeOverride` property; the
+    // override is cached here because the tab can be told before its WebView exists.
+    private var pendingDesktopModeOverride: Boolean? = null
 
     override fun setDesktopModeOverride(enabled: Boolean?) {
-        desktopModeOverride = enabled
-        webView?.setDesktopModeOverride(enabled)
+        pendingDesktopModeOverride = enabled
+        webView?.desktopModeOverride = enabled
     }
 
     override fun setPageZoom(percent: Int) {
@@ -121,7 +123,7 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
         if (webView == null) {
             val wv = WebViewEx(activityContext, webViewCallback, jsInterface)
             val cfg = AppContext.provideConfig()
-            val tabDesktop = desktopModeOverride ?: tab.desktopMode ?: cfg.desktopMode.value
+            val tabDesktop = pendingDesktopModeOverride ?: tab.desktopMode ?: cfg.desktopMode.value
             wv.desktopModeOverride = tabDesktop
             val effectiveUa = userAgentString ?: cfg.userAgentString.value
                 ?: if (tabDesktop) Config.DESKTOP_UA else null
