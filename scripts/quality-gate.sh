@@ -97,6 +97,28 @@ report "no dangling colour references" "$missing_col"
 emoji=$(grep -rnP '"[^"]*[\x{2600}-\x{27BF}]|"[^"]*\xf0\x9f' app/src/main/res/values/strings.xml 2>/dev/null || true)
 report "no emoji in user-visible strings" "$emoji"
 
+# CI must not be the thing that silently stops running: a workflow that fails to parse shows up as
+# a red X with no jobs and no log, which everyone learns to ignore.
+if command -v python3 >/dev/null 2>&1 && python3 -c 'import yaml' >/dev/null 2>&1; then
+  yml=$(python3 - <<'EOF'
+import glob, io, yaml
+for f in sorted(glob.glob(".github/workflows/*.yml")):
+    try:
+        d = yaml.safe_load(io.open(f, encoding="utf-8"))
+        jobs = (d or {}).get("jobs") or {}
+        assert jobs, "no jobs"
+        for name, job in jobs.items():
+            assert "runs-on" in job and job.get("steps"), f"job {name} malformed"
+            for step in job["steps"]:
+                assert isinstance(step, dict), f"job {name}: step is not a mapping: {step!r}"
+                assert bool(step.get("uses")) != bool(step.get("run")), f"job {name}/{step.get('name')}: needs exactly one of uses/run"
+    except Exception as e:
+        print(f"{f}: {type(e).__name__}: {e}")
+EOF
+)
+  report "workflow files parse and define jobs" "$yml"
+fi
+
 echo
 if [[ $fail -ne 0 ]]; then
   cat <<'EOF'
