@@ -118,7 +118,6 @@ class NativeHomeView @JvmOverloads constructor(
 
         val storageFreeStr = SystemMonitorHelper.formatBytes(storageStats.freeBytes)
         val storageUsedStr = SystemMonitorHelper.formatBytes(storageStats.usedBytes)
-        val storageTotalStr = SystemMonitorHelper.formatBytes(storageStats.totalBytes)
 
         return listOf(
             HomeShortcutItem(
@@ -143,15 +142,15 @@ class NativeHomeView @JvmOverloads constructor(
                 dashboardType = "NETWORK"
             ),
             HomeShortcutItem(
-                title = "RAM: $ramUsedStr / $ramTotalStr (${ramStats.usedPercent}%)",
-                subtitleText = "⚡ Click to Boost RAM",
+                title = context.getString(R.string.home_mem_card_title, ramUsedStr, ramTotalStr, ramStats.usedPercent),
+                subtitleText = context.getString(R.string.home_mem_card_subtitle),
                 iconDrawableRes = R.drawable.ic_stat_ram,
                 isDashboardCard = true,
                 dashboardType = "RAM"
             ),
             HomeShortcutItem(
-                title = "Disk: $storageFreeStr Free",
-                subtitleText = "Used: $storageUsedStr / $storageTotalStr (${storageStats.usedPercent}%)",
+                title = context.getString(R.string.home_disk_card_title, storageFreeStr),
+                subtitleText = context.getString(R.string.home_disk_card_subtitle, storageUsedStr, storageStats.usedPercent),
                 iconDrawableRes = R.drawable.ic_stat_storage,
                 isDashboardCard = true,
                 dashboardType = "STORAGE"
@@ -295,8 +294,12 @@ class NativeHomeView @JvmOverloads constructor(
                         dateSubtitle = SystemMonitorHelper.getCalendarSubtitle(),
                         networkTitle = net.first,
                         networkSubtitle = net.second,
-                        ramTitle = "RAM: ${SystemMonitorHelper.formatBytes(ram.usedBytes)} / " +
-                                "${SystemMonitorHelper.formatBytes(ram.totalBytes)} (${ram.usedPercent}%)",
+                        ramTitle = context.getString(
+                            R.string.home_mem_card_title,
+                            SystemMonitorHelper.formatBytes(ram.usedBytes),
+                            SystemMonitorHelper.formatBytes(ram.totalBytes),
+                            ram.usedPercent
+                        ),
                         ramPercent = ram.usedPercent,
                         storageFree = storage?.first ?: "",
                         storageUsed = storage?.second ?: "",
@@ -328,12 +331,12 @@ class NativeHomeView @JvmOverloads constructor(
         )
         bookmarkItems[4] = bookmarkItems[4].copy(
             title = snapshot.ramTitle,
-            subtitleText = "Tap for memory & storage details"
+            subtitleText = context.getString(R.string.home_mem_card_subtitle)
         )
         if (snapshot.storageFree.isNotEmpty()) {
             bookmarkItems[5] = bookmarkItems[5].copy(
-                title = "Disk: ${snapshot.storageFree} Free",
-                subtitleText = "Used: ${snapshot.storageUsed} (${snapshot.storagePercent}%)"
+                title = context.getString(R.string.home_disk_card_title, snapshot.storageFree),
+                subtitleText = context.getString(R.string.home_disk_card_subtitle, snapshot.storageUsed, snapshot.storagePercent)
             )
         }
         if (!rvBookmarks.isComputingLayout) {
@@ -384,7 +387,7 @@ class NativeHomeView @JvmOverloads constructor(
             "TIME" -> showTimeInfoDialog()
             "CALENDAR" -> showCalendarInfoDialog()
             "NETWORK" -> showNetworkInfoDialog()
-            "RAM" -> showRamBoostDialog()
+            "RAM" -> showMemoryPanel()
             "STORAGE" -> showStorageInfoDialog()
         }
     }
@@ -431,26 +434,97 @@ class NativeHomeView @JvmOverloads constructor(
             .show()
     }
 
-    private fun showRamBoostDialog() {
-        val freed = SystemMonitorHelper.performRamBoost(context)
-        val ramStats = SystemMonitorHelper.getRamStats(context)
-        val used = SystemMonitorHelper.formatBytes(ramStats.usedBytes)
-        val total = SystemMonitorHelper.formatBytes(ramStats.totalBytes)
-        val avail = SystemMonitorHelper.formatBytes(ramStats.availBytes)
+    /**
+     * Memory panel.
+     *
+     * This replaces the old "Boost RAM" dialog, which called `System.gc()` and then reported the
+     * delta as memory "freed" - a number that meant nothing (the OS reclaims what it wants anyway)
+     * and that no user can act on. The panel instead shows the real figures and offers the only two
+     * actions that genuinely release memory in this app: releasing detached background page views
+     * (the tab and its history stay) and clearing the WebView cache.
+     */
+    private fun showMemoryPanel() {
+        val main = context as? MainActivity
+        val ram = SystemMonitorHelper.getRamStats(context)
+        val runtime = Runtime.getRuntime()
+        val heapUsed = (runtime.totalMemory() - runtime.freeMemory()).coerceAtLeast(0L)
+        val tabs = main?.tabsModel?.tabsStates.orEmpty()
+        val liveViews = tabs.count { it.webEngine.getView() != null }
+        val maxLive = com.gothwad.browser.AppContext.provideConfig().maxLiveTabs
 
-        updateDashboardCardsLive()
-
-        val freedText = if (freed > 0) "${SystemMonitorHelper.formatBytes(freed)} freed!" else "Memory already optimized!"
-        Toast.makeText(context, "⚡ RAM Boosted: $freedText", Toast.LENGTH_SHORT).show()
+        val message = buildString {
+            append(
+                context.getString(
+                    R.string.home_mem_device,
+                    SystemMonitorHelper.formatBytes(ram.usedBytes),
+                    SystemMonitorHelper.formatBytes(ram.totalBytes),
+                    ram.usedPercent,
+                    SystemMonitorHelper.formatBytes(ram.availBytes)
+                )
+            )
+            append("\n\n")
+            append(
+                context.getString(
+                    R.string.home_mem_app,
+                    SystemMonitorHelper.formatBytes(heapUsed),
+                    SystemMonitorHelper.formatBytes(runtime.maxMemory())
+                )
+            )
+            if (tabs.isNotEmpty()) {
+                append("\n\n")
+                append(context.getString(R.string.home_mem_tabs, liveViews, tabs.size, maxLive))
+            }
+            append("\n\n")
+            append(context.getString(R.string.home_mem_note))
+        }
 
         AlertDialog.Builder(context)
-            .setTitle("⚡ RAM & Performance Status")
-            .setMessage("RAM Optimizer Result: $freedText\n\n• Used RAM: $used (${ramStats.usedPercent}%)\n• Available Free RAM: $avail\n• Total RAM: $total\n\nBrowser cache and memory trimmed safely.")
-            .setPositiveButton("OK", null)
-            .setNeutralButton("Boost Again") { _, _ ->
-                showRamBoostDialog()
+            .setTitle(R.string.home_mem_dialog_title)
+            .setMessage(message)
+            .setPositiveButton(R.string.home_mem_trim) { _, _ ->
+                releaseBackgroundPageViews()
             }
+            .setNegativeButton(R.string.home_mem_cache) { _, _ ->
+                clearBrowserCache()
+            }
+            .setNeutralButton(android.R.string.cancel, null)
             .show()
+    }
+
+    private fun releaseBackgroundPageViews() {
+        val main = context as? MainActivity
+        val model = main?.tabsModel
+        if (model == null) {
+            return
+        }
+        val before = model.tabsStates.count { it.webEngine.getView() != null }
+        model.onTrimMemory()
+        val after = model.tabsStates.count { it.webEngine.getView() != null }
+        val released = (before - after).coerceAtLeast(0)
+        Toast.makeText(
+            context,
+            if (released > 0) {
+                context.getString(R.string.home_mem_trimmed, released)
+            } else {
+                context.getString(R.string.home_mem_nothing_to_trim)
+            },
+            Toast.LENGTH_SHORT
+        ).show()
+        updateDashboardCardsLive()
+    }
+
+    private fun clearBrowserCache() {
+        val main = context as? MainActivity
+        val scope = main?.lifecycleScope ?: return
+        scope.launch {
+            try {
+                com.gothwad.browser.webengine.WebEngineFactory.clearCache(context)
+                Toast.makeText(context, R.string.home_mem_cache_cleared, Toast.LENGTH_SHORT).show()
+            } catch (e: Throwable) {
+                Toast.makeText(context, e.localizedMessage ?: "cache", Toast.LENGTH_SHORT).show()
+            }
+        }
+        updateDashboardCardsLive()
     }
 
     private fun showStorageInfoDialog() {

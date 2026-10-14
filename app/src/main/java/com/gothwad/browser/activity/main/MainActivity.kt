@@ -212,6 +212,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         onBackPressedDispatcher.addCallback(onBackPressedCallback)
         applySoftInputMode()
         HardwareMousePointerManager.applyToWindow(window)
+        applyInputMode()
 
         window.decorView.viewTreeObserver.addOnGlobalFocusChangeListener { _, newFocus ->
             if (config.disableVirtualKeyboard && newFocus != null) {
@@ -368,6 +369,8 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
         super.onResume()
         applySoftInputMode()
         HardwareMousePointerManager.applyToWindow(window)
+        // In AUTO mode this is what reacts to a mouse being plugged in / out while we were away.
+        applyInputMode()
         registerNetworkCallback()
         onNetworkStateChanged()
         tabsModel.currentTab.value?.webEngine?.onResume()
@@ -414,7 +417,7 @@ open class MainActivity : AppCompatActivity(), ActionBar.Callback {
     }
 
     fun navigate(url: String) = navigateInternal(url)
-    fun navigateBack(goHomeIfNoHistory: Boolean = false) = navigateBackInternal(goHomeIfNoHistory)
+    fun navigateBack() = navigateBackInternal()
     fun refresh() = refreshInternal()
     fun applyScreenOrientation() = applyScreenOrientationInternal()
     suspend fun showPopupBlockOptions() = showPopupBlockOptionsInternal()

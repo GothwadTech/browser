@@ -219,15 +219,4 @@ object SystemMonitorHelper {
         }
     }
 
-    fun performRamBoost(context: Context): Long {
-        return try {
-            val before = getRamStats(context).availBytes
-            System.gc()
-            Runtime.getRuntime().gc()
-            val after = getRamStats(context).availBytes
-            (after - before).coerceAtLeast(0)
-        } catch (e: Throwable) {
-            0L
-        }
-    }
 }

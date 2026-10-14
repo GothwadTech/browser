@@ -339,4 +339,27 @@
     <string name="app_lock_unlocked_note">The browser stays unlocked for a minute after you leave it, then asks again.</string>
     <string name="desktop_mode_default_title">Desktop site by default</string>
     <string name="desktop_mode_default_summary">New tabs start in desktop view. Turn it off for individual tabs from the page menu.</string>
+    <!-- Input mode (top of Settings) -->
+    <string name="input_mode_title">How do you browse?</string>
+    <string name="input_mode_summary">Picks the pointer and page layout for this device. Desktop view is switched on for TV remote and keyboard &amp; mouse.</string>
+    <string name="input_mode_auto">Auto</string>
+    <string name="input_mode_tv_remote">TV remote</string>
+    <string name="input_mode_keyboard_mouse">Keyboard &amp; mouse</string>
+    <string name="input_mode_touch">Touch</string>
+    <string name="input_mode_applied">Input mode: %1$s</string>
+    <!-- Home dashboard: memory / storage cards -->
+    <string name="home_mem_card_title">Memory: %1$s / %2$s (%3$d%%)</string>
+    <string name="home_mem_card_subtitle">Tap for memory details</string>
+    <string name="home_disk_card_title">Storage: %1$s free</string>
+    <string name="home_disk_card_subtitle">%1$s used (%2$d%%)</string>
+    <string name="home_mem_dialog_title">Memory</string>
+    <string name="home_mem_device">Device RAM: %1$s used of %2$s (%3$d%%)\n%4$s available</string>
+    <string name="home_mem_app">This app\'s heap: %1$s of %2$s limit</string>
+    <string name="home_mem_tabs">Live page views: %1$d of %2$d tabs (up to %3$d stay loaded)</string>
+    <string name="home_mem_note">Closing a background page view keeps the tab and its history; reopening it restores the page. No "booster" can return memory the system has not been asked for, so this panel only shows real numbers and real actions.</string>
+    <string name="home_mem_trim">Free background pages</string>
+    <string name="home_mem_cache">Clear cache</string>
+    <string name="home_mem_trimmed">%1$d background page views released</string>
+    <string name="home_mem_nothing_to_trim">Only the current page is loaded — nothing to release</string>
+    <string name="home_mem_cache_cleared">Browser cache cleared</string>
 </resources>

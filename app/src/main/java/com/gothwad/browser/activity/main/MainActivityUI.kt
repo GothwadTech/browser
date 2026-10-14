@@ -122,13 +122,10 @@ internal fun MainActivity.setupHeaderClickListeners(incognitoMode: Boolean) {
     vb.tvTabCountBadge.setOnClickListener { showTabsRowDialog() }
     vb.ibBack.setOnClickListener { navigateBack() }
     vb.ibForward.setOnClickListener {
+        // Forward is the WebView's own forward list only. It used to "restore" the page that Home
+        // had covered, which was a fake forward entry that re-fetched the page from the network.
         val tab = tabsModel.currentTab.value ?: return@setOnClickListener
-        val isHome = vb.vNativeHome.isVisible || tab.url == Config.HOME_URL_ALIAS || tab.url.isEmpty()
-        if (isHome && !tab.lastUrlBeforeHome.isNullOrEmpty()) {
-            val restoreUrl = tab.lastUrlBeforeHome!!
-            tab.lastUrlBeforeHome = null
-            navigate(restoreUrl)
-        } else if (tab.webEngine.canGoForward()) {
+        if (tab.webEngine.canGoForward()) {
             tab.webEngine.goForward()
         }
     }

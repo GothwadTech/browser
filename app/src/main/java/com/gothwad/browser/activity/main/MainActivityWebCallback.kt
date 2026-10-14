@@ -174,6 +174,10 @@ internal class WebEngineCallback(val activity: MainActivity, val tab: WebTabStat
         val webViewUrl = tab.webEngine.url
         tab.url = webViewUrl ?: (url ?: "")
         if (isCurrent) {
+            // A real navigation replaces whatever page Home was covering, so the restore marker
+            // must not survive it (otherwise Back would reveal a page that no longer exists).
+            tab.lastUrlBeforeHome = null
+            tab.lastTitleBeforeHome = null
             activity.vb.vActionBar.setAddressBoxText(tab.url)
         }
         tab.blockedAds = 0

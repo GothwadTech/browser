@@ -14,6 +14,8 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.gothwad.browser.R
+import com.gothwad.browser.activity.main.MainActivity
+import com.gothwad.browser.activity.main.bindInputModeSegments
 
 class SettingsDialog(private val context: Context, val model: SettingsModel) :
     VersionSettingsView.Callback {
@@ -107,6 +109,24 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
         bindViews()
         initChildViews()
         setupListeners()
+        setupInputModeRow()
+    }
+
+    /**
+     * The "how do you browse" segmented switch that sits above the search field: one place that
+     * turns TV-remote / keyboard+mouse / touch into the concrete pointer + page-layout switches.
+     */
+    private fun setupInputModeRow() {
+        val main = activity as? MainActivity ?: run {
+            contentView.findViewById<View>(R.id.llInputModeRow)?.visibility = View.GONE
+            return
+        }
+        main.bindInputModeSegments(
+            auto = contentView.findViewById(R.id.btnInputModeAuto),
+            tvRemote = contentView.findViewById(R.id.btnInputModeTvRemote),
+            keyboardMouse = contentView.findViewById(R.id.btnInputModeKeyboardMouse),
+            touch = contentView.findViewById(R.id.btnInputModeTouch)
+        )
     }
 
     private fun bindViews() {

@@ -26,34 +26,42 @@ if (!window.tvBroClicksListener) {
     document.addEventListener("click", window.tvBroClicksListener);
 }
 
-// video playback control support
-if (!('playing' in HTMLMediaElement.prototype)) {
-    try {
-        Object.defineProperty(HTMLMediaElement.prototype, 'playing', {
-            get: function() {
-                return !!(this.currentTime > 0 && !this.paused && !this.ended && this.readyState > 2);
-            },
-            configurable: true,
-            enumerable: false
-        });
-    } catch (e) {
-        // Ignore if already defined by host page or previous injection
+// media playback control support (driven by the media / DPAD keys handled in MainActivity)
+// NOTE: deliberately NOT a HTMLMediaElement.prototype patch - injecting a getter into a platform
+// prototype changes every page script on the site and can be detected / re-defined by the host page.
+function tvBroMediaIsPlaying(m) {
+    return !!(m && m.currentTime > 0 && !m.paused && !m.ended && m.readyState > 2);
+}
+
+// The element the media keys should drive: whatever is actually playing, else the first one.
+function tvBroActiveMedia() {
+    var list = document.querySelectorAll('video, audio');
+    for (var i = 0; i < list.length; i++) {
+        if (tvBroMediaIsPlaying(list[i])) {
+            return list[i];
+        }
     }
+    return list.length > 0 ? list[0] : null;
 }
 
 window.tvBroTogglePlayback = function() {
-    var media = document.querySelector('video') || document.querySelector('audio');
-    if (media) {
-        if (media.playing) {
-            media.pause();
-        } else {
-            media.play();
+    var media = tvBroActiveMedia();
+    if (!media) {
+        return;
+    }
+    if (tvBroMediaIsPlaying(media)) {
+        media.pause();
+    } else {
+        var p = media.play();
+        // Autoplay policies reject the promise; swallow it instead of logging an uncaught error.
+        if (p && typeof p.catch === 'function') {
+            p.catch(function() {});
         }
     }
 }
 
 window.tvBroStopPlayback = function() {
-    var media = document.querySelector('video') || document.querySelector('audio');
+    var media = tvBroActiveMedia();
     if (media) {
         media.pause();
         media.currentTime = 0;
@@ -61,14 +69,14 @@ window.tvBroStopPlayback = function() {
 }
 
 window.tvBroRewind = function() {
-    var media = document.querySelector('video') || document.querySelector('audio');
+    var media = tvBroActiveMedia();
     if (media) {
         media.currentTime -= 10;
     }
 }
 
 window.tvBroFastForward = function() {
-    var media = document.querySelector('video') || document.querySelector('audio');
+    var media = tvBroActiveMedia();
     if (media) {
         media.currentTime += 10;
     }
@@ -82,132 +90,6 @@ window.addEventListener("touchstart", function(e) {
         window.TVBRO_touchStartY = e.touches[0].clientY;
     }
 });
-
-// Android TV / STB Physical Mouse & Remote Precision Click Compatibility Engine
-(function() {
-    if (window.__tvHardwareMouseFixApplied) return;
-    window.__tvHardwareMouseFixApplied = true;
-
-    function findInteractiveAncestor(el) {
-        if (!el || el === document.body || el === document.documentElement) return null;
-        var cur = el;
-        while (cur && cur !== document.body && cur !== document.documentElement) {
-            var tag = cur.tagName ? cur.tagName.toUpperCase() : "";
-            if (tag === 'A' || tag === 'BUTTON' || tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA' || tag === 'LABEL') {
-                return cur;
-            }
-            if (cur.getAttribute) {
-                var role = cur.getAttribute('role');
-                if (role === 'button' || role === 'link' || role === 'menuitem' || role === 'tab' || role === 'checkbox' || role === 'switch') {
-                    return cur;
-                }
-                if (cur.hasAttribute('onclick') || cur.hasAttribute('jsaction') || cur.hasAttribute('data-action') || cur.hasAttribute('aria-haspopup')) {
-                    return cur;
-                }
-                var ariaLabel = (cur.getAttribute('aria-label') || "").toLowerCase();
-                if (ariaLabel.indexOf('google apps') !== -1 || ariaLabel.indexOf('sign in') !== -1 || ariaLabel.indexOf('sign up') !== -1 || ariaLabel.indexOf('menu') !== -1) {
-                    return cur;
-                }
-                if (cur.classList && (cur.classList.contains('gb_d') || cur.classList.contains('gb_wa') || cur.classList.contains('gb_A') || cur.classList.contains('gb_B'))) {
-                    return cur;
-                }
-            }
-            cur = cur.parentElement;
-        }
-        return null;
-    }
-
-    var lastPointerDownInfo = null;
-
-    document.addEventListener("pointerdown", function(e) {
-        lastPointerDownInfo = {
-            x: e.clientX,
-            y: e.clientY,
-            time: Date.now(),
-            target: e.target
-        };
-    }, true);
-
-    document.addEventListener("touchstart", function(e) {
-        if (e.touches && e.touches.length > 0) {
-            lastPointerDownInfo = {
-                x: e.touches[0].clientX,
-                y: e.touches[0].clientY,
-                time: Date.now(),
-                target: e.target
-            };
-        }
-    }, true);
-
-    var clickTriggeredRecently = false;
-    document.addEventListener("click", function(e) {
-        clickTriggeredRecently = true;
-        setTimeout(function() { clickTriggeredRecently = false; }, 200);
-
-        var interactive = findInteractiveAncestor(e.target);
-        if (interactive) {
-            if (interactive.tagName === 'INPUT' || interactive.tagName === 'TEXTAREA' || interactive.isContentEditable) {
-                if (typeof interactive.focus === 'function') {
-                    interactive.focus();
-                }
-            }
-        }
-    }, true);
-
-    function handlePointerUpOrEnd(clientX, clientY, target) {
-        if (!lastPointerDownInfo) return;
-        var dx = Math.abs(clientX - lastPointerDownInfo.x);
-        var dy = Math.abs(clientY - lastPointerDownInfo.y);
-        var dt = Date.now() - lastPointerDownInfo.time;
-
-        // If it was a clean stationary click (<= 15px movement within 800ms)
-        if (dx <= 18 && dy <= 18 && dt < 800) {
-            var hit = document.elementFromPoint(clientX, clientY) || target;
-            var interactive = findInteractiveAncestor(hit);
-
-            if (interactive) {
-                // Focus interactive inputs
-                if (interactive.tagName === 'INPUT' || interactive.tagName === 'TEXTAREA' || interactive.isContentEditable) {
-                    if (typeof interactive.focus === 'function') {
-                        interactive.focus();
-                    }
-                }
-
-                // If native click did not dispatch (e.g. dropped by TV box driver on SVG child)
-                setTimeout(function() {
-                    if (!clickTriggeredRecently) {
-                        try {
-                            if (typeof interactive.click === 'function') {
-                                interactive.click();
-                            } else {
-                                var evt = new MouseEvent('click', {
-                                    bubbles: true,
-                                    cancelable: true,
-                                    view: window,
-                                    clientX: clientX,
-                                    clientY: clientY
-                                });
-                                interactive.dispatchEvent(evt);
-                            }
-                        } catch (err) {
-                            // ignore
-                        }
-                    }
-                }, 40);
-            }
-        }
-    }
-
-    document.addEventListener("pointerup", function(e) {
-        handlePointerUpOrEnd(e.clientX, e.clientY, e.target);
-    }, true);
-
-    document.addEventListener("touchend", function(e) {
-        if (lastPointerDownInfo) {
-            handlePointerUpOrEnd(lastPointerDownInfo.x, lastPointerDownInfo.y, e.target);
-        }
-    }, true);
-})();
 
 // Real Desktop Mode fitting for TV Browser
 (function() {

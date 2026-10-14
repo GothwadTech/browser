@@ -85,6 +85,8 @@ class Config(val prefs: SharedPreferences) {
          */
         const val DEFAULT_MAX_LIVE_TABS = 6
         const val DESKTOP_MODE_KEY = "desktop_mode"
+        /** Which input device the user drives the browser with - see [InputMode]. */
+        const val INPUT_MODE_KEY = "input_mode"
         const val DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 
         const val ENGINE_WEB_VIEW = "WebView"
@@ -117,6 +119,23 @@ class Config(val prefs: SharedPreferences) {
         BLACK_AMOLED,
         BLACK_CHARCOAL,
         BLACK_MIDNIGHT;
+    }
+
+    /**
+     * How the user drives the browser. This is the one setting that decides pointer handling and
+     * the default page layout, so that TV users do not have to dig through four different
+     * sub-screens (virtual cursor, joystick axes, user agent) to get a working remote or a working
+     * mouse.
+     *
+     * - [AUTO] - resolve from the device: touch screen -> [TOUCH], TV with a mouse plugged in ->
+     *   [KEYBOARD_MOUSE], anything else -> [TV_REMOTE].
+     * - [TV_REMOTE] - D-pad only: the DPAD-driven virtual cursor and axis navigation are on.
+     * - [KEYBOARD_MOUSE] - a real pointer drives the page, so the drawn virtual cursor is turned
+     *   off (two pointers on screen at once was the classic "double cursor" complaint).
+     * - [TOUCH] - phone / tablet: no virtual cursor, no axis-to-DPAD translation.
+     */
+    enum class InputMode {
+        AUTO, TV_REMOTE, KEYBOARD_MOUSE, TOUCH
     }
 
     enum class HomePageMode {
@@ -197,6 +216,26 @@ class Config(val prefs: SharedPreferences) {
         get() = prefs.getBoolean(ENABLE_VIRTUAL_CURSOR_KEY, true)
         set(value) {
             prefs.edit().putBoolean(ENABLE_VIRTUAL_CURSOR_KEY, value).apply()
+        }
+
+    /** Stored input-mode choice (`AUTO` by default, i.e. "follow the device"). */
+    var inputMode: InputMode
+        get() = prefs.getString(INPUT_MODE_KEY, null)?.let { saved ->
+            InputMode.entries.firstOrNull { it.name == saved }
+        } ?: InputMode.AUTO
+        set(value) {
+            prefs.edit().putString(INPUT_MODE_KEY, value.name).apply()
+        }
+
+    /** [InputMode.AUTO] resolved against the actual device / connected hardware. */
+    fun resolveInputMode(isTvDevice: Boolean, physicalMouseConnected: Boolean): InputMode =
+        when (inputMode) {
+            InputMode.AUTO -> when {
+                !isTvDevice -> InputMode.TOUCH
+                physicalMouseConnected -> InputMode.KEYBOARD_MOUSE
+                else -> InputMode.TV_REMOTE
+            }
+            else -> inputMode
         }
 
     var cursorSizePercent: Int

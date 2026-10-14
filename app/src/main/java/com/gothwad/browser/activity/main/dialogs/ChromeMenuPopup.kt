@@ -119,7 +119,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         }
 
         // 2. Forward
-        val canGoForward = currentTab?.webEngine?.canGoForward() == true || (!currentTab?.lastUrlBeforeHome.isNullOrEmpty())
+        val canGoForward = currentTab?.webEngine?.canGoForward() == true
         btnForward.isEnabled = canGoForward
         btnForward.alpha = if (canGoForward) 1.0f else 0.4f
         bindMenuItem(btnForward) {

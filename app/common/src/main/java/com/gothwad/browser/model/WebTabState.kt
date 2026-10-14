@@ -71,6 +71,9 @@ data class WebTabState(@PrimaryKey(autoGenerate = true)
     var lastLoadingUrl: String? = null //this is last url appeared in WebViewClient.shouldOverrideUrlLoading callback
     @Ignore
     var lastUrlBeforeHome: String? = null
+    /** Title of the page currently covered by the native home screen (in-memory only). */
+    @Ignore
+    var lastTitleBeforeHome: String? = null
     @Ignore
     var blockedAds = 0
     @Ignore
