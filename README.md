@@ -28,9 +28,11 @@
 > converted one by one from "aspirational" into "measured": the APK-size figure is a **target**, not a
 > CI measurement yet, and the 10+ language claim is qualified under *Global Accessibility* below.
 > **Do not publish a build before the licence/attribution question in
-> [`docs/AUDIT-2026-10-14.md`](docs/AUDIT-2026-10-14.md) §0 is settled** — this tree derives from the
-> GPL-3.0-or-later *TV Bro* project, which is incompatible with the "all rights reserved" wording
-> currently in `LICENSE`. That is the owner's decision to make, not a code fix.
+> [`docs/AUDIT-2026-10-14.md`](docs/AUDIT-2026-10-14.md) §0 is settled**: this tree derives from the
+> GPL-3.0-or-later *TV Bro* project, which cannot be reconciled with the "All Rights Reserved /
+> NO OPEN SOURCE LICENSE IS GRANTED" notice below while the in-app About screen advertises "100% Open
+> Source Software" — and the repo carries no `LICENSE` file at all. Settling that is the owner's
+> decision, not a code fix; nothing here changes the licence terms.
 
 </div>
 
