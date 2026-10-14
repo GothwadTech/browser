@@ -102,7 +102,7 @@ object SettingsGeneralSection {
                     onSuccess = {
                         com.gothwad.browser.singleton.AppLockManager.setLockEnabled(context, false)
                         syncSwitchState()
-                        Toast.makeText(context, "PIN Lock Disabled", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.settings_pin_lock_disabled), Toast.LENGTH_SHORT).show()
                     },
                     onCancel = {
                         syncSwitchState()
@@ -204,40 +204,45 @@ object SettingsGeneralSection {
             }
             config.screenOrientation = nextOrientation
             mainAct?.applyScreenOrientation()
-            val label = when (nextOrientation) {
-                Config.ORIENTATION_PORTRAIT -> "Screen Orientation: Portrait"
-                Config.ORIENTATION_AUTO -> "Screen Orientation: Auto Rotate"
-                else -> "Screen Orientation: Landscape"
-            }
+            val label = context.getString(
+                when (nextOrientation) {
+                    Config.ORIENTATION_PORTRAIT -> R.string.settings_orientation_portrait
+                    Config.ORIENTATION_AUTO -> R.string.settings_orientation_auto
+                    else -> R.string.settings_orientation_landscape
+                }
+            )
             Toast.makeText(context, label, Toast.LENGTH_SHORT).show()
+        }
+
+        // One refresh path for the three zoom buttons (they used to duplicate the same five lines).
+        fun refreshZoomUi(): String {
+            val isDesk = config.isDesktopMode()
+            val zoom = config.getEffectiveZoom(isDesk)
+            vb.sbWebPageZoom.progress =
+                (zoom - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
+                    .coerceIn(0, Config.WEB_PAGE_ZOOM_PERCENT_MAX - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
+            val modeTitle = context.getString(if (isDesk) R.string.mode_desktop else R.string.mode_mobile)
+            vb.tvWebPageZoomValue.text = if (zoom == Config.WEB_PAGE_ZOOM_PERCENT_DEFAULT) {
+                context.getString(R.string.settings_zoom_value_default, modeTitle)
+            } else {
+                context.getString(R.string.settings_zoom_value, modeTitle, zoom)
+            }
+            return context.getString(R.string.settings_zoom_value, modeTitle, zoom)
         }
 
         vb.btnQuickZoomIn.setOnClickListener {
             mainAct?.zoomWebIn()
-            val isDesk = config.isDesktopMode()
-            val zoom = config.getEffectiveZoom(isDesk)
-            vb.sbWebPageZoom.progress = (zoom - Config.WEB_PAGE_ZOOM_PERCENT_MIN).coerceIn(0, Config.WEB_PAGE_ZOOM_PERCENT_MAX - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
-            val modeTitle = if (isDesk) "Desktop" else "Mobile"
-            vb.tvWebPageZoomValue.text = if (zoom == 100) "$modeTitle: 100% (Default)" else "$modeTitle: $zoom%"
-            Toast.makeText(context, "$modeTitle: $zoom%", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, refreshZoomUi(), Toast.LENGTH_SHORT).show()
         }
 
         vb.btnQuickZoomOut.setOnClickListener {
             mainAct?.zoomWebOut()
-            val isDesk = config.isDesktopMode()
-            val zoom = config.getEffectiveZoom(isDesk)
-            vb.sbWebPageZoom.progress = (zoom - Config.WEB_PAGE_ZOOM_PERCENT_MIN).coerceIn(0, Config.WEB_PAGE_ZOOM_PERCENT_MAX - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
-            val modeTitle = if (isDesk) "Desktop" else "Mobile"
-            vb.tvWebPageZoomValue.text = if (zoom == 100) "$modeTitle: 100% (Default)" else "$modeTitle: $zoom%"
-            Toast.makeText(context, "$modeTitle: $zoom%", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, refreshZoomUi(), Toast.LENGTH_SHORT).show()
         }
 
         vb.btnQuickZoomReset.setOnClickListener {
-            val isDesk = config.isDesktopMode()
-            mainAct?.applyWebPageZoom(100, isDesk)
-            vb.sbWebPageZoom.progress = 100 - Config.WEB_PAGE_ZOOM_PERCENT_MIN
-            val modeTitle = if (isDesk) "Desktop" else "Mobile"
-            vb.tvWebPageZoomValue.text = "$modeTitle: 100% (Default)"
+            mainAct?.applyWebPageZoom(Config.WEB_PAGE_ZOOM_PERCENT_DEFAULT, config.isDesktopMode())
+            vb.sbWebPageZoom.progress = Config.WEB_PAGE_ZOOM_PERCENT_DEFAULT - Config.WEB_PAGE_ZOOM_PERCENT_MIN
             Toast.makeText(context, R.string.quick_zoom_reset, Toast.LENGTH_SHORT).show()
         }
     }
@@ -296,13 +301,13 @@ object SettingsGeneralSection {
 
         vb.btnClearHistorySettings.setOnClickListener {
             android.app.AlertDialog.Builder(context)
-                .setTitle("Clear Browsing History")
+                .setTitle(R.string.settings_clear_browsing_history)
                 .setMessage("Are you sure you want to delete all saved browsing history? This action cannot be undone.")
                 .setPositiveButton("Clear History") { _, _ ->
                     (activity as? androidx.appcompat.app.AppCompatActivity)?.lifecycleScope?.launch(Dispatchers.IO) {
                         com.gothwad.browser.singleton.AppDatabase.db.historyDao().deleteAll()
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(context, "Browsing history cleared", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.menu_browsing_history_cleared), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

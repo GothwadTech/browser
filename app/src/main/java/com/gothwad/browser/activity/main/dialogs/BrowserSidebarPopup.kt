@@ -180,7 +180,7 @@ class BrowserSidebarPopup(private val activity: MainActivity) {
                     }
                     activity.startActivity(Intent.createChooser(sendIntent, "Share URL"))
                 } else {
-                    Toast.makeText(activity, "No active page to share", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, activity.getString(R.string.menu_no_active_page_to), Toast.LENGTH_SHORT).show()
                 }
             }
         }

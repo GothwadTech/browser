@@ -259,7 +259,7 @@ class DownloadsSidebarPopup(private val activity: MainActivity) : ActiveDownload
     private fun onDownloadClicked(download: Download) {
         val file = File(download.filepath)
         if (!file.exists()) {
-            Toast.makeText(activity, "File not found on storage", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.downloads_file_not_found_on), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -276,9 +276,9 @@ class DownloadsSidebarPopup(private val activity: MainActivity) : ActiveDownload
             }
             activity.startActivity(openIntent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(activity, "No app found to open this file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.downloads_no_app_found_to), Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
-            Toast.makeText(activity, "Error opening file: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.downloads_cannot_open, e.message ?: ""), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -186,9 +186,9 @@ class ShortcutMgr private constructor() {
                         list.add(item)
                         val sorted = HomeData.sortShortcutsWithGoogleFirst(list)
                         NativeHomeView.saveUserBookmarks(mainActivity, sorted)
-                        Toast.makeText(mainActivity, "⭐ Added to Bookmarks: $title", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mainActivity, mainActivity.getString(R.string.shortcut_added_to_bookmarks, title), Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(mainActivity, "Already in Bookmarks", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(mainActivity, mainActivity.getString(R.string.shortcut_already_in_bookmarks), Toast.LENGTH_SHORT).show()
                     }
                 }
             }

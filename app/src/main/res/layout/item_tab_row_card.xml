@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Tab Title"
+            android:text="@string/item_tab_grid_card_tab_title"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_height="24dp"
             android:background="@drawable/bg_chrome_close_btn"
             android:clickable="true"
-            android:contentDescription="Close Tab"
+            android:contentDescription="@string/item_sidebar_tab_close_tab"
             android:focusable="true"
             android:padding="4dp"
             android:scaleType="fitCenter"
@@ -81,7 +81,7 @@
             android:paddingEnd="6dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
-            android:text="ACTIVE"
+            android:text="@string/item_sidebar_tab_active"
             android:textColor="#FFFFFF"
             android:textSize="9sp"
             android:textStyle="bold"
@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="google.com"
+            android:text="@string/item_sidebar_favorite_google_com"
             android:textColor="#94A3B8"
             android:textSize="10sp" />
     </LinearLayout>

@@ -47,7 +47,7 @@
                 android:id="@+id/tvHistoryTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"
+                android:text="@string/history"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -95,7 +95,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Clear search"
+                android:contentDescription="@string/activity_history_clear_search"
                 android:focusable="true"
                 android:padding="7dp"
                 android:scaleType="fitCenter"
@@ -110,7 +110,7 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="2dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Voice search"
+                android:contentDescription="@string/voice_search"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="1 selected"
+                android:text="@string/activity_history_1_selected"
                 android:textColor="#38BDF8"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -149,7 +149,7 @@
                 android:focusable="true"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="Delete"
+                android:text="@string/delete"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
@@ -162,7 +162,7 @@
                 android:focusable="true"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="#94A3B8"
                 android:textSize="12sp" />
@@ -224,7 +224,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Chrome history"
+                    android:text="@string/activity_history_chrome_history"
                     android:textColor="#FFFFFF"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -237,7 +237,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="4dp"
-                android:text="FILTERS"
+                android:text="@string/activity_history_filters"
                 android:textColor="#64748B"
                 android:textSize="11sp"
                 android:textStyle="bold" />
@@ -252,7 +252,7 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  All time"
+                android:text="@string/activity_history_all_time"
                 android:textAllCaps="false"
                 android:textColor="#38BDF8"
                 android:textSize="12sp" />
@@ -267,7 +267,7 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  Today"
+                android:text="@string/activity_history_today"
                 android:textAllCaps="false"
                 android:textColor="#94A3B8"
                 android:textSize="12sp" />
@@ -282,7 +282,7 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  Yesterday"
+                android:text="@string/activity_history_yesterday"
                 android:textAllCaps="false"
                 android:textColor="#94A3B8"
                 android:textSize="12sp" />
@@ -297,7 +297,7 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  Older"
+                android:text="@string/activity_history_older"
                 android:textAllCaps="false"
                 android:textColor="#94A3B8"
                 android:textSize="12sp" />
@@ -321,7 +321,7 @@
                 android:gravity="center"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="Clear browsing data"
+                android:text="@string/activity_history_clear_browsing_data"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp" />
@@ -338,7 +338,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="0 visits recorded"
+                android:text="@string/activity_history_0_visits_recorded"
                 android:textColor="#64748B"
                 android:textSize="11sp" />
         </LinearLayout>
@@ -388,7 +388,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Your browsing history appears here"
+                    android:text="@string/activity_history_your_browsing_history_appears"
                     android:textColor="#FFFFFF"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -398,7 +398,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Websites you visit in TV Browser will be listed here"
+                    android:text="@string/activity_history_websites_you_visit_in"
                     android:textColor="#64748B"
                     android:textSize="13sp" />
             </LinearLayout>

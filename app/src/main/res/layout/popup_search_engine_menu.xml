@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Google"
+            android:text="@string/item_sidebar_favorite_google"
             android:textColor="#FFFFFF"
             android:textSize="13.5sp" />
 
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Bing"
+            android:text="@string/search_engine_menu_bing"
             android:textColor="#FFFFFF"
             android:textSize="13.5sp" />
 
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="DuckDuckGo"
+            android:text="@string/search_engine_menu_duckduckgo"
             android:textColor="#FFFFFF"
             android:textSize="13.5sp" />
 
@@ -183,7 +183,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Yahoo!"
+            android:text="@string/search_engine_menu_yahoo"
             android:textColor="#FFFFFF"
             android:textSize="13.5sp" />
 
@@ -226,7 +226,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Yandex"
+            android:text="@string/search_engine_menu_yandex"
             android:textColor="#FFFFFF"
             android:textSize="13.5sp" />
 
@@ -269,7 +269,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Startpage"
+            android:text="@string/search_engine_menu_startpage"
             android:textColor="#FFFFFF"
             android:textSize="13.5sp" />
 

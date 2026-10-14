@@ -32,7 +32,7 @@
                 android:layout_height="44dp"
                 android:background="@drawable/bg_google_circle_btn"
                 android:clickable="true"
-                android:contentDescription="Close Settings"
+                android:contentDescription="@string/settings_close_settings"
                 android:focusable="true"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
@@ -55,7 +55,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/button_bg_selector"
                 android:clickable="true"
-                android:contentDescription="Help"
+                android:contentDescription="@string/settings_help"
                 android:focusable="true"
                 android:padding="8dp"
                 android:scaleType="fitCenter"
@@ -251,7 +251,7 @@
                     android:paddingStart="8dp"
                     android:paddingTop="16dp"
                     android:paddingBottom="8dp"
-                    android:text="Basics"
+                    android:text="@string/settings_basics"
                     android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -285,7 +285,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Search Engine"
+                            android:text="@string/engine"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -295,7 +295,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Google, DuckDuckGo, Bing, Custom"
+                            android:text="@string/settings_google_duckduckgo_bing_custom"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -327,7 +327,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Display &amp; UI Scale"
+                            android:text="@string/settings_display_and_ui_scale"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -337,7 +337,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Interface scale, orientation &amp; font size"
+                            android:text="@string/settings_interface_scale_orientation_and"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -369,7 +369,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Web Page Zoom"
+                            android:text="@string/settings_web_page_zoom"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -379,7 +379,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Default page magnification &amp; zoom steps"
+                            android:text="@string/settings_default_page_magnification_and"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -411,7 +411,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Themes &amp; Appearance"
+                            android:text="@string/settings_themes_and_appearance"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -421,7 +421,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Dark mode, AMOLED black, light theme"
+                            android:text="@string/settings_dark_mode_amoled_black"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -453,7 +453,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Home Page &amp; Startup"
+                            android:text="@string/settings_home_page_and_startup"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -463,7 +463,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="New tab grid, custom URL, shortcuts"
+                            android:text="@string/settings_new_tab_grid_custom"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -478,7 +478,7 @@
                     android:paddingStart="8dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
-                    android:text="Privacy &amp; Security"
+                    android:text="@string/settings_privacy_and_security"
                     android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -511,7 +511,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Ad &amp; Tracker Blocker"
+                            android:text="@string/settings_ad_and_tracker_blocker"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -521,7 +521,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="EasyList filter rules, auto-updates &amp; shields"
+                            android:text="@string/settings_easylist_filter_rules_auto"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -553,7 +553,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="App Lock &amp; PIN Security"
+                            android:text="@string/settings_app_lock_and_pin"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -563,7 +563,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Passcode protection, incognito lock"
+                            android:text="@string/settings_passcode_protection_incognito_lock"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -595,7 +595,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Cache &amp; Storage"
+                            android:text="@string/settings_cache_and_storage"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -605,7 +605,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Clear browsing history, cookies &amp; cache"
+                            android:text="@string/settings_clear_browsing_history_cookies"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -620,7 +620,7 @@
                     android:paddingStart="8dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
-                    android:text="Browsing &amp; Engine"
+                    android:text="@string/settings_browsing_and_engine"
                     android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -653,7 +653,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="User Agent &amp; Identity"
+                            android:text="@string/settings_user_agent_and_identity"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -663,7 +663,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Desktop mode, Mobile browser identity"
+                            android:text="@string/settings_desktop_mode_mobile_browser"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -695,7 +695,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Web Engine &amp; Rendering"
+                            android:text="@string/settings_web_engine_and_rendering"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -705,7 +705,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="System WebView, GPU acceleration"
+                            android:text="@string/settings_system_webview_gpu_acceleration"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -737,7 +737,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Media Playback &amp; Video"
+                            android:text="@string/settings_media_playback_and_video"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -747,7 +747,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Autoplay media, background audio, PiP"
+                            android:text="@string/settings_autoplay_media_background_audio"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -779,7 +779,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Quick Tools &amp; Utilities"
+                            android:text="@string/settings_quick_tools_and_utilities"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -789,7 +789,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Keep screen on, downloads, popup block"
+                            android:text="@string/settings_keep_screen_on_downloads"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -804,7 +804,7 @@
                     android:paddingStart="8dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
-                    android:text="Controls &amp; Devices"
+                    android:text="@string/settings_controls_and_devices"
                     android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -837,7 +837,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Remote &amp; Joystick"
+                            android:text="@string/settings_remote_and_joystick"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -847,7 +847,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="D-pad navigation, analog stick, remote mapping"
+                            android:text="@string/settings_d_pad_navigation_analog"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -879,7 +879,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Virtual Cursor &amp; Physics"
+                            android:text="@string/settings_virtual_cursor_and_physics"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -889,7 +889,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Speed, acceleration, cursor size &amp; style"
+                            android:text="@string/settings_speed_acceleration_cursor_size"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -921,7 +921,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Keyboard &amp; Mouse"
+                            android:text="@string/settings_keyboard_and_mouse"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -931,7 +931,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Virtual keyboard, pointer customisation"
+                            android:text="@string/settings_virtual_keyboard_pointer_customisation"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -963,7 +963,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="Keyboard Shortcuts"
+                            android:text="@string/settings_keyboard_shortcuts"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -973,7 +973,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Configurable hotkeys for tabs &amp; navigation"
+                            android:text="@string/settings_configurable_hotkeys_for_tabs"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -988,7 +988,7 @@
                     android:paddingStart="8dp"
                     android:paddingTop="20dp"
                     android:paddingBottom="8dp"
-                    android:text="About"
+                    android:text="@string/settings_about"
                     android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -1021,7 +1021,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
-                            android:text="About &amp; Version"
+                            android:text="@string/settings_about_and_version"
                             android:textColor="@color/selector_google_item_title"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -1031,7 +1031,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:duplicateParentState="true"
-                            android:text="Gothwad Browser, build details, updates"
+                            android:text="@string/settings_gothwad_browser_build_details"
                             android:textColor="@color/selector_google_item_subtitle"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -1068,7 +1068,7 @@
                 android:layout_height="44dp"
                 android:background="@drawable/bg_google_circle_btn"
                 android:clickable="true"
-                android:contentDescription="Back to Settings Categories"
+                android:contentDescription="@string/settings_back_to_settings_categories"
                 android:focusable="true"
                 android:padding="10dp"
                 android:scaleType="fitCenter"
@@ -1086,7 +1086,7 @@
                     android:id="@+id/tvSettingsDetailTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Setting"
+                    android:text="@string/settings_setting"
                     android:textColor="@color/google_text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -1096,7 +1096,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Preferences"
+                    android:text="@string/settings_preferences"
                     android:textColor="@color/google_accent"
                     android:textSize="11sp"
                     android:textStyle="bold" />

@@ -189,12 +189,12 @@ object SettingsRemoteSection {
                     descTv.text = "ID: ${dev.id}  •  🚫 Blocked (Input Ignored)"
                     descTv.setTextColor(Color.parseColor("#F87171"))
                     blockSwitch.text = "Block"
-                    Toast.makeText(context, "${dev.name} is now BLOCKED", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.settings_device_blocked, dev.name), Toast.LENGTH_SHORT).show()
                 } else {
                     descTv.text = "ID: ${dev.id}  •  ✅ Allowed (Active & Optimized)"
                     descTv.setTextColor(Color.parseColor("#4ADE80"))
                     blockSwitch.text = "Allow"
-                    Toast.makeText(context, "${dev.name} is now ALLOWED", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.settings_device_allowed, dev.name), Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -230,7 +230,15 @@ object SettingsRemoteSection {
         vb.btnRefreshDevices.setOnClickListener {
             val devs = hwInput.getConnectedDevices()
             updateDeviceList(devs)
-            Toast.makeText(context, "Scanned: ${devs.count { !it.isVirtual }} device(s) found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.resources.getQuantityString(
+                    R.plurals.settings_devices_found,
+                    devs.count { !it.isVirtual },
+                    devs.count { !it.isVirtual }
+                ),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         updateDeviceList(hwInput.getConnectedDevices())

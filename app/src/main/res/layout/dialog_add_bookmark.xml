@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Custom Bookmark"
+        android:text="@string/settings_add_bookmark_add_custom_bookmark"
         android:textColor="@color/day_night_text_color_contrast"
         android:textSize="18sp"
         android:textStyle="bold"

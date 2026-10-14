@@ -1,6 +1,7 @@
 package com.gothwad.browser.activity.main.view.home
 
 import android.app.ActivityManager
+import com.gothwad.browser.R
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -80,41 +81,41 @@ object SystemMonitorHelper {
         }
     }
 
-    fun getFormattedTime(): String {
+    fun getFormattedTime(context: Context): String {
         return try {
             val sdf = SimpleDateFormat("hh:mm:ss a", Locale.getDefault())
             sdf.format(Date())
         } catch (e: Throwable) {
-            "Time"
+            context.getString(R.string.home_time_fallback)
         }
     }
 
-    fun getTimeSubtitle(): String {
+    fun getTimeSubtitle(context: Context): String {
         return try {
             val cal = Calendar.getInstance()
-            cal.timeZone.displayName ?: "Local Time"
+            cal.timeZone.displayName ?: context.getString(R.string.home_local_time)
         } catch (e: Throwable) {
-            "Local Time"
+            context.getString(R.string.home_local_time)
         }
     }
 
-    fun getFormattedDate(): String {
+    fun getFormattedDate(context: Context): String {
         return try {
             val sdf = SimpleDateFormat("EEE, dd MMM yyyy", Locale.getDefault())
             sdf.format(Date())
         } catch (e: Throwable) {
-            "Date"
+            context.getString(R.string.home_date_fallback)
         }
     }
 
-    fun getCalendarSubtitle(): String {
+    fun getCalendarSubtitle(context: Context): String {
         return try {
             val cal = Calendar.getInstance()
             val dayOfYear = cal.get(Calendar.DAY_OF_YEAR)
             val weekOfYear = cal.get(Calendar.WEEK_OF_YEAR)
-            "Day $dayOfYear • Week $weekOfYear"
+            context.getString(R.string.home_calendar_day_week, dayOfYear, weekOfYear)
         } catch (e: Throwable) {
-            "Calendar"
+            context.getString(R.string.home_calendar_fallback)
         }
     }
 
@@ -122,27 +123,39 @@ object SystemMonitorHelper {
         try {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             if (cm == null) {
-                return Pair("Offline", "No Network")
+                return Pair(
+                    context.getString(R.string.home_network_offline),
+                    context.getString(R.string.home_network_none)
+                )
             }
 
             val activeNetwork = cm.activeNetwork
             val capabilities = cm.getNetworkCapabilities(activeNetwork)
 
             if (capabilities == null || !capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) {
-                return Pair("Offline", "No Internet")
+                return Pair(
+                    context.getString(R.string.home_network_offline),
+                    context.getString(R.string.home_network_no_internet)
+                )
             }
 
             val typeStr: String = when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> "Wi-Fi Connected"
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> "Ethernet Connected"
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> "Mobile Data"
-                else -> "Online"
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ->
+                    context.getString(R.string.home_network_wifi)
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ->
+                    context.getString(R.string.home_network_ethernet)
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ->
+                    context.getString(R.string.home_network_cellular)
+                else -> context.getString(R.string.home_network_online)
             }
 
             val detailStr = "↓ $currentDownloadSpeedStr  ↑ $currentUploadSpeedStr"
             return Pair(typeStr, detailStr)
         } catch (e: Throwable) {
-            return Pair("Online", "↓ $currentDownloadSpeedStr  ↑ $currentUploadSpeedStr")
+            return Pair(
+                context.getString(R.string.home_network_online),
+                "↓ $currentDownloadSpeedStr  ↑ $currentUploadSpeedStr"
+            )
         }
     }
 

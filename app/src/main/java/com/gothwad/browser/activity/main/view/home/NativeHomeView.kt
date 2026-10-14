@@ -121,15 +121,15 @@ class NativeHomeView @JvmOverloads constructor(
 
         return listOf(
             HomeShortcutItem(
-                title = SystemMonitorHelper.getFormattedTime(),
-                subtitleText = SystemMonitorHelper.getTimeSubtitle(),
+                title = SystemMonitorHelper.getFormattedTime(context),
+                subtitleText = SystemMonitorHelper.getTimeSubtitle(context),
                 iconDrawableRes = R.drawable.ic_stat_time,
                 isDashboardCard = true,
                 dashboardType = "TIME"
             ),
             HomeShortcutItem(
-                title = SystemMonitorHelper.getFormattedDate(),
-                subtitleText = SystemMonitorHelper.getCalendarSubtitle(),
+                title = SystemMonitorHelper.getFormattedDate(context),
+                subtitleText = SystemMonitorHelper.getCalendarSubtitle(context),
                 iconDrawableRes = R.drawable.ic_stat_calendar,
                 isDashboardCard = true,
                 dashboardType = "CALENDAR"
@@ -288,10 +288,10 @@ class NativeHomeView @JvmOverloads constructor(
                         )
                     } else null
                     DashboardSnapshot(
-                        timeTitle = SystemMonitorHelper.getFormattedTime(),
-                        timeSubtitle = SystemMonitorHelper.getTimeSubtitle(),
-                        dateTitle = SystemMonitorHelper.getFormattedDate(),
-                        dateSubtitle = SystemMonitorHelper.getCalendarSubtitle(),
+                        timeTitle = SystemMonitorHelper.getFormattedTime(context),
+                        timeSubtitle = SystemMonitorHelper.getTimeSubtitle(context),
+                        dateTitle = SystemMonitorHelper.getFormattedDate(context),
+                        dateSubtitle = SystemMonitorHelper.getCalendarSubtitle(context),
                         networkTitle = net.first,
                         networkSubtitle = net.second,
                         ramTitle = context.getString(
@@ -394,28 +394,43 @@ class NativeHomeView @JvmOverloads constructor(
 
     private fun showTimeInfoDialog() {
         val cal = java.util.Calendar.getInstance()
-        val timeFormatted = SystemMonitorHelper.getFormattedTime()
+        val timeFormatted = SystemMonitorHelper.getFormattedTime(context)
         val timeZone = cal.timeZone.displayName ?: "Local Time"
         val timeZoneId = cal.timeZone.id
 
         AlertDialog.Builder(context)
-            .setTitle("🕒 System Time")
-            .setMessage("Current Time: $timeFormatted\nTimezone: $timeZone ($timeZoneId)\nLive clock updates automatically.")
-            .setPositiveButton("OK", null)
+            .setTitle(R.string.home_system_time)
+            .setMessage(
+                context.getString(
+                    R.string.home_time_dialog_message,
+                    timeFormatted,
+                    timeZone,
+                    timeZoneId
+                )
+            )
+            .setPositiveButton(android.R.string.ok, null)
             .show()
     }
 
     private fun showCalendarInfoDialog() {
-        val dateFormatted = SystemMonitorHelper.getFormattedDate()
-        val subtitle = SystemMonitorHelper.getCalendarSubtitle()
+        val dateFormatted = SystemMonitorHelper.getFormattedDate(context)
+        val subtitle = SystemMonitorHelper.getCalendarSubtitle(context)
         val cal = java.util.Calendar.getInstance()
         val year = cal.get(java.util.Calendar.YEAR)
         val isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
 
         AlertDialog.Builder(context)
-            .setTitle("📅 System Calendar")
-            .setMessage("Date: $dateFormatted\nProgress: $subtitle\nYear: $year (Leap year: ${if (isLeapYear) "Yes" else "No"})")
-            .setPositiveButton("OK", null)
+            .setTitle(R.string.home_system_calendar)
+            .setMessage(
+                context.getString(
+                    R.string.home_calendar_dialog_message,
+                    dateFormatted,
+                    subtitle,
+                    year,
+                    context.getString(if (isLeapYear) R.string.yes else R.string.no)
+                )
+            )
+            .setPositiveButton(android.R.string.ok, null)
             .show()
     }
 
@@ -428,9 +443,18 @@ class NativeHomeView @JvmOverloads constructor(
         val totalTx = SystemMonitorHelper.formatBytes(android.net.TrafficStats.getTotalTxBytes())
 
         AlertDialog.Builder(context)
-            .setTitle("🌐 Network & Speed Monitor")
-            .setMessage("Status: ${netInfo.first}\n\nReal-Time Speed:\n• Download: $downSpeed\n• Upload: $upSpeed\n\nTotal Session Traffic:\n• Total Received: $totalRx\n• Total Sent: $totalTx\n\n(Monitored directly via device network stats without consuming internet)")
-            .setPositiveButton("OK", null)
+            .setTitle(R.string.home_network_and_speed_monitor)
+            .setMessage(
+                context.getString(
+                    R.string.home_network_dialog_message,
+                    netInfo.first,
+                    downSpeed,
+                    upSpeed,
+                    totalRx,
+                    totalTx
+                )
+            )
+            .setPositiveButton(android.R.string.ok, null)
             .show()
     }
 
@@ -535,9 +559,21 @@ class NativeHomeView @JvmOverloads constructor(
         val cores = Runtime.getRuntime().availableProcessors()
 
         AlertDialog.Builder(context)
-            .setTitle("💾 Storage & Device Info")
-            .setMessage("Internal Storage:\n• Free: $free\n• Used: $used (${storage.usedPercent}%)\n• Total: $total\n\nDevice & CPU Info:\n• Device: ${Build.MANUFACTURER} ${Build.MODEL}\n• Android: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})\n• CPU Cores: $cores Cores")
-            .setPositiveButton("OK", null)
+            .setTitle(R.string.home_storage_and_device_info)
+            .setMessage(
+                context.getString(
+                    R.string.home_storage_dialog_message,
+                    free,
+                    used,
+                    storage.usedPercent,
+                    total,
+                    "${Build.MANUFACTURER} ${Build.MODEL}",
+                    Build.VERSION.RELEASE,
+                    Build.VERSION.SDK_INT,
+                    cores
+                )
+            )
+            .setPositiveButton(android.R.string.ok, null)
             .show()
     }
 
@@ -672,14 +708,14 @@ class NativeHomeView @JvmOverloads constructor(
     private fun showRemoveSelectionDialog() {
         val userShortcuts = loadUserBookmarks()
         if (userShortcuts.isEmpty()) {
-            Toast.makeText(context, "No manual shortcuts to remove", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.home_no_manual_shortcuts_to), Toast.LENGTH_SHORT).show()
             return
         }
 
         val shortcutTitles = userShortcuts.map { "${it.title} (${it.domainText})" }.toTypedArray()
 
         AlertDialog.Builder(context)
-            .setTitle("Select Shortcut to Remove")
+            .setTitle(R.string.home_select_shortcut_to_remove)
             .setItems(shortcutTitles) { _, which ->
                 if (which in userShortcuts.indices) {
                     val target = userShortcuts[which]
@@ -692,8 +728,8 @@ class NativeHomeView @JvmOverloads constructor(
 
     private fun showDeleteBookmarkDialog(item: HomeShortcutItem) {
         AlertDialog.Builder(context)
-            .setTitle("Delete Shortcut")
-            .setMessage("Remove '${item.title}' from My Shortcuts?")
+            .setTitle(R.string.home_delete_shortcut)
+            .setMessage(context.getString(R.string.home_remove_shortcut_confirm, item.title ?: ""))
             .setPositiveButton("Delete") { _, _ ->
                 val userOnly = loadUserBookmarks().filter { it.url != item.url || it.title != item.title }
                 saveUserBookmarks(userOnly)

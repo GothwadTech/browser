@@ -29,7 +29,7 @@
             android:layout_height="18dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_tab_default_favicon"
-            android:contentDescription="Favicon" />
+            android:contentDescription="@string/item_chrome_tab_grid_favicon" />
 
         <!-- Title -->
         <TextView
@@ -56,7 +56,7 @@
             android:tint="@color/day_night_text_secondary"
             android:scaleType="fitCenter"
             android:padding="5dp"
-            android:contentDescription="Close tab"
+            android:contentDescription="@string/close_tab"
             android:focusable="true"
             android:clickable="true" />
     </LinearLayout>
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:contentDescription="Tab preview" />
+            android:contentDescription="@string/item_chrome_tab_grid_tab_preview" />
 
         <!-- Fallback Placeholder when thumbnail is null -->
         <LinearLayout

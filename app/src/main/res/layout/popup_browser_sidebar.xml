@@ -37,7 +37,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Browser Menu"
+                android:text="@string/settings_browser_side_menu_browser_menu"
                 android:textColor="@color/day_night_text_color_contrast"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -45,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fast TV Navigation"
+                android:text="@string/browser_sidebar_fast_tv_navigation"
                 android:textColor="@color/day_night_text_secondary"
                 android:textSize="11sp" />
         </LinearLayout>
@@ -100,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="Bookmarks"
+                    android:text="@string/bookmarks"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="History"
+                    android:text="@string/history"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -160,7 +160,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="Downloads"
+                    android:text="@string/downloads"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -192,7 +192,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="Incognito Mode"
+                    android:text="@string/browser_sidebar_incognito_mode"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="App Lock PIN"
+                    android:text="@string/browser_sidebar_app_lock_pin"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -246,7 +246,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="App UI Zoom"
+                    android:text="@string/browser_sidebar_app_ui_zoom"
                     android:textColor="@color/day_night_text_secondary"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -327,7 +327,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="Settings"
+                    android:text="@string/settings"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -357,7 +357,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:text="About &amp; Help"
+                    android:text="@string/browser_sidebar_about_and_help"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="13sp" />
             </LinearLayout>

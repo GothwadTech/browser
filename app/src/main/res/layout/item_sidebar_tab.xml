@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ACTIVE"
+            android:text="@string/item_sidebar_tab_active"
             android:textColor="#38BDF8"
             android:textSize="9sp"
             android:textStyle="bold"
@@ -49,7 +49,7 @@
             android:layout_height="26dp"
             android:background="@drawable/bg_chrome_close_btn"
             android:clickable="true"
-            android:contentDescription="Close Tab"
+            android:contentDescription="@string/item_sidebar_tab_close_tab"
             android:focusable="true"
             android:padding="5dp"
             android:scaleType="fitCenter"
@@ -64,7 +64,7 @@
         android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:maxLines="2"
-        android:text="Google Search"
+        android:text="@string/item_sidebar_tab_google_search"
         android:textColor="@color/day_night_text_color_contrast"
         android:textSize="12sp"
         android:textStyle="bold" />
@@ -76,7 +76,7 @@
         android:layout_marginTop="2dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="google.com"
+        android:text="@string/item_sidebar_favorite_google_com"
         android:textColor="#64748B"
         android:textSize="10sp" />
 </LinearLayout>

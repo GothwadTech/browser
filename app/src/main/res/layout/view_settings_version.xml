@@ -36,7 +36,7 @@
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gothwad Browser"
+                    android:text="@string/app_name"
                     android:textColor="@color/google_accent"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -79,7 +79,7 @@
                 android:gravity="center"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="🐙 github.com/gothwadtech/tvbrowser"
+                android:text="@string/settings_version_github_com_gothwadtech_tvbrowser"
                 android:textColor="@color/selector_tv_tab_pill_text"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -95,7 +95,7 @@
                 android:gravity="center"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="🌐 gothwadtech.com"
+                android:text="@string/settings_version_gothwadtech_com"
                 android:textColor="@color/selector_tv_tab_pill_text"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -162,7 +162,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="🛡️ 100% Local &amp; Privacy First"
+            android:text="@string/settings_version_100_local_and_privacy"
             android:textColor="@color/google_accent"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -171,7 +171,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="4dp"
-            android:text="• Zero Tracking: No telemetry, no background analytics, and no remote data harvesting.\n• 100% Client-Side Local: All history, bookmarks, notes, and preferences remain solely on this device.\n• Open Source: Fully transparent architecture crafted by Gothwad Tech with zero server dependencies."
+            android:text="@string/settings_version_zero_tracking_no_telemetry"
             android:textColor="#CBD5E1"
             android:textSize="13sp" />
     </LinearLayout>
@@ -188,7 +188,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="📜 Legal, Author &amp; Organization"
+            android:text="@string/settings_version_legal_author_and_organization"
             android:textColor="@color/google_accent"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -212,7 +212,7 @@
                 android:gravity="center_vertical|start"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="🏢 About Gothwad Tech"
+                android:text="@string/about_gothwad_title"
                 android:textColor="@color/selector_tv_tab_pill_text"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -229,7 +229,7 @@
                 android:gravity="center_vertical|start"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="🔒 Privacy Policy (In-Built)"
+                android:text="@string/settings_version_privacy_policy_in_built"
                 android:textColor="@color/selector_tv_tab_pill_text"
                 android:textSize="13sp" />
         </LinearLayout>
@@ -253,7 +253,7 @@
                 android:gravity="center_vertical|start"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="📜 Terms &amp; Conditions"
+                android:text="@string/terms_and_conditions"
                 android:textColor="@color/selector_tv_tab_pill_text"
                 android:textSize="13sp" />
 
@@ -269,7 +269,7 @@
                 android:gravity="center_vertical|start"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="📃 Open Source License (MIT)"
+                android:text="@string/settings_version_open_source_license_mit"
                 android:textColor="@color/selector_tv_tab_pill_text"
                 android:textSize="13sp" />
         </LinearLayout>
@@ -292,7 +292,7 @@
                 android:gravity="center_vertical|start"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="☕ Support Gothwad Tech"
+                android:text="@string/support_gothwad_tech"
                 android:textColor="@color/selector_tv_tab_pill_text"
                 android:textSize="13sp" />
 
@@ -308,7 +308,7 @@
                 android:gravity="center_vertical|start"
                 android:paddingStart="14dp"
                 android:paddingEnd="14dp"
-                android:text="🌐 Visit gothwadtech.com"
+                android:text="@string/settings_version_visit_gothwadtech_com"
                 android:textColor="@color/google_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />

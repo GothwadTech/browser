@@ -176,7 +176,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                             setDestinationInExternalPublicDir(android.os.Environment.DIRECTORY_DOWNLOADS, "page_${System.currentTimeMillis()}.html")
                         }
                         dm.enqueue(request)
-                        Toast.makeText(activity, "Download started...", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, activity.getString(R.string.menu_download_started), Toast.LENGTH_SHORT).show()
                     } else {
                         activity.showDownloads(activity.vb.ibMenu)
                     }
@@ -254,7 +254,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                 }
                 activity.startActivity(Intent.createChooser(sendIntent, "Share URL"))
             } else {
-                Toast.makeText(activity, "No active webpage to share", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.menu_no_active_webpage_to), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -334,11 +334,11 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                     }
                     favDao.insert(newItem)
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(activity, "Shortcut created on Home & Bookmarks: $title", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, activity.getString(R.string.menu_shortcut_created, title), Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Toast.makeText(activity, "No webpage to create shortcut for", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.menu_no_webpage_to_create), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -365,9 +365,12 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         // 15. Help & feedback
         bindMenuItem(contentView.findViewById(R.id.btnMenuHelp)) {
             AlertDialog.Builder(activity)
-                .setTitle("Gothwad TV Browser")
-                .setMessage("Android TV & Tablet Web Browser.\n\nVersion: ${BuildConfig.VERSION_NAME}\nDeveloper: gothwadtech@gmail.com\n\nFast, lightweight, ad-free browsing optimized for remote and touch.")
-                .setPositiveButton("OK", null)
+                .setTitle(R.string.app_name)
+                .setMessage(activity.getString(R.string.menu_about_message, BuildConfig.VERSION_NAME))
+                .setPositiveButton(R.string.menu_about_website) { _, _ ->
+                    activity.navigate("https://github.com/GothwadTech/browser")
+                }
+                .setNegativeButton(android.R.string.ok, null)
                 .show()
         }
 
@@ -397,14 +400,14 @@ class ChromeMenuPopup(private val activity: MainActivity) {
             "Clear everything (History, Cache & Cookies)"
         )
         AlertDialog.Builder(activity)
-            .setTitle("Delete Browsing Data")
+            .setTitle(R.string.menu_delete_browsing_data)
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> {
                         CoroutineScope(Dispatchers.IO).launch {
                             AppDatabase.db.historyDao().deleteAll()
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(activity, "Browsing history cleared", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.menu_browsing_history_cleared), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -412,7 +415,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                         CoroutineScope(Dispatchers.IO).launch {
                             WebEngineFactory.clearCache(activity)
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(activity, "Cache & cookies cleared", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.menu_cache_and_cookies_cleared), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -421,7 +424,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                             AppDatabase.db.historyDao().deleteAll()
                             WebEngineFactory.clearCache(activity)
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(activity, "All browsing data cleared", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.menu_all_browsing_data_cleared), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

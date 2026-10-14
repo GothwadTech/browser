@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Download file"
+                android:text="@string/settings_download_prompt_download_file"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -83,7 +83,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="middle"
                         android:maxLines="1"
-                        android:text="file_name.apk"
+                        android:text="@string/settings_download_prompt_file_name_apk"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -93,7 +93,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="123.4 MB"
+                        android:text="@string/settings_download_prompt_123_4_mb"
                         android:textColor="#94A3B8"
                         android:textSize="13sp" />
                 </LinearLayout>
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="middle"
                     android:maxLines="1"
-                    android:text="Download/file_name.apk"
+                    android:text="@string/settings_download_prompt_download_file_name_apk"
                     android:textColor="#94A3B8"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -148,7 +148,7 @@
                 android:focusable="true"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
@@ -161,7 +161,7 @@
                 android:focusable="true"
                 android:paddingStart="28dp"
                 android:paddingEnd="28dp"
-                android:text="Download"
+                android:text="@string/download"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"

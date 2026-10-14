@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🖥️ Display &amp; UI Scaling"
+            android:text="@string/settings_display_and_ui_scaling"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -182,7 +182,7 @@
                     android:layout_weight="1.4"
                     android:background="@drawable/bg_tv_tab_pill"
                     android:focusable="true"
-                    android:text="50% (Default)"
+                    android:text="@string/settings_ui_scale_default"
                     android:textColor="@color/selector_tv_tab_pill_text"
                     android:textSize="11sp" />
 
@@ -240,7 +240,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🔍 Web Page Zoom Controls"
+            android:text="@string/settings_web_page_zoom_controls"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -312,7 +312,7 @@
                     android:layout_marginEnd="6dp"
                     android:background="@drawable/bg_tv_tab_pill"
                     android:focusable="true"
-                    android:text="📱 Mobile View Zoom"
+                    android:text="@string/settings_mobile_view_zoom"
                     android:textColor="@color/selector_tv_tab_pill_text"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -325,7 +325,7 @@
                     android:layout_marginStart="6dp"
                     android:background="@drawable/bg_tv_tab_pill"
                     android:focusable="true"
-                    android:text="🖥️ Desktop View Zoom"
+                    android:text="@string/settings_desktop_view_zoom"
                     android:textColor="@color/selector_tv_tab_pill_text"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -392,7 +392,7 @@
                     android:layout_weight="1.2"
                     android:background="@drawable/bg_tv_tab_pill"
                     android:focusable="true"
-                    android:text="100% (Def)"
+                    android:text="@string/settings_zoom_default"
                     android:textColor="@color/selector_tv_tab_pill_text"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -568,7 +568,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🎨 Themes &amp; Appearance"
+            android:text="@string/settings_themes_and_appearance"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -624,7 +624,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🎬 Media &amp; Playback"
+            android:text="@string/settings_media_and_playback"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -705,7 +705,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🔎 Search Engine Settings"
+            android:text="@string/settings_search_engine_settings"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -791,7 +791,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🏠 Home Page &amp; Startup"
+            android:text="@string/settings_home_page_and_startup"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -915,7 +915,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:duplicateParentState="true"
-                        android:text="Set as Default Browser"
+                        android:text="@string/settings_set_as_default_browser"
                         android:textColor="@color/selector_tv_setting_item_text"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -926,7 +926,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:duplicateParentState="true"
-                        android:text="Make Gothwad Browser your system default browser"
+                        android:text="@string/settings_make_gothwad_browser_your"
                         android:textColor="@color/google_text_secondary"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -948,7 +948,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🌐 User Agent &amp; Identity"
+            android:text="@string/settings_user_agent_and_identity"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1080,7 +1080,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="⚙️ Web Engine &amp; Rendering"
+            android:text="@string/settings_web_engine_and_rendering"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1189,7 +1189,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🛡️ Ad &amp; Tracker Blocker"
+            android:text="@string/settings_ad_and_tracker_blocker"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1218,7 +1218,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
-                android:text="Enable Ad &amp; Tracker Blocking"
+                android:text="@string/settings_enable_ad_and_tracker"
                 android:textColor="@color/selector_tv_setting_item_text"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -1244,7 +1244,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="6dp"
-                android:text="Filter List URL (EasyList format):"
+                android:text="@string/settings_filter_list_url_easylist"
                 android:textColor="@color/google_text_secondary"
                 android:textSize="13sp" />
 
@@ -1275,7 +1275,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Filter list loaded &amp; active"
+                    android:text="@string/settings_filter_list_loaded_and"
                     android:textColor="#10B981"
                     android:textSize="12sp" />
 
@@ -1294,7 +1294,7 @@
                     android:focusable="true"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="Update Now"
+                    android:text="@string/settings_update_now"
                     android:textColor="@color/google_accent"
                     android:textSize="13sp"
                     android:textStyle="bold" />
@@ -1316,7 +1316,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🔒 App Security &amp; PIN Lock"
+            android:text="@string/settings_app_security_and_pin"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1345,7 +1345,7 @@
                 android:layout_marginEnd="12dp"
                 android:layout_weight="1"
                 android:duplicateParentState="true"
-                android:text="Enable App Lock (4-Digit PIN)"
+                android:text="@string/settings_enable_app_lock_4"
                 android:textColor="@color/selector_tv_setting_item_text"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -1373,7 +1373,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="No PIN set (Set 4-digit PIN to enable)"
+                android:text="@string/settings_no_pin_set_set"
                 android:textColor="@color/google_text_secondary"
                 android:textSize="13sp" />
 
@@ -1385,7 +1385,7 @@
                 android:focusable="true"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:text="Change PIN"
+                android:text="@string/settings_change_pin"
                 android:textColor="@color/google_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -1406,7 +1406,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🗑️ Cache &amp; Storage"
+            android:text="@string/settings_cache_and_storage"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1430,7 +1430,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Clear Browser Cache &amp; Cookies"
+                    android:text="@string/settings_clear_browser_cache_and"
                     android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -1439,7 +1439,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Frees up internal TV storage and resets temporary web engine sessions."
+                    android:text="@string/settings_frees_up_internal_tv"
                     android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -1480,7 +1480,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Record Browsing History"
+                    android:text="@string/settings_record_browsing_history"
                     android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -1490,7 +1490,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Automatically save visited websites to your local history. When turned off, history tracking is paused."
+                    android:text="@string/settings_automatically_save_visited_websites"
                     android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -1524,7 +1524,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Clear Browsing History"
+                    android:text="@string/settings_clear_browsing_history"
                     android:textColor="@color/google_text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -1533,7 +1533,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
-                    android:text="Delete all visited page records and search history from this device."
+                    android:text="@string/settings_delete_all_visited_page"
                     android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -1546,7 +1546,7 @@
                 android:focusable="true"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="Clear History"
+                android:text="@string/settings_clear_history"
                 android:textColor="#F59E0B"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -1567,7 +1567,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="⚡ Quick Tools &amp; Utilities"
+            android:text="@string/settings_quick_tools_and_utilities"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1675,7 +1675,7 @@
             android:gravity="center_vertical|start"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="Rotate Screen"
+            android:text="@string/settings_rotate_screen"
             android:textColor="@color/selector_tv_tab_pill_text"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -1709,7 +1709,7 @@
             android:gravity="center_vertical|start"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="Set as Default Browser"
+            android:text="@string/settings_set_as_default_browser"
             android:textColor="@color/selector_tv_tab_pill_text"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -1729,7 +1729,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🎮 Remote &amp; Joystick Navigation"
+            android:text="@string/settings_remote_and_joystick_navigation"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -1810,7 +1810,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="🖱️ Virtual Cursor &amp; Physics"
+            android:text="@string/settings_virtual_cursor_and_physics"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -2007,7 +2007,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:text="⌨️ Keyboard &amp; Mouse Settings"
+            android:text="@string/settings_keyboard_and_mouse_settings"
             android:textColor="@color/google_accent"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -2024,7 +2024,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="🔌 Connected Input Devices (Auto-Detect)"
+                android:text="@string/settings_connected_input_devices_auto"
                 android:textColor="@color/google_text_primary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -2035,7 +2035,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:lineSpacingExtra="4dp"
-                android:text="Scanning for USB / Bluetooth devices..."
+                android:text="@string/settings_scanning_for_usb_bluetooth"
                 android:textColor="@color/google_text_secondary"
                 android:textSize="13sp" />
 
@@ -2055,7 +2055,7 @@
                 android:focusable="true"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:text="🔄 Refresh Device List"
+                android:text="@string/settings_refresh_device_list"
                 android:textColor="@color/google_accent"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -2133,7 +2133,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Pointer Size (Min 30% to Max 300%):"
+                        android:text="@string/settings_pointer_size_min_30"
                         android:textColor="@color/google_text_secondary"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -2142,7 +2142,7 @@
                         android:id="@+id/tvHardwareMouseSizeValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="100% (Normal)"
+                        android:text="@string/settings_percent_normal"
                         android:textColor="@color/google_accent"
                         android:textSize="13sp"
                         android:textStyle="bold" />
@@ -2163,7 +2163,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Quick Size Presets:"
+                    android:text="@string/settings_quick_size_presets"
                     android:textColor="@color/google_text_secondary"
                     android:textSize="12sp" />
 
@@ -2181,7 +2181,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
-                        android:text="30% Mini"
+                        android:text="@string/settings_percent_mini"
                         android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
@@ -2193,7 +2193,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
-                        android:text="60% Small"
+                        android:text="@string/settings_percent_small"
                         android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
@@ -2205,7 +2205,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
-                        android:text="100% Default"
+                        android:text="@string/settings_percent_default"
                         android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
@@ -2217,7 +2217,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
-                        android:text="150% Large"
+                        android:text="@string/settings_percent_large"
                         android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
 
@@ -2228,7 +2228,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_tv_tab_pill"
                         android:focusable="true"
-                        android:text="250% Huge"
+                        android:text="@string/settings_percent_huge"
                         android:textColor="@color/google_text_primary"
                         android:textSize="11sp" />
                 </LinearLayout>
@@ -2286,7 +2286,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
-                            android:text="Real-time rendered hardware cursor preview (scales smoothly from mini to huge)"
+                            android:text="@string/settings_real_time_rendered_hardware"
                             android:textColor="@color/google_text_secondary"
                             android:textSize="11sp" />
                     </LinearLayout>
@@ -2331,7 +2331,7 @@
                     android:layout_marginStart="0dp"
                     android:layout_weight="1"
                     android:duplicateParentState="true"
-                    android:text="Disable On-Screen Virtual Keyboard"
+                    android:text="@string/settings_disable_on_screen_virtual"
                     android:textColor="@color/selector_tv_setting_item_text"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -2350,7 +2350,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:duplicateParentState="true"
-                android:text="Prevents the Android TV soft keyboard from popping up when a physical keyboard is attached."
+                android:text="@string/settings_prevents_the_android_tv"
                 android:textColor="@color/selector_tv_setting_item_desc"
                 android:textSize="12sp" />
         </LinearLayout>

@@ -237,7 +237,7 @@ class FavoritesSidebarPopup(
         val url = currentTab?.url ?: ""
 
         if (url.isBlank() || url == "about:blank") {
-            Toast.makeText(activity, "No active page to bookmark", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.bookmarks_no_active_page_to), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -251,7 +251,7 @@ class FavoritesSidebarPopup(
             val db = AppDatabase.db
             db.favoritesDao().insert(item)
             withContext(Dispatchers.Main) {
-                Toast.makeText(activity, "Bookmark Added!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.bookmarks_bookmark_added), Toast.LENGTH_SHORT).show()
                 loadBookmarks()
             }
         }

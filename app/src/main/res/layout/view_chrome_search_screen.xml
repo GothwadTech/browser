@@ -78,7 +78,7 @@
                 android:tint="#9AA0A6"
                 android:padding="7dp"
                 android:scaleType="fitCenter"
-                android:contentDescription="Clear query"
+                android:contentDescription="@string/clear_query"
                 android:visibility="gone"
                 android:clickable="true"
                 android:focusable="true" />

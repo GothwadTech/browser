@@ -1,5 +1,6 @@
 package com.gothwad.browser.utils
 
+import com.gothwad.browser.R
 import android.app.Activity
 import android.app.role.RoleManager
 import android.content.Context
@@ -34,7 +35,7 @@ object DefaultBrowserHelper {
             val roleManager = context.getSystemService(Context.ROLE_SERVICE) as? RoleManager
             if (roleManager != null && roleManager.isRoleAvailable(RoleManager.ROLE_BROWSER)) {
                 if (roleManager.isRoleHeld(RoleManager.ROLE_BROWSER)) {
-                    Toast.makeText(context, "Gothwad Browser is already your default browser", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.default_browser_gothwad_browser_is_already), Toast.LENGTH_SHORT).show()
                     return
                 }
                 try {
@@ -59,7 +60,7 @@ object DefaultBrowserHelper {
                     }
                 }
                 context.startActivity(intent)
-                Toast.makeText(context, "Select 'Browser app' -> choose 'Gothwad Browser'", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.default_browser_select_browser_app_choose), Toast.LENGTH_LONG).show()
                 return
             } catch (e: Exception) {
                 // Fallthrough to app details
@@ -75,9 +76,9 @@ object DefaultBrowserHelper {
                 }
             }
             context.startActivity(intent)
-            Toast.makeText(context, "Set Gothwad Browser as default browser in App Settings", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.default_browser_set_gothwad_browser_as), Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
-            Toast.makeText(context, "Could not open system settings", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.default_browser_could_not_open_system), Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -58,6 +58,29 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
 
     private var lastFocusedCategoryItem: View? = null
 
+    companion object {
+        /** title resource -> subtitle resource, so the search box also matches the subtitle text. */
+        private val categorySubtitleRes = mapOf(
+            R.string.engine to R.string.settings_google_duckduckgo_bing_custom,
+            R.string.settings_display_and_ui_scale to R.string.settings_interface_scale_orientation_and,
+            R.string.settings_web_page_zoom to R.string.settings_default_page_magnification_and,
+            R.string.settings_themes_and_appearance to R.string.settings_dark_mode_amoled_black,
+            R.string.settings_media_playback_and_video to R.string.settings_autoplay_media_background_audio,
+            R.string.settings_home_page_and_startup to R.string.settings_new_tab_grid_custom,
+            R.string.settings_user_agent_and_identity to R.string.settings_desktop_mode_mobile_browser,
+            R.string.settings_web_engine_and_rendering to R.string.settings_system_webview_gpu_acceleration,
+            R.string.settings_ad_and_tracker_blocker to R.string.settings_easylist_filter_rules_auto,
+            R.string.settings_app_lock_and_pin to R.string.settings_passcode_protection_incognito_lock,
+            R.string.settings_cache_and_storage to R.string.settings_clear_browsing_history_cookies,
+            R.string.settings_quick_tools_and_utilities to R.string.settings_keep_screen_on_downloads,
+            R.string.settings_remote_and_joystick to R.string.settings_d_pad_navigation_analog,
+            R.string.settings_virtual_cursor_and_physics to R.string.settings_speed_acceleration_cursor_size,
+            R.string.settings_keyboard_and_mouse to R.string.settings_virtual_keyboard_pointer_customisation,
+            R.string.settings_keyboard_shortcuts to R.string.settings_configurable_hotkeys_for_tabs,
+            R.string.settings_about to R.string.settings_about_and_version
+        )
+    }
+
     init {
         rootContainer = object : FrameLayout(context) {
             override fun dispatchKeyEvent(event: KeyEvent): Boolean {
@@ -178,80 +201,95 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
         }
 
         val etSearch = contentView.findViewById<android.widget.EditText>(R.id.etSearchSettings)
+        // Search over the same resources the rows display: one source of truth, and it becomes
+        // translatable for free (it used to match against hard-coded English keyword blobs).
         val allCategoryItems = listOf(
-            itemCatSearchEngine to "Search Engine",
-            itemCatDisplayScale to "Display Scale Orientation",
-            itemCatWebZoom to "Web Page Zoom Magnification",
-            itemCatThemes to "Themes Appearance Dark Mode",
-            itemCatMediaPlayback to "Media Autoplay Video",
-            itemCatHomePage to "Home Page Startup",
-            itemCatUserAgent to "User Agent Identity Desktop Mobile",
-            itemCatWebEngine to "Web Engine Rendering Chromium",
-            itemCatAdBlock to "AdBlock Ad Blocking Filter",
-            itemCatAppLock to "App Lock PIN Security",
-            itemCatCacheStorage to "Cache Storage Cookies Clear Data",
-            itemCatQuickTools to "Quick Tools Toolbar Shortcuts",
-            itemCatRemoteNav to "Remote Navigation D-pad Controls",
-            itemCatCursorPhysics to "Virtual Cursor Speed Acceleration",
-            itemCatKeyboardMouse to "Keyboard Mouse Hardware Input",
-            itemCatShortcuts to "Keyboard Shortcuts Custom Bindings",
-            itemCatAbout to "About Gothwad Browser Version Info"
+            itemCatSearchEngine to R.string.engine,
+            itemCatDisplayScale to R.string.settings_display_and_ui_scale,
+            itemCatWebZoom to R.string.settings_web_page_zoom,
+            itemCatThemes to R.string.settings_themes_and_appearance,
+            itemCatMediaPlayback to R.string.settings_media_playback_and_video,
+            itemCatHomePage to R.string.settings_home_page_and_startup,
+            itemCatUserAgent to R.string.settings_user_agent_and_identity,
+            itemCatWebEngine to R.string.settings_web_engine_and_rendering,
+            itemCatAdBlock to R.string.settings_ad_and_tracker_blocker,
+            itemCatAppLock to R.string.settings_app_lock_and_pin,
+            itemCatCacheStorage to R.string.settings_cache_and_storage,
+            itemCatQuickTools to R.string.settings_quick_tools_and_utilities,
+            itemCatRemoteNav to R.string.settings_remote_and_joystick,
+            itemCatCursorPhysics to R.string.settings_virtual_cursor_and_physics,
+            itemCatKeyboardMouse to R.string.settings_keyboard_and_mouse,
+            itemCatShortcuts to R.string.settings_keyboard_shortcuts,
+            itemCatAbout to R.string.settings_about
         )
+        val categoryKeywords = allCategoryItems.map { (view, titleRes) ->
+            val subRes = categorySubtitleRes[titleRes] ?: 0
+            val text = buildString {
+                append(context.getString(titleRes))
+                if (subRes != 0) append(' ').append(context.getString(subRes))
+            }
+            view to text.lowercase(java.util.Locale.getDefault())
+        }
+
         etSearch?.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val q = s?.toString()?.trim() ?: ""
-                for ((view, text) in allCategoryItems) {
-                    view.visibility = if (q.isBlank() || text.contains(q, ignoreCase = true)) View.VISIBLE else View.GONE
+                for ((view, text) in categoryKeywords) {
+                    view.visibility = if (q.isBlank() || text.contains(q.lowercase(java.util.Locale.getDefault()))) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
                 }
             }
             override fun afterTextChanged(s: android.text.Editable?) {}
         })
 
         bindCategoryItem(itemCatDisplayScale) {
-            openMainCategory(itemCatDisplayScale, "Display & UI Scale", "Display & Layout", SettingsCategory.DISPLAY_SCALE)
+            openMainCategory(itemCatDisplayScale, R.string.settings_display_and_ui_scale, R.string.settings_interface_scale_orientation_and, SettingsCategory.DISPLAY_SCALE)
         }
         bindCategoryItem(itemCatWebZoom) {
-            openMainCategory(itemCatWebZoom, "Web Page Zoom", "Zoom Controls", SettingsCategory.WEB_ZOOM)
+            openMainCategory(itemCatWebZoom, R.string.settings_web_page_zoom, R.string.settings_default_page_magnification_and, SettingsCategory.WEB_ZOOM)
         }
         bindCategoryItem(itemCatThemes) {
-            openMainCategory(itemCatThemes, "Themes & Appearance", "Appearance & Dark Mode", SettingsCategory.THEMES)
+            openMainCategory(itemCatThemes, R.string.settings_themes_and_appearance, R.string.settings_dark_mode_amoled_black, SettingsCategory.THEMES)
         }
         bindCategoryItem(itemCatMediaPlayback) {
-            openMainCategory(itemCatMediaPlayback, "Media & Playback", "Video & Audio", SettingsCategory.MEDIA_PLAYBACK)
+            openMainCategory(itemCatMediaPlayback, R.string.settings_media_playback_and_video, R.string.settings_autoplay_media_background_audio, SettingsCategory.MEDIA_PLAYBACK)
         }
         bindCategoryItem(itemCatSearchEngine) {
-            openMainCategory(itemCatSearchEngine, "Search Engine", "Default Engine", SettingsCategory.SEARCH_ENGINE)
+            openMainCategory(itemCatSearchEngine, R.string.engine, R.string.settings_google_duckduckgo_bing_custom, SettingsCategory.SEARCH_ENGINE)
         }
         bindCategoryItem(itemCatHomePage) {
-            openMainCategory(itemCatHomePage, "Home Page & Startup", "Startup & Bookmarks", SettingsCategory.HOME_PAGE)
+            openMainCategory(itemCatHomePage, R.string.settings_home_page_and_startup, R.string.settings_new_tab_grid_custom, SettingsCategory.HOME_PAGE)
         }
         bindCategoryItem(itemCatUserAgent) {
-            openMainCategory(itemCatUserAgent, "User Agent & Identity", "Desktop / Mobile Mode", SettingsCategory.USER_AGENT)
+            openMainCategory(itemCatUserAgent, R.string.settings_user_agent_and_identity, R.string.settings_desktop_mode_mobile_browser, SettingsCategory.USER_AGENT)
         }
         bindCategoryItem(itemCatWebEngine) {
-            openMainCategory(itemCatWebEngine, "Web Engine & Rendering", "Browser Core", SettingsCategory.WEB_ENGINE)
+            openMainCategory(itemCatWebEngine, R.string.settings_web_engine_and_rendering, R.string.settings_system_webview_gpu_acceleration, SettingsCategory.WEB_ENGINE)
         }
         bindCategoryItem(itemCatAdBlock) {
-            openMainCategory(itemCatAdBlock, "Ad & Tracker Blocker", "Filters & Rules", SettingsCategory.AD_BLOCKER)
+            openMainCategory(itemCatAdBlock, R.string.settings_ad_and_tracker_blocker, R.string.settings_easylist_filter_rules_auto, SettingsCategory.AD_BLOCKER)
         }
         bindCategoryItem(itemCatAppLock) {
-            openMainCategory(itemCatAppLock, "App Lock & PIN Security", "Master Passcode", SettingsCategory.APP_LOCK)
+            openMainCategory(itemCatAppLock, R.string.settings_app_lock_and_pin, R.string.settings_passcode_protection_incognito_lock, SettingsCategory.APP_LOCK)
         }
         bindCategoryItem(itemCatCacheStorage) {
-            openMainCategory(itemCatCacheStorage, "Cache & Storage", "Data & History", SettingsCategory.CACHE_STORAGE)
+            openMainCategory(itemCatCacheStorage, R.string.settings_cache_and_storage, R.string.settings_clear_browsing_history_cookies, SettingsCategory.CACHE_STORAGE)
         }
         bindCategoryItem(itemCatQuickTools) {
-            openMainCategory(itemCatQuickTools, "Quick Tools & Utilities", "Toolbox & Actions", SettingsCategory.QUICK_TOOLS)
+            openMainCategory(itemCatQuickTools, R.string.settings_quick_tools_and_utilities, R.string.settings_keep_screen_on_downloads, SettingsCategory.QUICK_TOOLS)
         }
         bindCategoryItem(itemCatRemoteNav) {
-            openMainCategory(itemCatRemoteNav, "Remote & Joystick", "Navigation Controls", SettingsCategory.REMOTE_NAV)
+            openMainCategory(itemCatRemoteNav, R.string.settings_remote_and_joystick, R.string.settings_d_pad_navigation_analog, SettingsCategory.REMOTE_NAV)
         }
         bindCategoryItem(itemCatCursorPhysics) {
-            openMainCategory(itemCatCursorPhysics, "Virtual Cursor & Physics", "Pointer Controls", SettingsCategory.CURSOR_PHYSICS)
+            openMainCategory(itemCatCursorPhysics, R.string.settings_virtual_cursor_and_physics, R.string.settings_speed_acceleration_cursor_size, SettingsCategory.CURSOR_PHYSICS)
         }
         bindCategoryItem(itemCatKeyboardMouse) {
-            openMainCategory(itemCatKeyboardMouse, "Keyboard & Mouse", "Hardware Devices", SettingsCategory.KEYBOARD_MOUSE)
+            openMainCategory(itemCatKeyboardMouse, R.string.settings_keyboard_and_mouse, R.string.settings_virtual_keyboard_pointer_customisation, SettingsCategory.KEYBOARD_MOUSE)
         }
         bindCategoryItem(itemCatShortcuts) {
             openShortcuts(itemCatShortcuts)
@@ -281,13 +319,13 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
 
     private fun openMainCategory(
         clickedItem: View,
-        title: String,
-        badge: String,
+        @androidx.annotation.StringRes titleRes: Int,
+        @androidx.annotation.StringRes badgeRes: Int,
         category: SettingsCategory
     ) {
         lastFocusedCategoryItem = clickedItem
-        tvSettingsDetailTitle.text = title
-        tvSettingsDetailBadge.text = badge
+        tvSettingsDetailTitle.setText(titleRes)
+        tvSettingsDetailBadge.setText(badgeRes)
 
         val mv = mainView ?: return
         flTabsContent.removeAllViews()
@@ -300,7 +338,7 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
     private fun openShortcuts(clickedItem: View) {
         lastFocusedCategoryItem = clickedItem
         tvSettingsDetailTitle.text = context.getString(R.string.tab_shortcuts)
-        tvSettingsDetailBadge.text = "Navigation & Keys"
+        tvSettingsDetailBadge.setText(R.string.settings_navigation_and_keys)
 
         val sv = shortcutsView ?: return
         flTabsContent.removeAllViews()
@@ -311,8 +349,8 @@ class SettingsDialog(private val context: Context, val model: SettingsModel) :
 
     private fun openAbout(clickedItem: View) {
         lastFocusedCategoryItem = clickedItem
-        tvSettingsDetailTitle.text = "About & Version"
-        tvSettingsDetailBadge.text = "Build Information"
+        tvSettingsDetailTitle.setText(R.string.settings_about_and_version)
+        tvSettingsDetailBadge.setText(R.string.settings_gothwad_browser_build_details)
 
         val vv = versionView ?: return
         flTabsContent.removeAllViews()

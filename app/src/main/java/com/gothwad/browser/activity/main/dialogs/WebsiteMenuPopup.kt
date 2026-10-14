@@ -117,12 +117,12 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
                         )
                     )
                     NativeHomeView.saveUserBookmarks(activity, currentList)
-                    Toast.makeText(activity, "Added '$title' to Shortcuts", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, activity.getString(R.string.menu_added_to_shortcuts, title), Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(activity, "Already in Shortcuts", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, activity.getString(R.string.menu_already_in_shortcuts), Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(activity, "Cannot bookmark empty page", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.menu_cannot_bookmark_empty_page), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -165,7 +165,7 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
             val isDesk = cbDesktop.isChecked
             activity.applyWebPageZoom(100, isDesk)
             updateZoomDisplay()
-            Toast.makeText(activity, "Zoom reset to 100%", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.menu_zoom_reset_to_100), Toast.LENGTH_SHORT).show()
         }
 
         // 1. New Tab
@@ -197,7 +197,7 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
                 }
                 activity.startActivity(Intent.createChooser(sendIntent, "Share URL"))
             } else {
-                Toast.makeText(activity, "No active page to share", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.menu_no_active_page_to), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -213,13 +213,13 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
         }
 
         AlertDialog.Builder(activity)
-            .setTitle("🔍 Find in page")
+            .setTitle(R.string.menu_find_in_page)
             .setView(input)
             .setPositiveButton("Find") { _, _ ->
                 val query = input.text.toString().trim()
                 if (query.isNotEmpty()) {
                     webView.findAllAsync(query)
-                    Toast.makeText(activity, "Searching for: $query", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, activity.getString(R.string.menu_searching_for, query), Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancel", null)

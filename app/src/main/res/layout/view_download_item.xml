@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="File Name"
+            android:text="@string/settings_download_item_file_name"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -56,7 +56,7 @@
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="https://example.com"
+            android:text="@string/settings_download_item_https_example_com"
             android:textColor="#94A3B8"
             android:textSize="12sp" />
 
@@ -82,7 +82,7 @@
             android:id="@+id/tvSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 KB"
+            android:text="@string/settings_download_item_0_kb"
             android:textColor="#FFFFFF"
             android:textSize="13sp"
             android:textStyle="bold" />

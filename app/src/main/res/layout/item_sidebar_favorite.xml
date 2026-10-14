@@ -37,7 +37,7 @@
             android:layout_height="22dp"
             android:background="@drawable/bg_tv_side_back_btn"
             android:clickable="true"
-            android:contentDescription="Delete Bookmark"
+            android:contentDescription="@string/item_sidebar_favorite_delete_bookmark"
             android:focusable="true"
             android:padding="4dp"
             android:scaleType="fitCenter"
@@ -52,7 +52,7 @@
         android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Google"
+        android:text="@string/item_sidebar_favorite_google"
         android:textColor="@color/day_night_text_color_contrast"
         android:textSize="12sp"
         android:textStyle="bold" />
@@ -64,7 +64,7 @@
         android:layout_marginTop="2dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="google.com"
+        android:text="@string/item_sidebar_favorite_google_com"
         android:textColor="#64748B"
         android:textSize="10sp" />
 </LinearLayout>

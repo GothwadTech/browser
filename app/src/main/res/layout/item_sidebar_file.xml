@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="middle"
             android:maxLines="1"
-            android:text="Download"
+            android:text="@string/download"
             android:textColor="@color/day_night_text_color_contrast"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="12 items • Today"
+            android:text="@string/item_sidebar_file_12_items_today"
             android:textColor="#94A3B8"
             android:textSize="11sp" />
     </LinearLayout>
@@ -53,7 +53,7 @@
         android:layout_height="28dp"
         android:background="@drawable/bg_tv_side_back_btn"
         android:clickable="true"
-        android:contentDescription="File options"
+        android:contentDescription="@string/item_sidebar_file_file_options"
         android:focusable="true"
         android:padding="6dp"
         android:scaleType="fitCenter"

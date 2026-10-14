@@ -43,7 +43,7 @@
                 android:layout_height="32dp"
                 android:background="@drawable/bg_tv_side_back_btn"
                 android:clickable="true"
-                android:contentDescription="Close Downloads"
+                android:contentDescription="@string/settings_sidebar_downloads_close_downloads"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="Downloads"
+                android:text="@string/downloads"
                 android:textColor="@color/day_night_text_color_contrast"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -71,7 +71,7 @@
                 android:paddingTop="3dp"
                 android:paddingEnd="8dp"
                 android:paddingBottom="3dp"
-                android:text="0 files"
+                android:text="@string/settings_sidebar_downloads_0_files"
                 android:textColor="#38BDF8"
                 android:textSize="11sp"
                 android:textStyle="bold" />
@@ -86,7 +86,7 @@
                 android:minWidth="0dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="Clear"
+                android:text="@string/clear"
                 android:textAllCaps="false"
                 android:textColor="@color/day_night_text_color_contrast"
                 android:textSize="11sp" />
@@ -107,7 +107,7 @@
                 android:layout_marginEnd="4dp"
                 android:background="@drawable/bg_pill_button"
                 android:focusable="true"
-                android:text="All"
+                android:text="@string/activity_downloads_all"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="11sp"
@@ -122,7 +122,7 @@
                 android:layout_marginEnd="2dp"
                 android:background="@drawable/bg_pill_button"
                 android:focusable="true"
-                android:text="Active"
+                android:text="@string/activity_downloads_active"
                 android:textAllCaps="false"
                 android:textColor="#94A3B8"
                 android:textSize="11sp" />
@@ -135,7 +135,7 @@
                 android:layout_marginStart="4dp"
                 android:background="@drawable/bg_pill_button"
                 android:focusable="true"
-                android:text="Done"
+                android:text="@string/done"
                 android:textAllCaps="false"
                 android:textColor="#94A3B8"
                 android:textSize="11sp" />
@@ -175,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="No Downloads Yet"
+                    android:text="@string/settings_sidebar_downloads_no_downloads_yet"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -184,7 +184,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Downloaded files will appear here"
+                    android:text="@string/settings_sidebar_downloads_downloaded_files_will_appear"
                     android:textColor="#64748B"
                     android:textSize="12sp" />
             </LinearLayout>

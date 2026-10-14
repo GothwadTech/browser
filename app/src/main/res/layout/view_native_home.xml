@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="You've gone Incognito"
+                android:text="@string/settings_native_home_you_ve_gone_incognito"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -75,7 +75,7 @@
                 android:layout_marginTop="8dp"
                 android:maxWidth="700dp"
                 android:gravity="center"
-                android:text="Now you can browse privately, and other people who use this device won't see your activity. However, downloads and bookmarks will be saved."
+                android:text="@string/settings_native_home_now_you_can_browse"
                 android:textColor="#9AA0A6"
                 android:textSize="13sp"
                 android:lineSpacingExtra="3dp" />
@@ -102,7 +102,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Chrome won't save:"
+                        android:text="@string/settings_native_home_chrome_won_t_save"
                         android:textColor="#E8EAED"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -111,7 +111,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="• Your browsing history"
+                        android:text="@string/settings_native_home_your_browsing_history"
                         android:textColor="#BDC1C6"
                         android:textSize="12.5sp" />
 
@@ -119,7 +119,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="• Cookies and site data"
+                        android:text="@string/settings_native_home_cookies_and_site_data"
                         android:textColor="#BDC1C6"
                         android:textSize="12.5sp" />
 
@@ -127,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="• Information entered in forms"
+                        android:text="@string/settings_native_home_information_entered_in_forms"
                         android:textColor="#BDC1C6"
                         android:textSize="12.5sp" />
                 </LinearLayout>
@@ -145,7 +145,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Your activity might still be visible to:"
+                        android:text="@string/settings_native_home_your_activity_might_still"
                         android:textColor="#E8EAED"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -154,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="• Websites you visit"
+                        android:text="@string/settings_native_home_websites_you_visit"
                         android:textColor="#BDC1C6"
                         android:textSize="12.5sp" />
 
@@ -162,7 +162,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="• Your employer or school"
+                        android:text="@string/settings_native_home_your_employer_or_school"
                         android:textColor="#BDC1C6"
                         android:textSize="12.5sp" />
 
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="• Your internet service provider"
+                        android:text="@string/settings_native_home_your_internet_service_provider"
                         android:textColor="#BDC1C6"
                         android:textSize="12.5sp" />
                 </LinearLayout>
@@ -187,7 +187,7 @@
                 android:focusableInTouchMode="true"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp"
-                android:text="Close Incognito Mode"
+                android:text="@string/settings_native_home_close_incognito_mode"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />

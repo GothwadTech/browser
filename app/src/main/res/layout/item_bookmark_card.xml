@@ -28,7 +28,7 @@
             android:paddingEnd="8dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
-            android:text="page"
+            android:text="@string/item_bookmark_card_page"
             android:textColor="#94A3B8"
             android:textSize="10sp"
             android:textStyle="bold" />
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="WhatsApp"
+            android:text="@string/item_bookmark_card_whatsapp"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="web.whatsapp.com"
+                android:text="@string/item_bookmark_card_web_whatsapp_com"
                 android:textColor="#94A3B8"
                 android:textSize="11sp" />
         </LinearLayout>
