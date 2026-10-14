@@ -313,7 +313,7 @@
     <string name="shortcut_created">Shortcut added to the Home screen</string>
     <string name="desktop_site_on">Desktop site enabled</string>
     <string name="desktop_site_off">Mobile site enabled</string>
-    <string name="page_download_started">Saving this page\'s HTML\u2026</string>
+    <string name="page_download_started">Saving this page\'s HTML…</string>
     <string name="safe_browsing_title">Safe Browsing protection</string>
     <string name="safe_browsing_desc">Ask the WebView engine to check navigation and downloads against Google\'s Safe Browsing lists, like Chrome does. Disabling it is faster on very slow networks but unsafe.</string>
     <!-- App lock / PIN -->
@@ -590,9 +590,9 @@
     <string name="settings_download_item_0_kb">0 KB</string>
     <string name="settings_history_item_page_title">Page Title</string>
     <string name="settings_history_item_remove_from_history">Remove from history</string>
-    <string name="settings_native_home_you_ve_gone_incognito">You've gone Incognito</string>
-    <string name="settings_native_home_now_you_can_browse">Now you can browse privately, and other people who use this device won't see your activity. However, downloads and bookmarks will be saved.</string>
-    <string name="settings_native_home_chrome_won_t_save">Chrome won't save:</string>
+    <string name="settings_native_home_you_ve_gone_incognito">You\'ve gone Incognito</string>
+    <string name="settings_native_home_now_you_can_browse">Now you can browse privately, and other people who use this device won\'t see your activity. However, downloads and bookmarks will be saved.</string>
+    <string name="settings_native_home_chrome_won_t_save">Chrome won\'t save:</string>
     <string name="settings_native_home_your_browsing_history">• Your browsing history</string>
     <string name="settings_native_home_cookies_and_site_data">• Cookies and site data</string>
     <string name="settings_native_home_information_entered_in_forms">• Information entered in forms</string>

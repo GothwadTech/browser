@@ -66,8 +66,10 @@ escape_gh() {
 }
 
 if [[ -s "$log" ]]; then
+  total=$(grep -cE '^e: ' "$log" || true)
   digest=$(
     {
+      [ "$total" -gt 12 ] 2>/dev/null && echo "($total Kotlin compiler errors in total; first 12 below)"
       grep -E '^e: ' "$log" | head -12
       grep -E ' error: |^[[:space:]]*error:' "$log" | head -20
       awk '/^FAILURE: Build (failed|completion failed)/{p=1} p{print} /Get more help/{p=0}' "$log" | head -14

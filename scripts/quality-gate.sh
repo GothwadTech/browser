@@ -93,6 +93,36 @@ USED_COL=$(grep -rhoE '@color/[a-zA-Z0-9_]+|(android\.)?R\.color\.[a-zA-Z0-9_]+'
 missing_col=$(comm -23 <(printf '%s\n' "$USED_COL") <(printf '%s\n' "$COL_RES" | sort -u))
 report "no dangling colour references" "$missing_col"
 
+# aapt2 rejects an unescaped apostrophe and a \uXXXX escape in a string resource (a resource is
+# not a Kotlin literal). Both came out of scripted extraction, so the script checks the script.
+esc=$(python3 - <<'EOF' 2>/dev/null || true
+import glob, re
+files = sorted(set(glob.glob('app/src/main/res/values*/*.xml') + glob.glob('app/common/src/main/res/values*/*.xml')))
+BS = chr(92)
+for p in files:
+    for i, line in enumerate(open(p, encoding='utf-8'), 1):
+        m = re.match(r'\s*<(?:string|item)\b[^>]*>(.*?)</(?:string|item)>\s*$', line)
+        if not m:
+            continue
+        v = m.group(1)
+        bad = []
+        if re.search(BS + '[uU][0-9a-fA-F]', v):
+            bad.append('unicode escape (a resource is not a Kotlin literal)')
+        quoted = v.strip().startswith('"') and v.strip().endswith('"') and v.strip().count('"') == 2
+        if not quoted:
+            for q in [j for j, c in enumerate(v) if c == chr(39)]:
+                k = 0
+                while q - 1 - k >= 0 and v[q - 1 - k] == BS:
+                    k += 1
+                if k % 2 == 0:  # 0 = unescaped, 2 = escaped backslash then a live quote
+                    bad.append('apostrophe needs a single backslash: %r' % v[max(0, q - 6):q + 2])
+                    break
+        if bad:
+            print('%s:%d: %s' % (p, i, '; '.join(bad)))
+EOF
+)
+report "string resources escape apostrophes and avoid unicode escapes" "$esc"
+
 # CDATA inside a <string> is a hard aapt2 failure ("Can not extract resource from ParsedResource"),
 # so escaped entities are the only legal way to carry & or < in a resource.
 cdata=$(grep -rn 'CDATA' app/src/main/res/values* app/common/src/main/res/values* 2>/dev/null || true)
