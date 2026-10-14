@@ -51,7 +51,15 @@ jobs:
           cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
       - name: Unit tests (app + common)
-        run: ./gradlew :app:common:testDebugUnitTest testDebugUnitTest --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew :app:common:testDebugUnitTest testDebugUnitTest --no-daemon --stacktrace 2>&1 | tee gradle.log
+
+      # The raw log lives behind an endpoint a sandboxed runner often cannot reach, and a red X
+      # with no message teaches nobody anything: put the useful lines in the job summary.
+      - name: Publish the failure in the job summary
+        if: failure()
+        run: bash scripts/ci-summarize-gradle.sh
 
   build:
     name: Compile (debug) + Android lint
@@ -87,7 +95,13 @@ jobs:
           fi
 
       - name: Compile debug
-        run: ./gradlew :app:compileDebugKotlin :app:common:compileDebugKotlin --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          ./gradlew :app:compileDebugKotlin :app:common:compileDebugKotlin --no-daemon --stacktrace 2>&1 | tee gradle.log
+
+      - name: Publish the failure in the job summary
+        if: failure()
+        run: bash scripts/ci-summarize-gradle.sh
 
       - name: Android lint
         continue-on-error: true
