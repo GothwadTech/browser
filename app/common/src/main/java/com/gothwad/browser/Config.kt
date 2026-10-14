@@ -84,6 +84,8 @@ class Config(val prefs: SharedPreferences) {
          * fast tab switching without exhausting system memory.
          */
         const val DEFAULT_MAX_LIVE_TABS = 6
+        /** Cap for the tab-switcher snapshot width; the grid cards are far smaller than a screen. */
+        const val THUMBNAIL_MAX_WIDTH_PX = 480
         const val DESKTOP_MODE_KEY = "desktop_mode"
         /** Which input device the user drives the browser with - see [InputMode]. */
         const val INPUT_MODE_KEY = "input_mode"
@@ -478,11 +480,41 @@ class Config(val prefs: SharedPreferences) {
     var showTopTabBar = ObservableBooleanPreference(false, SHOW_TOP_TAB_BAR_KEY)
     var keepAliveInBackground = ObservableBooleanPreference(true, KEEP_ALIVE_IN_BACKGROUND_KEY)
 
+    /**
+     * Cap used when the user never set one. Lowered once at startup by [applyMemoryAwareDefaults]:
+     * a 1 GB Android TV box cannot keep six renderers alive, since every extra live WebView is a
+     * full native process plus a painted buffer.
+     */
+    @Volatile
+    var maxLiveTabsDefault: Int = DEFAULT_MAX_LIVE_TABS
+
     var maxLiveTabs: Int
-        get() = prefs.getInt(MAX_LIVE_TABS_KEY, DEFAULT_MAX_LIVE_TABS).coerceIn(2, 20)
+        get() = prefs.getInt(MAX_LIVE_TABS_KEY, maxLiveTabsDefault).coerceIn(2, 20)
         set(value) {
             prefs.edit().putInt(MAX_LIVE_TABS_KEY, value.coerceIn(2, 20)).apply()
         }
+
+    /**
+     * Device-aware defaults, called from `BrowserApp.onCreate` before the first tab is restored.
+     * Only lowers limits on small-memory hardware; it never raises above the shipped defaults.
+     */
+    fun applyMemoryAwareDefaults(context: android.content.Context) {
+        try {
+            val am = context.getSystemService(android.content.Context.ACTIVITY_SERVICE)
+                    as? android.app.ActivityManager ?: return
+            val info = android.app.ActivityManager.MemoryInfo()
+            am.getMemoryInfo(info)
+            val totalMb = if (info.totalMem > 0) info.totalMem / (1024L * 1024L) else 0L
+            maxLiveTabsDefault = when {
+                info.lowRamDevice || totalMb in 1..1536 -> 3
+                totalMb in 1537..2816 -> 4
+                totalMb > 2816 -> DEFAULT_MAX_LIVE_TABS
+                else -> DEFAULT_MAX_LIVE_TABS
+            }
+        } catch (e: Throwable) {
+            // Keep the shipped default when the memory query is unavailable.
+        }
+    }
 
     var adBlockEnabled: Boolean = prefs.getBoolean(ADBLOCK_ENABLED_PREF_KEY, true)
         set(value) {

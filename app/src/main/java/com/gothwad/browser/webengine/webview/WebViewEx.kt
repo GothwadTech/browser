@@ -128,10 +128,17 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
             defaultTextEncodingName = "UTF-8"
             domStorageEnabled = true
             databaseEnabled = true
+            // Needed for file:// pages (the bundled asset home page, local documents), but a local
+            // page must never be able to read other origins.
             allowFileAccess = true
             allowContentAccess = true
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                allowFileAccessFromFileURLs = false
+                allowUniversalAccessFromFileURLs = false
+            }
             cacheMode = WebSettings.LOAD_DEFAULT
-            setRenderPriority(WebSettings.RenderPriority.HIGH)
+            // setRenderPriority(HIGH) used to be called here: it has been a documented no-op since
+            // API 18, so it is removed rather than "tuned".
             // Chrome keeps Safe Browsing on; it was previously pinned to `false` while the
             // README advertised "securest browser". Now it follows a real setting (default on).
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -276,9 +283,15 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
     fun renderThumbnail(bitmap: Bitmap?): Bitmap? {
         if (width == 0 || height == 0) return null
         var thumbnail = bitmap
-        if (thumbnail == null) {
+        // The snapshot only ever feeds a small grid card, so cap it: at full view size one tab
+        // thumbnail costs megabytes of RGB_565 on a 1080p TV, and drawing the whole view tree into
+        // it happens on the UI thread.
+        val maxWidth = Config.THUMBNAIL_MAX_WIDTH_PX.coerceAtLeast(120)
+        if (thumbnail == null || thumbnail.width > maxWidth || thumbnail.height <= 0) {
+            val targetWidth = minOf(width, maxWidth)
+            val targetHeight = (height.toFloat() * targetWidth / width.toFloat()).toInt().coerceAtLeast(1)
             try {
-                thumbnail = createBitmap(width, height, Bitmap.Config.RGB_565)
+                thumbnail = createBitmap(targetWidth, targetHeight, Bitmap.Config.RGB_565)
             } catch (e: Throwable) {
                 e.printStackTrace()
             }

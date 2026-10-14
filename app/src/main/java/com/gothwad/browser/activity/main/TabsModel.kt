@@ -16,7 +16,6 @@ import com.gothwad.browser.utils.observable.ObservableValue
 import com.gothwad.browser.webengine.WebEngineWindowProviderCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.net.URL
 

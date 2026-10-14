@@ -63,6 +63,21 @@ object AppLockManager {
     @Volatile
     private var isSessionUnlocked = false
 
+    /**
+     * The lock state is read on every `onResume`. SharedPreferences are in-memory, but the
+     * pre-prefs installs also left flag files, and `File.exists()` on the UI thread is exactly the
+     * kind of thing AGENTS.md rule 6 forbids - so the answer is cached and only invalidated by the
+     * methods that change it.
+     */
+    @Volatile
+    private var lockEnabledCache: Boolean? = null
+
+    @Volatile
+    private var legacyPin: String? = null
+
+    @Volatile
+    private var legacyPinChecked = false
+
     private fun getFilesDir(context: Context? = null): File? {
         return try {
             context?.filesDir ?: BrowserApp.instance.filesDir
@@ -95,7 +110,15 @@ object AppLockManager {
             return parts.size == 4 && parts[0] == RECORD_SCHEME && parts[3].isNotEmpty()
         }
         // Migration source only: a pre-hash install still has the raw file.
-        return readLegacyPinFile(context) != null
+        return legacyPinOf(context) != null
+    }
+
+    private fun legacyPinOf(context: Context): String? {
+        if (legacyPinChecked) return legacyPin
+        val pin = readLegacyPinFile(context)
+        legacyPin = pin
+        legacyPinChecked = true
+        return pin
     }
 
     private fun readLegacyPinFile(context: Context): String? {
@@ -128,6 +151,9 @@ object AppLockManager {
     }
 
     fun clearPinAndDisableLock(context: Context) {
+        lockEnabledCache = false
+        legacyPin = null
+        legacyPinChecked = false
         getPrefs(context).edit()
             .remove(KEY_PIN_RECORD)
             .putBoolean(KEY_LOCK_ENABLED, false)
@@ -247,13 +273,20 @@ object AppLockManager {
 
     fun isLockEnabled(context: Context): Boolean {
         if (!hasPinSet(context)) return false
-        if (getPrefs(context).getBoolean(KEY_LOCK_ENABLED, false)) return true
-        val flagFile = getFilesDir(context)?.let { File(it, FILE_ENABLED) }
-        return flagFile?.exists() == true
+        lockEnabledCache?.let { return it }
+        val enabled = if (getPrefs(context).getBoolean(KEY_LOCK_ENABLED, false)) {
+            true
+        } else {
+            val flagFile = getFilesDir(context)?.let { File(it, FILE_ENABLED) }
+            flagFile?.exists() == true
+        }
+        lockEnabledCache = enabled
+        return enabled
     }
 
     fun setLockEnabled(context: Context, enabled: Boolean) {
         if (enabled && !hasPinSet(context)) return
+        lockEnabledCache = enabled
         getPrefs(context).edit().putBoolean(KEY_LOCK_ENABLED, enabled).apply()
         val flagFile = getFilesDir(context)?.let { File(it, FILE_ENABLED) }
         try {

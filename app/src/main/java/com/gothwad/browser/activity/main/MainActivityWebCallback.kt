@@ -197,14 +197,22 @@ internal class WebEngineCallback(val activity: MainActivity, val tab: WebTabStat
         if (isCurrent) {
             activity.vb.vActionBar.setAddressBoxText(tab.url)
         }
-        thumbnailJob?.cancel()
-        thumbnailJob = activity.lifecycleScope.launch {
-            try {
-                val newThumbnail = tab.webEngine.renderThumbnail(tab.thumbnail)
-                if (newThumbnail != null) {
-                    tab.updateThumbnail(activity, newThumbnail)
+        // Only the tab on screen is worth a snapshot: a detached background WebView has no size, so
+        // the draw would be wasted, and the tab grid can live with the last thumbnail it captured.
+        val resumable = activity.lifecycle.currentState
+                .isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)
+        if (isCurrent && resumable) {
+            thumbnailJob?.cancel()
+            thumbnailJob = activity.lifecycleScope.launch {
+                try {
+                    val newThumbnail = tab.webEngine.renderThumbnail(tab.thumbnail)
+                    if (newThumbnail != null) {
+                        tab.updateThumbnail(activity, newThumbnail)
+                    }
+                } catch (e: Exception) {
+                    // A failed snapshot must never break page loading.
                 }
-            } catch (e: Exception) {}
+            }
         }
     }
 
