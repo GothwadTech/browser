@@ -244,7 +244,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="Search history..."
+                android:hint="@string/settings_sidebar_history_search_history"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:singleLine="true"

@@ -77,9 +77,9 @@
   <string name="version_and_updates">Version &amp; Updates</string>
   <string name="version_s">Version: %s</string>
   <string name="build_flavor_s">Build-Variante: %1$s · %2$s</string>
-  <string name="support_the_author">☕ Autor unterstützen</string>
-  <string name="view_license">📃 Lizenz</string>
-  <string name="privacy_policy">🔒 Datenschutz</string>
+  <string name="support_the_author">Autor unterstützen</string>
+  <string name="view_license">Lizenz</string>
+  <string name="privacy_policy">Datenschutz</string>
   <string name="update_channel">Updatekanal:</string>
   <string name="auto_check_for_updates">Automatisch nach Updates suchen</string>
   <string name="update">Update</string>
@@ -103,7 +103,7 @@
   <string name="ssl_date_invalid">Datum des Zertifikats ungültig</string>
   <string name="ssl_invalid">Ein Fehler ist aufgetreten</string>
   <string name="back_to_safety">Zurück in Sicherheit</string>
-  <string name="go_im_aware">Weiter, ich kenne das Risiko! </string>
+  <string name="go_im_aware">Weiter, ich kenne das Risiko!</string>
   <string name="connection_isnt_secure">Unsichere Verbindung</string>
   <string name="hostname">Hostname:</string>
   <string name="err_desk">Fehlerbeschreibung:</string>

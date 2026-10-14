@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:hint="Search open and recently closed tabs..."
+                android:hint="@string/settings_tab_search_dropdown_search_open_and_recently"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"

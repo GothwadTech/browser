@@ -106,7 +106,7 @@
             android:layout_height="1dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="14dp"
-            android:background="#26344D" />
+            android:background="@color/app_accent" />
 
         <!-- Version & Engine Specs -->
         <LinearLayout

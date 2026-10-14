@@ -152,7 +152,9 @@ class Config(val prefs: SharedPreferences) {
         get() = prefs.getBoolean(INCOGNITO_MODE_KEY, false)
         @SuppressLint("ApplySharedPref")
         set(value) {
-            prefs.edit().putBoolean(INCOGNITO_MODE_KEY, value).commit()
+            // The incognito process reads this flag, so it has to hit disk before the other
+            // process is started - apply() would race with it.
+            prefs.edit().putBoolean(INCOGNITO_MODE_KEY, value).commit() // quality-gate: allow
         }
 
     var incognitoModeHintSuppress: Boolean

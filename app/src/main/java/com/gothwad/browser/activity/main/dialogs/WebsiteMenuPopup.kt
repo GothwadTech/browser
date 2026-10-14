@@ -95,9 +95,17 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
             val url = currentTab?.url ?: ""
             val isSecure = url.startsWith("https://")
             AlertDialog.Builder(activity)
-                .setTitle(if (isSecure) "🔒 Secure Connection" else "ℹ️ Page Info")
-                .setMessage("URL: ${if (url.isEmpty()) "Home Page" else url}\n\nSecurity: ${if (isSecure) "Encrypted Connection (HTTPS / SSL Active)" else "Unencrypted Connection (HTTP)"}\n\nCookies: Active\nJavaScript: Enabled")
-                .setPositiveButton("OK", null)
+                .setTitle(if (isSecure) R.string.menu_site_info_title_secure else R.string.menu_site_info_title_page_info)
+                .setMessage(
+                    activity.getString(
+                        R.string.menu_site_info_message,
+                        if (url.isEmpty()) activity.getString(R.string.home_screen) else url,
+                        activity.getString(
+                            if (isSecure) R.string.menu_site_info_secure else R.string.menu_site_info_insecure
+                        )
+                    )
+                )
+                .setPositiveButton(android.R.string.ok, null)
                 .show()
         }
 

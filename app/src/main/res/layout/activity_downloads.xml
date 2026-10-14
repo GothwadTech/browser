@@ -131,7 +131,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#1E2638" />
+        android:background="@color/app_surface_elevated" />
 
     <!-- Content Area: ListView or Modern Empty State -->
     <FrameLayout

@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.gothwad.browser.Config
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.main.MainActivity
+import com.gothwad.browser.activity.main.applyInputMode
 import com.gothwad.browser.databinding.ViewSettingsMainBinding
 import com.gothwad.browser.utils.HardwareInputManager
 import com.gothwad.browser.utils.HardwareMousePointerManager
@@ -133,20 +134,36 @@ object SettingsRemoteSection {
             val devIdStr = dev.id.toString()
             val isBlocked = config.isInputDeviceBlocked(devIdStr) || config.isInputDeviceBlocked(dev.name)
 
-            val typeIcon = when {
-                dev.isMouse && dev.isKeyboard -> "⌨️🖱️"
-                dev.isMouse -> "🖱️"
-                dev.isKeyboard -> "⌨️"
-                dev.isGamepad -> "🎮"
-                else -> "🔌"
+            // Device kind as an icon + a plain text label: the emoji glyphs this used to print were
+            // unreadable on some TV fonts and carried no information a screen reader could use.
+            val typeIconRes = when {
+                dev.isMouse || dev.isKeyboard -> R.drawable.ic_settings_keyboard_mouse
+                dev.isGamepad -> R.drawable.gamepad_circle_up_24px
+                else -> R.drawable.ic_usb
             }
+            val typeLabel = context.getString(
+                when {
+                    dev.isMouse && dev.isKeyboard -> R.string.settings_device_type_kb_mouse
+                    dev.isMouse -> R.string.settings_device_type_mouse
+                    dev.isKeyboard -> R.string.settings_device_type_keyboard
+                    dev.isGamepad -> R.string.settings_device_type_gamepad
+                    else -> R.string.settings_device_type_other
+                }
+            )
 
-            val iconTv = TextView(context).apply {
-                text = typeIcon
-                textSize = 20f
-                setPadding(0, 0, Utils.D2P(context, 10f).toInt(), 0)
+            val iconView = android.widget.ImageView(context).apply {
+                setImageResource(typeIconRes)
+                setImageTintList(
+                    android.content.res.ColorStateList.valueOf(
+                        ContextCompat.getColor(context, R.color.app_on_surface_muted)
+                    )
+                )
+                layoutParams = LinearLayout.LayoutParams(
+                    Utils.D2P(context, 22f).toInt(), Utils.D2P(context, 22f).toInt()
+                ).apply { rightMargin = Utils.D2P(context, 10f).toInt() }
+                contentDescription = typeLabel
             }
-            itemLayout.addView(iconTv)
+            itemLayout.addView(iconView)
 
             val textColumn = LinearLayout(context).apply {
                 orientation = LinearLayout.VERTICAL
@@ -162,10 +179,13 @@ object SettingsRemoteSection {
             textColumn.addView(nameTv)
 
             val descTv = TextView(context).apply {
-                val stateText = if (isBlocked) "🚫 Blocked (Input Ignored)" else "✅ Allowed (Active & Optimized)"
-                val stateColor = if (isBlocked) "#F87171" else "#4ADE80"
-                text = "ID: ${dev.id}  •  $stateText"
-                setTextColor(Color.parseColor(stateColor))
+                text = context.getString(R.string.settings_device_state, dev.id, typeLabel)
+                setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        if (isBlocked) R.color.app_error else R.color.app_success
+                    )
+                )
                 textSize = 12f
                 setPadding(0, Utils.D2P(context, 2f).toInt(), 0, 0)
             }
@@ -176,8 +196,8 @@ object SettingsRemoteSection {
                 isChecked = !isBlocked // Checked means Allowed/Active
                 isFocusable = true
                 isClickable = true
-                text = if (isBlocked) "Block" else "Allow"
-                setTextColor(Color.parseColor("#94A3B8"))
+                text = context.getString(if (isBlocked) R.string.settings_block else R.string.allow)
+                setTextColor(ContextCompat.getColor(context, R.color.app_on_surface_muted))
                 textSize = 12f
             }
 
@@ -186,14 +206,12 @@ object SettingsRemoteSection {
                 config.setInputDeviceBlocked(devIdStr, newBlocked)
                 config.setInputDeviceBlocked(dev.name, newBlocked)
                 if (newBlocked) {
-                    descTv.text = "ID: ${dev.id}  •  🚫 Blocked (Input Ignored)"
-                    descTv.setTextColor(Color.parseColor("#F87171"))
-                    blockSwitch.text = "Block"
+                    descTv.setTextColor(ContextCompat.getColor(context, R.color.app_error))
+                    blockSwitch.setText(R.string.settings_block)
                     Toast.makeText(context, context.getString(R.string.settings_device_blocked, dev.name), Toast.LENGTH_SHORT).show()
                 } else {
-                    descTv.text = "ID: ${dev.id}  •  ✅ Allowed (Active & Optimized)"
-                    descTv.setTextColor(Color.parseColor("#4ADE80"))
-                    blockSwitch.text = "Allow"
+                    descTv.setTextColor(ContextCompat.getColor(context, R.color.app_success))
+                    blockSwitch.setText(R.string.allow)
                     Toast.makeText(context, context.getString(R.string.settings_device_allowed, dev.name), Toast.LENGTH_SHORT).show()
                 }
             }
@@ -211,9 +229,13 @@ object SettingsRemoteSection {
             vb.llConnectedDevicesContainer.removeAllViews()
 
             if (nonVirtual.isEmpty()) {
-                vb.tvConnectedHardwareStatus.text = "⚠️ No external physical keyboard or mouse currently detected.\n(Using standard TV Remote / D-Pad navigation)"
+                vb.tvConnectedHardwareStatus.setText(R.string.settings_no_external_devices)
             } else {
-                vb.tvConnectedHardwareStatus.text = "Found ${nonVirtual.size} connected input device(s). You can toggle Allow/Block for each device below:"
+                vb.tvConnectedHardwareStatus.text = context.resources.getQuantityString(
+                    R.plurals.settings_connected_devices,
+                    nonVirtual.size,
+                    nonVirtual.size
+                )
                 for (dev in nonVirtual) {
                     val itemView = renderDeviceItem(dev)
                     vb.llConnectedDevicesContainer.addView(itemView)
@@ -223,7 +245,11 @@ object SettingsRemoteSection {
 
         hwInput.addListener(object : HardwareInputManager.InputDevicesListener {
             override fun onInputDevicesChanged(devices: List<HardwareInputManager.DeviceInfo>) {
-                vb.root.post { updateDeviceList(devices) }
+                vb.root.post {
+                    updateDeviceList(devices)
+                    // In AUTO mode a mouse being plugged in / removed *is* a mode change.
+                    mainAct?.applyInputMode()
+                }
             }
         })
 

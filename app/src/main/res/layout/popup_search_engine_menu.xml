@@ -324,7 +324,7 @@
             android:layout_weight="1"
             android:layout_marginStart="14dp"
             android:text="@string/search_settings"
-            android:textColor="#E4E4E8"
+            android:textColor="@color/app_on_surface"
             android:textSize="13sp" />
     </LinearLayout>
 

@@ -206,7 +206,7 @@
                     android:layout_marginStart="12dp"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:hint="Search settings"
+                    android:hint="@string/settings_settings_search_settings"
                     android:imeOptions="actionDone"
                     android:singleLine="true"
                     android:textColor="@color/day_night_text_color_contrast"

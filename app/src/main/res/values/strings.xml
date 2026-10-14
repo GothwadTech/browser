@@ -84,8 +84,7 @@
     <string name="hardware_mouse_pointer_size">Pointer Size: %1$d%%</string>
     <string name="hardware_mouse_pointer_style">Pointer Style &amp; Contrast</string>
     <string name="hardware_mouse_preview">Live Preview</string>
-    <string-array name="hardware_mouse_styles">
-        <item>Classic White (Black Outline)</item>
+    <string-array name="hardware_mouse_styles"><item>Classic White (Black Outline)</item>
         <item>Dark Onyx (White Outline)</item>
         <item>High-Contrast Neon Yellow (TV Distance)</item>
         <item>Cyber Cyan (Gamer Glow)</item>
@@ -157,8 +156,7 @@
     <string name="cursor_style_crosshair">Crosshair Target</string>
     <string name="cursor_style_laser">Glowing Red Laser</string>
     <string name="cursor_style_neon">Neon Blue Pointer</string>
-    <string-array name="cursor_styles">
-        <item>@string/cursor_style_classic</item>
+    <string-array name="cursor_styles"><item>@string/cursor_style_classic</item>
         <item>@string/cursor_style_arrow</item>
         <item>@string/cursor_style_crosshair</item>
         <item>@string/cursor_style_laser</item>
@@ -178,12 +176,12 @@
     <string name="web_engine_debug_warning_message">Enabling web engine debugging can expose page content, cookies, and sensitive session data to anyone with device debugging access. Enable only on trusted devices for troubleshooting.</string>
     <array name="themes">
         <item>Auto (Follow System)</item>
-        <item>☀️ Pure White Light</item>
-        <item>📜 Warm Paper Light</item>
-        <item>🧊 Cool Ice Light</item>
-        <item>🖤 AMOLED Pitch Black</item>
-        <item>🌑 Deep Charcoal Dark</item>
-        <item>🌌 Midnight Slate Dark</item>
+        <item>Pure White Light</item>
+        <item>Warm Paper Light</item>
+        <item>Cool Ice Light</item>
+        <item>AMOLED Pitch Black</item>
+        <item>Deep Charcoal Dark</item>
+        <item>Midnight Slate Dark</item>
     </array>
     <string name="incognito_mode">Incognito mode</string>
     <string name="incognito_mode_hint">Now you can browse privately, and other people who use this device won’t see your activity. Browser won’t save your browsing history, cookies and site data, information entered in forms.\n\nHowever, downloads and bookmarks will be saved. Your activity might still be visible to websites you visit, your organization or internet service provider.</string>
@@ -698,4 +696,34 @@
         <item quantity="other">%1$d input devices found</item>
     </plurals>
     <string name="connection_not_secure">Connection is not private</string>
+    <string name="home_shortcut_added">Shortcut added: %1$s</string>
+    <string name="home_shortcut_removed">Shortcut removed: %1$s</string>
+    <string name="settings_delete_history_confirm">Delete all saved browsing history? This cannot be undone.</string>
+    <string name="menu_site_info_message">Address: %1$s\nConnection: %2$s\n\nCookies are enabled and scripts can run, like any other browser.</string>
+    <string name="menu_site_info_secure">Encrypted (HTTPS)</string>
+    <string name="menu_site_info_insecure">Not encrypted (HTTP)</string>
+    <string name="menu_site_info_title_secure">Secure connection</string>
+    <string name="menu_site_info_title_page_info">Page info</string>
+    <string name="settings_device_type_kb_mouse">Keyboard + mouse</string>
+    <string name="settings_device_type_mouse">Mouse</string>
+    <string name="settings_device_type_keyboard">Keyboard</string>
+    <string name="settings_device_type_gamepad">Gamepad</string>
+    <string name="settings_device_type_other">Input device</string>
+    <string name="settings_device_state">ID %1$d · %2$s</string>
+    <string name="settings_block">Block</string>
+    <string name="settings_no_external_devices">No external keyboard or mouse detected.\nNavigation uses the TV remote.</string>
+    <plurals name="settings_connected_devices">
+        <item quantity="one">%1$d input device connected. Allow or block it below.</item>
+        <item quantity="other">%1$d input devices connected. Allow or block each one below.</item>
+    </plurals>
+    <string name="settings_add_bookmark_site_title_e_g">Site Title (e.g. JioCinema)</string>
+    <string name="settings_add_bookmark_url_https">URL (https://...)</string>
+    <string name="settings_favorites_search_bookmarks">Search bookmarks</string>
+    <string name="settings_settings_search_settings">Search settings</string>
+    <string name="settings_sidebar_favorites_search_bookmarks">Search bookmarks...</string>
+    <string name="settings_sidebar_history_search_history">Search history...</string>
+    <string name="settings_tab_search_dropdown_search_open_and_recently">Search open and recently closed tabs...</string>
+    <string name="settings_voice_search_speak_to_search_or">Speak to search or type URL…</string>
+    <string name="settings_chrome_tab_switcher_search_your_tabs">Search your tabs</string>
+    <string name="settings_settings_main_https_easylist_to_easylist">https://easylist.to/easylist/easylist.txt</string>
 </resources>

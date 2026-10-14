@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# Mechanical checks for the rules in AGENTS.md that a reviewer cannot be trusted to remember.
+# Everything here is a grep, so it runs in milliseconds and needs no Android SDK - which is exactly
+# why the expensive build steps do not have to catch these regressions first.
+#
+# A line may be exempted by ending it with:  quality-gate: allow
+set -uo pipefail
+
+cd "$(dirname "$0")/.." || exit 2
+
+SRC=(app/src/main/java app/common/src/main/java)
+RES=(app/src/main/res)
+fail=0
+
+report() {
+  local name="$1"; shift
+  local hits="$1"
+  if [[ -n "$hits" ]]; then
+    echo "FAIL: $name"
+    echo "$hits" | sed 's/^/      /'
+    fail=1
+  else
+    echo "ok:   $name"
+  fi
+}
+
+# strip // comments and allow-marked lines before matching, so explanatory comments never trip a gate
+scan() {
+  grep -rnE "$1" "${@:2}" --include='*.kt' --include='*.java' 2>/dev/null \
+    | grep -v 'quality-gate: allow' \
+    | grep -vE '^[^:]+:[0-9]+:[[:space:]]*(\*|//)' \
+    || true
+}
+
+scan_res() {
+  grep -rnE "$1" "${@:2}" --include='*.xml' 2>/dev/null | grep -v 'quality-gate: allow' || true
+}
+
+echo "== AGENTS.md mechanical gates =="
+
+# rule 6 / §6 checklist: no blocking calls on the UI thread
+report "no runBlocking()" "$(scan 'runBlocking[[:space:]]*\(' "${SRC[@]}")"
+report "no Thread.sleep()" "$(scan 'Thread[[:space:]]*\.[[:space:]]*sleep' "${SRC[@]}")"
+report "no SharedPreferences .commit()" "$(scan '\.commit\(\)' "${SRC[@]}")"
+report "no System.gc() (there is no such thing as a RAM booster)" "$(scan 'System[[:space:]]*\.[[:space:]]*gc\(\)' "${SRC[@]}")"
+
+# rule 5: RecyclerView adapters must not blindly rebind
+rv_offenders=""
+while IFS= read -r f; do
+  body=$(grep -vE '^[[:space:]]*(\*|//)' "$f" | grep -v 'quality-gate: allow')
+  if grep -q 'notifyDataSetChanged()' <<<"$body"; then
+    rv_offenders+="$f: notifyDataSetChanged in a RecyclerView adapter"$'\n'
+  fi
+done < <(grep -rl 'RecyclerView.Adapter' "${SRC[@]}" --include='*.kt' 2>/dev/null)
+report "no notifyDataSetChanged() in RecyclerView adapters" "$(sed '/^$/d' <<<"$rv_offenders")"
+
+# rule 14: no OEM / device-model specific branches in code
+report "no Build.MANUFACTURER / MODEL branching" "$(scan 'Build\.(MANUFACTURER|MODEL|BRAND|DEVICE)[[:space:]]*(==|\.equals|\.contains)' "${SRC[@]}")"
+
+# style: logging must go through android.util.Log
+report "no println/stdout" "$(scan 'println[[:space:]]*\(' "${SRC[@]}")"
+
+# i18n: user-visible text must be a resource
+toast_lits=$(scan 'Toast\.makeText\([A-Za-z_.]+, *"' "${SRC[@]}")
+title_lits=$(scan '\.set(Title|Message)\( *"' "${SRC[@]}")
+report "no hard-coded toast text" "$toast_lits"
+report "no hard-coded dialog text" "$title_lits"
+xml_lits=$(scan_res 'android:(text|hint|contentDescription)="[A-Za-z]' "${RES[@]}/layout")
+report "no hard-coded layout text/contentDescription" "$xml_lits"
+
+# theming: colours come from the palette, never from a literal
+layout_hex=$(scan_res 'android:(textColor|textColorHint|background|backgroundTint)="#[0-9A-Fa-f]{6}"' "${RES[@]}/layout")
+drawable_hex=$(scan_res '<(solid|stroke)[^>]*/?>' "${RES[@]}/drawable" | grep -E 'android:color="#[0-9A-Fa-f]{6}"')
+kotlin_hex=$(scan '0xFF[0-9A-Fa-f]{6}' "${SRC[@]}")
+report "no hard-coded colours in layouts" "$layout_hex"
+report "no hard-coded colours in drawables" "$drawable_hex"
+report "no hard-coded colours in Kotlin" "$kotlin_hex"
+
+# resource integrity: a bulk string/colour refactor must not leave a dangling @string/ behind
+STR_RES=$(cat app/src/main/res/values/strings.xml app/common/src/main/res/values/strings.xml 2>/dev/null \
+  | grep -oE '<(string|plurals) name="[^"]+"' | sed 's/.*name="//; s/"//; s/ *$//' | sort -u)
+USED_STR=$(grep -rhoE '@string/[a-zA-Z0-9_]+|(android\.)?R\.string\.[a-zA-Z0-9_]+|R\.plurals\.[a-zA-Z0-9_]+' \
+  app/src/main app/common/src/main --include='*.xml' --include='*.kt' 2>/dev/null \
+  | grep -v '^android\.R\.string' | sed 's|@string/||; s|R\.string\.||; s|R\.plurals\.||' | sort -u)
+missing=$(comm -23 <(printf '%s\n' "$USED_STR") <(printf '%s\n' "$STR_RES"))
+report "no dangling string references" "$missing"
+
+# colour integrity, same reason
+COL_RES=$(cat app/src/main/res/values/colors.xml app/src/main/res/values-night/colors.xml app/common/src/main/res/values/colors.xml 2>/dev/null \
+  | grep -oE '<color name="[^"]+"' | sed 's/.*name="//; s/"//' | sort -u; ls app/src/main/res/color 2>/dev/null | sed 's/\.xml$//')
+USED_COL=$(grep -rhoE '@color/[a-zA-Z0-9_]+|(android\.)?R\.color\.[a-zA-Z0-9_]+' app/src/main app/common/src/main \
+  --include='*.xml' --include='*.kt' 2>/dev/null | grep -v '^android\.R\.color' | sed 's|@color/||; s|R\.color\.||' | sort -u)
+missing_col=$(comm -23 <(printf '%s\n' "$USED_COL") <(printf '%s\n' "$COL_RES" | sort -u))
+report "no dangling colour references" "$missing_col"
+
+# user-visible text must stay emoji-free (translatable, and readable on every TV font)
+emoji=$(grep -rnP '"[^"]*[\x{2600}-\x{27BF}]|"[^"]*\xf0\x9f' app/src/main/res/values/strings.xml 2>/dev/null || true)
+report "no emoji in user-visible strings" "$emoji"
+
+echo
+if [[ $fail -ne 0 ]]; then
+  cat <<'EOF'
+Quality gate failed. Fix the findings above (see AGENTS.md for why each rule exists).
+If a finding is genuinely intentional, end that line with: quality-gate: allow
+EOF
+  exit 1
+fi
+echo "Quality gate passed."

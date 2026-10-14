@@ -87,7 +87,7 @@
             android:background="@drawable/key_badge_bg"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="8dp"
-            android:hint="Search bookmarks..."
+            android:hint="@string/settings_sidebar_favorites_search_bookmarks"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingStart="10dp"

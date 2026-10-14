@@ -71,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="Search bookmarks"
+                android:hint="@string/settings_favorites_search_bookmarks"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"

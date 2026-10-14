@@ -213,10 +213,13 @@ object AppLockManager {
         val prefs = getPrefs(context)
         var record = prefs.getString(KEY_PIN_RECORD, null)
         if (record.isNullOrEmpty()) {
-            val legacyFile = readLegacyPinFile(context)
+            val legacyFile = legacyPinOf(context)
             if (legacyFile == null) return VerifyResult(false, 0, false)
-            if (legacyFile == inputPin) {
+            if (constantTimeEquals(legacyFile, inputPin)) {
                 migrateToHash(context, legacyFile)
+                // The plaintext file is gone now; never look at it again.
+                legacyPin = null
+                legacyPinChecked = false
                 return VerifyResult(true, 0, true)
             }
             registerFailure(context)

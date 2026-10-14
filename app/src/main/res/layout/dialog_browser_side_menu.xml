@@ -146,7 +146,7 @@
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/bg_badge_yellow"
                         android:text="@string/settings_browser_side_menu_plus"
-                        android:textColor="#000000"
+                        android:textColor="@color/app_on_accent"
                         android:textSize="10sp"
                         android:textStyle="bold" />
 

@@ -303,7 +303,7 @@ object SettingsGeneralSection {
         vb.btnClearHistorySettings.setOnClickListener {
             android.app.AlertDialog.Builder(context)
                 .setTitle(R.string.settings_clear_browsing_history)
-                .setMessage("Are you sure you want to delete all saved browsing history? This action cannot be undone.")
+                .setMessage(R.string.settings_delete_history_confirm)
                 .setPositiveButton("Clear History") { _, _ ->
                     (activity as? androidx.appcompat.app.AppCompatActivity)?.lifecycleScope?.launch(Dispatchers.IO) {
                         com.gothwad.browser.singleton.AppDatabase.db.historyDao().deleteAll()

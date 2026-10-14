@@ -79,9 +79,9 @@
   <string name="version_and_updates">Wersja i aktualizacje</string>
   <string name="version_s">Wersja: %s</string>
   <string name="build_flavor_s">Wariant kompilacji: %1$s · %2$s</string>
-  <string name="support_the_author">☕ Wesprzyj autora</string>
-  <string name="view_license">📃 Licencja</string>
-  <string name="privacy_policy">🔒 Polityka prywatności</string>
+  <string name="support_the_author">Wesprzyj autora</string>
+  <string name="view_license">Licencja</string>
+  <string name="privacy_policy">Polityka prywatności</string>
   <string name="update_channel">Kanał aktualizacji:</string>
   <string name="auto_check_for_updates">Automatycznie sprawdzaj aktualizacje</string>
   <string name="update">Aktualizacja</string>

@@ -8,12 +8,12 @@
     </item>
     <item android:state_pressed="true">
         <shape android:shape="oval">
-            <solid android:color="#1D4ED8" />
+            <solid android:color="@color/app_accent" />
         </shape>
     </item>
     <item>
         <shape android:shape="oval">
-            <solid android:color="#1E40AF" />
+            <solid android:color="@color/app_accent" />
             <stroke android:width="1.5dp" android:color="@color/app_accent" />
         </shape>
     </item>

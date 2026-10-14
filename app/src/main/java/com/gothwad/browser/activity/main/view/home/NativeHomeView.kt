@@ -698,7 +698,7 @@ class NativeHomeView @JvmOverloads constructor(
                     saveUserBookmarks(currentList)
                     reloadShortcuts()
 
-                    Toast.makeText(context, "Shortcut '$name' added!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.home_shortcut_added, name), Toast.LENGTH_SHORT).show()
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -734,7 +734,7 @@ class NativeHomeView @JvmOverloads constructor(
                 val userOnly = loadUserBookmarks().filter { it.url != item.url || it.title != item.title }
                 saveUserBookmarks(userOnly)
                 reloadShortcuts()
-                Toast.makeText(context, "'${item.title}' deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.home_shortcut_removed, item.title ?: ""), Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("Cancel", null)
             .show()

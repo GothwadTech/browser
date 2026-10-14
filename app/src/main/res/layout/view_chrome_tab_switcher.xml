@@ -120,7 +120,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:gravity="center_vertical"
-            android:hint="Search your tabs"
+            android:hint="@string/settings_chrome_tab_switcher_search_your_tabs"
             android:imeOptions="actionSearch"
             android:inputType="textFilter|textNoSuggestions"
             android:paddingStart="16dp"

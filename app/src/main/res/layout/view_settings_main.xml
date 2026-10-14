@@ -1255,7 +1255,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/bg_tv_tab_pill"
                 android:focusable="true"
-                android:hint="https://easylist.to/easylist/easylist.txt"
+                android:hint="@string/settings_settings_main_https_easylist_to_easylist"
                 android:imeOptions="actionDone"
                 android:inputType="textUri"
                 android:paddingStart="12dp"

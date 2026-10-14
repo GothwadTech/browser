@@ -76,9 +76,9 @@
   <string name="version_and_updates">版本与更新</string>
   <string name="version_s">版本: %s</string>
   <string name="build_flavor_s">构建变体：%1$s · %2$s</string>
-  <string name="support_the_author">☕ 支持作者</string>
-  <string name="view_license">📃 许可协议</string>
-  <string name="privacy_policy">🔒 隐私政策</string>
+  <string name="support_the_author">支持作者</string>
+  <string name="view_license">许可协议</string>
+  <string name="privacy_policy">隐私政策</string>
   <string name="update_channel">更新频道：</string>
   <string name="auto_check_for_updates">自动检查更新</string>
   <string name="update">更新资料</string>

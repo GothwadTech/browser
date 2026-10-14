@@ -55,7 +55,7 @@
             android:paddingEnd="4dp"
             android:singleLine="true"
             android:maxLines="1"
-            android:textColor="#E3E3E3"
+            android:textColor="@color/app_on_surface"
             android:textColorHint="@color/app_on_surface_muted"
             android:textCursorDrawable="@null"
             android:textSize="15sp" />

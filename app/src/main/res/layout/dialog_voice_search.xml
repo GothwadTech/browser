@@ -123,9 +123,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Speak to search or type URL…"
+                android:hint="@string/settings_voice_search_speak_to_search_or"
                 android:textColor="@color/app_on_surface"
-                android:textColorHint="#484F58"
+                android:textColorHint="@color/app_surface_elevated"
                 android:textSize="17sp"
                 android:textStyle="bold" />
         </LinearLayout>

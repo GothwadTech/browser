@@ -4,7 +4,7 @@
         <shape android:shape="rectangle">
             <corners android:radius="18dp" />
             <solid android:color="@color/button_background_focused" />
-            <stroke android:width="2dp" android:color="#8AB4F8" />
+            <stroke android:width="2dp" android:color="@color/app_accent" />
         </shape>
     </item>
     <item android:state_checked="true" android:drawable="@drawable/chrome_tab_active" />
