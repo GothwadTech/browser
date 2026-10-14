@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/downloads"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/activity_downloads_nothing_in_progress_17"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -82,7 +82,7 @@
             android:paddingEnd="16dp"
             android:text="@string/activity_downloads_all"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -97,7 +97,7 @@
             android:paddingEnd="16dp"
             android:text="@string/activity_downloads_active"
             android:textAllCaps="false"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
 
         <Button
@@ -111,7 +111,7 @@
             android:paddingEnd="16dp"
             android:text="@string/activity_downloads_completed"
             android:textAllCaps="false"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
 
         <Button
@@ -124,7 +124,7 @@
             android:paddingEnd="16dp"
             android:text="@string/activity_downloads_failed"
             android:textAllCaps="false"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:text="@string/activity_downloads_no_downloads"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/activity_downloads_files_you_download_from"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="14sp" />
         </LinearLayout>
     </FrameLayout>

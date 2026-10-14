@@ -136,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_app_lock_pin_and"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -208,7 +208,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_private_browsing_without_history"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -268,7 +268,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_send_current_link_or"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -328,7 +328,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_saved_websites_and_quick"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -388,7 +388,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_recently_visited_pages_and"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -448,7 +448,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_manage_downloaded_files_and"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -510,7 +510,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_request_desktop_site_view"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 
@@ -571,7 +571,7 @@
                             android:layout_height="wrap_content"
                             android:duplicateParentState="true"
                             android:text="@string/settings_browser_side_menu_preferences_engine_and_shortcuts"
-                            android:textColor="#94A3B8"
+                            android:textColor="@color/app_on_surface_muted"
                             android:textSize="11sp" />
                     </LinearLayout>
 

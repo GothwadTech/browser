@@ -172,7 +172,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingExtra="4dp"
             android:text="@string/settings_version_zero_tracking_no_telemetry"
-            android:textColor="#CBD5E1"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
     </LinearLayout>
 

@@ -65,6 +65,6 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/item_sidebar_favorite_google_com"
-        android:textColor="#64748B"
+        android:textColor="@color/app_on_surface_muted"
         android:textSize="10sp" />
 </LinearLayout>

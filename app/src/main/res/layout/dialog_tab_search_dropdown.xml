@@ -73,7 +73,7 @@
                 android:paddingEnd="10dp"
                 android:text="@string/settings_tab_search_dropdown_new_tab"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>

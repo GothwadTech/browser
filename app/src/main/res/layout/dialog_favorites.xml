@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bookmarks"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/settings_favorites_0_saved"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -75,8 +75,8 @@
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#64748B"
+                android:textColor="@color/app_on_surface"
+                android:textColorHint="@color/app_on_surface_muted"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:paddingEnd="14dp"
             android:text="@string/settings_favorites_recently_added"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="12sp" />
 
         <!-- Add Bookmark Button -->
@@ -109,7 +109,7 @@
             android:paddingEnd="14dp"
             android:text="@string/settings_favorites_add"
             android:textAllCaps="false"
-            android:textColor="#0284C7"
+            android:textColor="@color/app_accent"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/settings_favorites_all_bookmarks"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -164,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_favorites_0_items"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -212,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
                 android:text="@string/no_bookmarks_yet"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -221,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/settings_favorites_bookmark_pages_to_easily"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="14sp" />
         </LinearLayout>
     </FrameLayout>

@@ -772,7 +772,7 @@
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:textColor="@color/google_text_primary"
-                    android:textColorHint="#64748B" />
+                    android:textColorHint="@color/app_on_surface_muted" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -857,7 +857,7 @@
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:textColor="@color/google_text_primary"
-                    android:textColorHint="#64748B" />
+                    android:textColorHint="@color/app_on_surface_muted" />
             </LinearLayout>
 
             <LinearLayout
@@ -1261,7 +1261,7 @@
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:textColor="@color/google_text_primary"
-                android:textColorHint="#64748B"
+                android:textColorHint="@color/app_on_surface_muted"
                 android:textSize="13sp" />
 
             <LinearLayout
@@ -1276,7 +1276,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/settings_filter_list_loaded_and"
-                    android:textColor="#10B981"
+                    android:textColor="@color/app_success"
                     android:textSize="12sp" />
 
                 <ProgressBar
@@ -1453,7 +1453,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/clear_web_cache"
-                android:textColor="#EF4444"
+                android:textColor="@color/app_error"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -1547,7 +1547,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:text="@string/settings_clear_history"
-                android:textColor="#F59E0B"
+                android:textColor="@color/app_warning"
                 android:textSize="13sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -2120,7 +2120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginBottom="12dp"
-                    android:background="#334155" />
+                    android:background="@color/app_surface_elevated" />
 
                 <!-- Size Header & Value -->
                 <LinearLayout
@@ -2263,7 +2263,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:background="#0F172A"
+                    android:background="@color/app_surface_elevated"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="12dp">
@@ -2294,7 +2294,7 @@
                     <FrameLayout
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:background="#1E293B">
+                        android:background="@color/app_surface_elevated">
 
                         <ImageView
                             android:id="@+id/ivHardwareMousePreview"

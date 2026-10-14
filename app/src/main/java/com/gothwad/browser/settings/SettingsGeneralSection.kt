@@ -7,6 +7,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
@@ -149,17 +150,17 @@ object SettingsGeneralSection {
         val hasPin = com.gothwad.browser.singleton.AppLockManager.hasPinSet(context)
         if (isEnabled) {
             vb.tvAppLockStatus.text = "PIN Lock Active (Protected)"
-            vb.tvAppLockStatus.setTextColor(0xFF38BDF8.toInt())
+            vb.tvAppLockStatus.setTextColor(ContextCompat.getColor(context, R.color.app_accent))
             vb.btnChangePin.visibility = View.VISIBLE
             vb.btnChangePin.text = "Change PIN"
         } else if (hasPin) {
             vb.tvAppLockStatus.text = "PIN Lock Disabled (PIN configured)"
-            vb.tvAppLockStatus.setTextColor(0xFF94A3B8.toInt())
+            vb.tvAppLockStatus.setTextColor(ContextCompat.getColor(context, R.color.app_on_surface_muted))
             vb.btnChangePin.visibility = View.VISIBLE
             vb.btnChangePin.text = "Change PIN"
         } else {
             vb.tvAppLockStatus.text = "No PIN set (Set 4-digit PIN to enable)"
-            vb.tvAppLockStatus.setTextColor(0xFF94A3B8.toInt())
+            vb.tvAppLockStatus.setTextColor(ContextCompat.getColor(context, R.color.app_on_surface_muted))
             vb.btnChangePin.visibility = View.GONE
         }
     }
@@ -257,10 +258,10 @@ object SettingsGeneralSection {
             val isDefault = com.gothwad.browser.utils.DefaultBrowserHelper.isDefaultBrowser(context)
             if (isDefault) {
                 vb.tvDefaultBrowserStatus.text = "Status: Currently Default Browser (Active)"
-                vb.tvDefaultBrowserStatus.setTextColor(0xFF38BDF8.toInt())
+                vb.tvDefaultBrowserStatus.setTextColor(ContextCompat.getColor(context, R.color.app_accent))
             } else {
                 vb.tvDefaultBrowserStatus.text = "Status: Not Default Browser (Click to Set)"
-                vb.tvDefaultBrowserStatus.setTextColor(0xFF94A3B8.toInt())
+                vb.tvDefaultBrowserStatus.setTextColor(ContextCompat.getColor(context, R.color.app_on_surface_muted))
             }
         }
 

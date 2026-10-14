@@ -95,7 +95,7 @@
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:text="@string/item_sidebar_tab_active"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="10sp"
             android:textStyle="bold"
             android:visibility="gone" />

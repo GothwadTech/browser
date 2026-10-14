@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="#F8FAFC"
+        android:textColor="@color/app_on_surface"
         android:textSize="12sp"
         android:textStyle="bold"
         tools:text="Today – Tuesday, September 8, 2026" />
@@ -38,7 +38,7 @@
         android:id="@+id/tvHeaderCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#64748B"
+        android:textColor="@color/app_on_surface_muted"
         android:textSize="11sp"
         tools:text="3 visits" />
 </LinearLayout>

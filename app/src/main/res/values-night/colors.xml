@@ -74,6 +74,7 @@
   <color name="app_outline">#3C4043</color>
   <color name="app_accent">#8AB4F8</color>
   <color name="app_error">#F28B82</color>
+  <color name="app_on_accent">#0B0D0F</color>
   <color name="app_warning">#FDD663</color>
   <color name="app_success">#81C995</color>
   <color name="google_error">#F28B82</color>

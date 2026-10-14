@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/history"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="22sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -85,8 +85,8 @@
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#64748B"
+                android:textColor="@color/app_on_surface"
+                android:textColorHint="@color/app_on_surface_muted"
                 android:textSize="13sp" />
 
             <!-- Clear Search Query Button -->
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
                 android:text="@string/activity_history_1_selected"
-                android:textColor="#38BDF8"
+                android:textColor="@color/app_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -151,7 +151,7 @@
                 android:paddingEnd="12dp"
                 android:text="@string/delete"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="12sp" />
 
             <Button
@@ -164,7 +164,7 @@
                 android:paddingEnd="12dp"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -225,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/activity_history_chrome_history"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/app_on_surface"
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -238,7 +238,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="4dp"
                 android:text="@string/activity_history_filters"
-                android:textColor="#64748B"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -254,7 +254,7 @@
                 android:paddingEnd="12dp"
                 android:text="@string/activity_history_all_time"
                 android:textAllCaps="false"
-                android:textColor="#38BDF8"
+                android:textColor="@color/app_accent"
                 android:textSize="12sp" />
 
             <!-- Filter: Today -->
@@ -269,7 +269,7 @@
                 android:paddingEnd="12dp"
                 android:text="@string/activity_history_today"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <!-- Filter: Yesterday -->
@@ -284,7 +284,7 @@
                 android:paddingEnd="12dp"
                 android:text="@string/activity_history_yesterday"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <!-- Filter: Older -->
@@ -299,7 +299,7 @@
                 android:paddingEnd="12dp"
                 android:text="@string/activity_history_older"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <View
@@ -307,7 +307,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:background="#1E293B" />
+                android:background="@color/app_surface_elevated" />
 
             <!-- Clear Browsing Data Button -->
             <Button
@@ -323,7 +323,7 @@
                 android:paddingEnd="12dp"
                 android:text="@string/activity_history_clear_browsing_data"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="12sp" />
 
             <!-- Filler View -->
@@ -339,7 +339,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/activity_history_0_visits_recorded"
-                android:textColor="#64748B"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -389,7 +389,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/activity_history_your_browsing_history_appears"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/app_on_surface"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -399,7 +399,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/activity_history_websites_you_visit_in"
-                    android:textColor="#64748B"
+                    android:textColor="@color/app_on_surface_muted"
                     android:textSize="13sp" />
             </LinearLayout>
         </FrameLayout>

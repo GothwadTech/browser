@@ -65,7 +65,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="@string/history"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -96,7 +96,7 @@
                 android:paddingEnd="10dp"
                 android:text="@string/settings_sidebar_history_clear_data"
                 android:textAllCaps="false"
-                android:textColor="#EF4444"
+                android:textColor="@color/app_error"
                 android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -126,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/settings_sidebar_history_history_tracking_is_paused"
-                android:textColor="#F59E0B"
+                android:textColor="@color/app_warning"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -142,7 +142,7 @@
                 android:paddingEnd="10dp"
                 android:text="@string/settings_sidebar_history_resume"
                 android:textAllCaps="false"
-                android:textColor="#38BDF8"
+                android:textColor="@color/app_accent"
                 android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -166,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/activity_history_1_selected"
-                android:textColor="#38BDF8"
+                android:textColor="@color/app_accent"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -183,7 +183,7 @@
                 android:paddingEnd="8dp"
                 android:text="@string/settings_sidebar_history_select_all"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
 
             <Button
@@ -199,7 +199,7 @@
                 android:paddingEnd="10dp"
                 android:text="@string/delete"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -215,7 +215,7 @@
                 android:paddingEnd="8dp"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -249,7 +249,7 @@
                 android:inputType="text"
                 android:singleLine="true"
                 android:textColor="@color/day_night_text_color_contrast"
-                android:textColorHint="#64748B"
+                android:textColorHint="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <ImageButton
@@ -296,7 +296,7 @@
                 android:focusable="true"
                 android:text="@string/activity_downloads_all"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -310,7 +310,7 @@
                 android:focusable="true"
                 android:text="@string/settings_sidebar_history_today"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
 
             <Button
@@ -323,7 +323,7 @@
                 android:focusable="true"
                 android:text="@string/settings_sidebar_history_yesterday"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
 
             <Button
@@ -335,7 +335,7 @@
                 android:focusable="true"
                 android:text="@string/settings_sidebar_history_older"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -383,7 +383,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="@string/settings_sidebar_history_no_browsing_history"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/app_on_surface"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -394,7 +394,7 @@
                     android:layout_marginTop="4dp"
                     android:gravity="center"
                     android:text="@string/settings_sidebar_history_pages_you_visit_in"
-                    android:textColor="#94A3B8"
+                    android:textColor="@color/app_on_surface_muted"
                     android:textSize="12sp" />
             </LinearLayout>
         </FrameLayout>

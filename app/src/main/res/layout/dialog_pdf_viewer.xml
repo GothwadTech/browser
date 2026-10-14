@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F172A"
+    android:background="@color/app_surface_elevated"
     android:orientation="vertical">
 
     <!-- Top Toolbar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#1E293B"
+        android:background="@color/app_surface_elevated"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="16dp"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:singleLine="true"
-                android:textColor="#F8FAFC"
+                android:textColor="@color/app_on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="Document.pdf" />
@@ -48,7 +48,7 @@
                 android:id="@+id/tvPdfPageCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp"
                 tools:text="Page 1 of 12 • 2.4 MB" />
         </LinearLayout>

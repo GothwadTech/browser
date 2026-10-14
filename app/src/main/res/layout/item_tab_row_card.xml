@@ -37,7 +37,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/item_tab_grid_card_tab_title"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -82,7 +82,7 @@
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:text="@string/item_sidebar_tab_active"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="9sp"
             android:textStyle="bold"
             android:visibility="gone" />
@@ -111,7 +111,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/item_sidebar_favorite_google_com"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="10sp" />
     </LinearLayout>
 </LinearLayout>

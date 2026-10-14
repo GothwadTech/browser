@@ -72,7 +72,7 @@
                 android:paddingEnd="8dp"
                 android:paddingBottom="3dp"
                 android:text="@string/settings_sidebar_downloads_0_files"
-                android:textColor="#38BDF8"
+                android:textColor="@color/app_accent"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -109,7 +109,7 @@
                 android:focusable="true"
                 android:text="@string/activity_downloads_all"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -124,7 +124,7 @@
                 android:focusable="true"
                 android:text="@string/activity_downloads_active"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
 
             <Button
@@ -137,7 +137,7 @@
                 android:focusable="true"
                 android:text="@string/done"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="@string/settings_sidebar_downloads_downloaded_files_will_appear"
-                    android:textColor="#64748B"
+                    android:textColor="@color/app_on_surface_muted"
                     android:textSize="12sp" />
             </LinearLayout>
         </FrameLayout>

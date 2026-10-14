@@ -74,7 +74,7 @@
                 android:paddingEnd="10dp"
                 android:text="@string/settings_sidebar_tabs_new"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -90,7 +90,7 @@
                 android:paddingEnd="10dp"
                 android:text="@string/settings_sidebar_tabs_close_all"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 

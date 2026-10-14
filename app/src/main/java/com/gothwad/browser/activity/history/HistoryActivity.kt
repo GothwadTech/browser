@@ -123,8 +123,8 @@ class HistoryActivity : AppCompatActivity(), AdapterView.OnItemClickListener, Ad
     }
 
     private fun updateFilterUI(filter: Int) {
-        val activeColor = 0xFF38BDF8.toInt()
-        val inactiveColor = 0xFF94A3B8.toInt()
+        val activeColor = androidx.core.content.ContextCompat.getColor(this, R.color.app_accent)
+        val inactiveColor = androidx.core.content.ContextCompat.getColor(this, R.color.app_on_surface_muted)
 
         vb.btnFilterAll.setTextColor(if (filter == HistoryModel.FILTER_ALL) activeColor else inactiveColor)
         vb.btnFilterToday.setTextColor(if (filter == HistoryModel.FILTER_TODAY) activeColor else inactiveColor)

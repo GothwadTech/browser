@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/tabs"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
                 android:paddingEnd="14dp"
                 android:text="@string/settings_tab_search_dropdown_new_tab"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -60,7 +60,7 @@
                 android:paddingEnd="14dp"
                 android:text="@string/settings_sidebar_tabs_close_all"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <ImageButton

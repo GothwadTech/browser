@@ -186,7 +186,9 @@ class ActionBar @JvmOverloads constructor(
             "yahoo" -> R.drawable.ic_logo_yahoo
             "yandex" -> R.drawable.ic_logo_yandex
             "startpage" -> R.drawable.ic_logo_startpage
-            else -> R.drawable.ic_logo_google
+            // A custom / unknown engine must not claim to be Google in the omnibox: use the neutral
+            // search glyph instead of the Google logo.
+            else -> R.drawable.ic_search
         }
     }
 
@@ -207,7 +209,7 @@ class ActionBar @JvmOverloads constructor(
             isHttpsSecure = false
             vb.ivLockIcon.setImageResource(R.drawable.ic_menu_info)
             vb.ivLockIcon.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.day_night_icon_color))
-            vb.ivLockIcon.contentDescription = "Not secure"
+            vb.ivLockIcon.contentDescription = context.getString(R.string.connection_not_secure)
         } else {
             isHttpsSecure = false
             val config = AppContext.provideConfig()

@@ -111,7 +111,7 @@
             android:paddingStart="18dp"
             android:paddingEnd="18dp"
             android:text="@string/clear"
-            android:textColor="#EF4444"
+            android:textColor="@color/app_error"
             android:textSize="13sp" />
 
         <Button

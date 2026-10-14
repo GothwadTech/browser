@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
-        android:textColor="#64748B"
+        android:textColor="@color/app_on_surface_muted"
         android:textSize="11sp"
         android:textStyle="bold"
         tools:text="10:45 AM" />
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="13sp"
             android:textStyle="bold"
             tools:text="Google Search" />
@@ -82,7 +82,7 @@
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="11sp"
             tools:text="https://www.google.com" />
     </LinearLayout>
