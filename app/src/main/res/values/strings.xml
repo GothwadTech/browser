@@ -354,7 +354,7 @@
     <string name="home_mem_device">Device RAM: %1$s used of %2$s (%3$d%%)\n%4$s available</string>
     <string name="home_mem_app">This app\'s heap: %1$s of %2$s limit</string>
     <string name="home_mem_tabs">Live page views: %1$d of %2$d tabs (up to %3$d stay loaded)</string>
-    <string name="home_mem_note">Closing a background page view keeps the tab and its history; reopening it restores the page. No "booster" can return memory the system has not been asked for, so this panel only shows real numbers and real actions.</string>
+    <string name="home_mem_note">Closing a background page view keeps the tab and its history; reopening it restores the page. No \"booster\" can return memory the system has not been asked for, so this panel only shows real numbers and real actions.</string>
     <string name="home_mem_trim">Free background pages</string>
     <string name="home_mem_cache">Clear cache</string>
     <string name="home_mem_trimmed">%1$d background page views released</string>
