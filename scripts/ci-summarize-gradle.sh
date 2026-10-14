@@ -49,3 +49,26 @@ out="${GITHUB_STEP_SUMMARY:-/dev/stdout}"
     echo '```'
   fi
 } >>"$out"
+
+# A job step's $GITHUB_STEP_SUMMARY is not exposed by the REST API, and the raw log is often
+# unreachable from a restricted network — but *annotations* are readable at
+# GET /repos/{owner}/{repo}/check-runs/{id}/annotations. So the same digest is also emitted as an
+# ::error:: workflow command, which is what a reviewer (or an agent) can actually fetch.
+escape_gh() {
+  printf '%s\n' "$1" \
+    | sed -e 's/%/%25/g' -e 's/:/%3A/g' -e 's/,/%2C/g' -e 's/\r$//' \
+    | awk 'NF { out = out ? out "%0A" $0 : $0 } END { printf "%s", out }'
+}
+
+if [[ -s "$log" ]]; then
+  digest=$(
+    {
+      grep -E '^e: ' "$log" | head -12
+      awk '/^FAILURE: Build (failed|completion failed)/{p=1} p{print} /Get more help/{p=0}' "$log" | head -14
+      grep -E '^> Task .*FAILED$' "$log" | head -6
+    } | head -32
+  )
+  if [[ -n "$digest" ]]; then
+    echo "::error title=Gradle failure::$(escape_gh "${digest:0:2000}")"
+  fi
+fi
