@@ -1014,7 +1014,54 @@
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
                     android:textColor="@color/google_text_primary"
-                    android:textColorHint="#64748B" />
+                    android:textColorHint="@color/google_text_secondary" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="2dp"
+                android:background="@color/google_divider" />
+
+            <!-- Desktop site as the DEFAULT for new tabs. The real switch lives per tab in the
+                 page menu; this only decides what a freshly opened tab starts with. -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/desktop_mode_default_title"
+                        android:textColor="@color/google_text_primary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/desktop_mode_default_summary"
+                        android:textColor="@color/google_text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/scDesktopModeDefault"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:focusable="true" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

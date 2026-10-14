@@ -127,13 +127,29 @@ class AppLockActivity : AppCompatActivity() {
 
     private fun checkPin() {
         val entered = inputPin.toString()
-        if (AppLockManager.verifyPin(this, entered)) {
+        if (AppLockManager.isLockedOut(this)) {
+            Toast.makeText(
+                this,
+                getString(R.string.app_lock_locked_out, (AppLockManager.lockoutRemainingMs(this) / 1000L).toInt()),
+                Toast.LENGTH_LONG
+            ).show()
+            inputPin.clear()
+            updateDots()
+            return
+        }
+        val result = AppLockManager.verifyPinDetailed(this, entered)
+        if (result.success) {
             AppLockManager.setSessionUnlocked(this, true)
             setResult(RESULT_OK)
             finish()
             overridePendingTransition(0, 0)
         } else {
-            Toast.makeText(this, "Incorrect PIN", Toast.LENGTH_SHORT).show()
+            val message = if (result.lockoutMs > 0) {
+                getString(R.string.app_lock_locked_out, (result.lockoutMs / 1000L).toInt())
+            } else {
+                getString(R.string.app_lock_pin_incorrect)
+            }
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
             dotsContainer?.animate()
                 ?.translationXBy(20f)
                 ?.setDuration(60)

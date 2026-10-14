@@ -158,7 +158,8 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
             setSupportMultipleWindows(true)
             setNeedInitialFocus(false)
 
-            val effectiveUa = config.userAgentString.value ?: if (config.desktopMode.value) Config.DESKTOP_UA else null
+            val effectiveUa = config.userAgentString.value
+                ?: if (config.desktopMode.value || desktopModeOverride == true) Config.DESKTOP_UA else null
             if (effectiveUa != null) {
                 userAgentString = effectiveUa
             }
@@ -442,12 +443,28 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
         }
     }
 
+    /**
+     * Per-tab desktop-mode state, pushed in by `WebViewWebEngine` (null = follow the global
+     * default). Everything that used to read `config.isDesktopMode()` here now reads this, so the
+     * zoom / UA of a backgrounded tab can no longer leak into the tab being displayed.
+     */
+    var desktopModeOverride: Boolean? = null
+
     fun isDesktopModeEnabled(): Boolean {
-        return config.isDesktopMode()
+        return desktopModeOverride ?: config.isDesktopMode()
+    }
+
+    fun setDesktopModeOverride(enabled: Boolean?) {
+        if (desktopModeOverride == enabled) {
+            return
+        }
+        desktopModeOverride = enabled
+        applyDesktopMode()
     }
 
     fun applyDesktopMode() {
         val isDesktop = isDesktopModeEnabled()
+        // A user-configured custom UA always wins over the desktop switch (same rule as Chrome).
         val effectiveUa = config.userAgentString.value ?: if (isDesktop) Config.DESKTOP_UA else null
         settings.userAgentString = effectiveUa
         val targetZoom = config.getEffectiveZoom(isDesktop)

@@ -23,7 +23,10 @@ import com.gothwad.browser.Config
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.lock.AppLockActivity
 import com.gothwad.browser.activity.main.MainActivity
+import com.gothwad.browser.activity.main.desktopModeToastText
+import com.gothwad.browser.activity.main.isCurrentTabInDesktopMode
 import com.gothwad.browser.activity.main.openInNewTab
+import com.gothwad.browser.activity.main.toggleDesktopModeForCurrentTab
 import com.gothwad.browser.activity.main.showDownloads
 import com.gothwad.browser.activity.main.showFavoritesDialog
 import com.gothwad.browser.activity.main.showHistoryActivity
@@ -342,23 +345,14 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         // 13. Desktop Site Checkbox
         val btnDesktop: View = contentView.findViewById(R.id.btnMenuDesktop)
         val cbDesktop: CheckBox = contentView.findViewById(R.id.cbDesktopSite)
-        val isDesktop = config.isDesktopMode()
-        cbDesktop.isChecked = isDesktop
+        cbDesktop.isChecked = activity.isCurrentTabInDesktopMode()
 
         bindMenuItem(btnDesktop) {
-            val willBeDesktop = !cbDesktop.isChecked
+            val willBeDesktop = activity.toggleDesktopModeForCurrentTab(!cbDesktop.isChecked)
             cbDesktop.isChecked = willBeDesktop
-            config.desktopMode.value = willBeDesktop
-            config.userAgentString.value = if (willBeDesktop) Config.DESKTOP_UA else null
-            val newZoom = config.getEffectiveZoom(willBeDesktop)
-            for (tab in activity.tabsModel.tabsStates) {
-                tab.webEngine.userAgentString = if (willBeDesktop) Config.DESKTOP_UA else null
-                tab.webEngine.setPageZoom(newZoom)
-            }
-            currentTab?.webEngine?.reload()
             Toast.makeText(
                 activity,
-                activity.getString(if (willBeDesktop) R.string.desktop_site_on else R.string.desktop_site_off),
+                activity.desktopModeToastText(willBeDesktop),
                 Toast.LENGTH_SHORT
             ).show()
         }

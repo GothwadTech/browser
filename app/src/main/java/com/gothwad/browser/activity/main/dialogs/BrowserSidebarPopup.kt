@@ -20,6 +20,9 @@ import com.gothwad.browser.R
 import com.gothwad.browser.activity.lock.AppLockActivity
 import com.gothwad.browser.activity.lock.TvPinDialog
 import com.gothwad.browser.activity.main.MainActivity
+import com.gothwad.browser.activity.main.desktopModeToastText
+import com.gothwad.browser.activity.main.isCurrentTabInDesktopMode
+import com.gothwad.browser.activity.main.toggleDesktopModeForCurrentTab
 import com.gothwad.browser.activity.main.showDownloads
 import com.gothwad.browser.activity.main.showFavoritesDialog
 import com.gothwad.browser.activity.main.showHistoryActivity
@@ -205,22 +208,17 @@ class BrowserSidebarPopup(private val activity: MainActivity) {
 
         // 7. Desktop View Mode
         val ivDesktopCheck = contentView.findViewById<ImageView>(R.id.ivSideDesktopCheck)
-        val isDesktop = config.isDesktopMode()
+        val isDesktop = activity.isCurrentTabInDesktopMode()
         ivDesktopCheck?.setImageResource(
             if (isDesktop) R.drawable.ic_check_box_checked else R.drawable.ic_check_box_outline
         )
         contentView.findViewById<View>(R.id.btnSideDesktopMode)?.let { btn ->
             bindItem(btn) {
-                val willBeDesktop = !isDesktop
-                config.desktopMode.value = willBeDesktop
-                config.userAgentString.value = if (willBeDesktop) Config.DESKTOP_UA else null
-                val newZoom = config.getEffectiveZoom(willBeDesktop)
-                for (tab in activity.tabsModel.tabsStates) {
-                    tab.webEngine.userAgentString = if (willBeDesktop) Config.DESKTOP_UA else null
-                    tab.webEngine.setPageZoom(newZoom)
-                }
-                currentTab?.webEngine?.reload()
-                Toast.makeText(activity, if (willBeDesktop) "Desktop mode enabled (${newZoom}% zoom)" else "Mobile mode enabled (${newZoom}% zoom)", Toast.LENGTH_SHORT).show()
+                val willBeDesktop = activity.toggleDesktopModeForCurrentTab(!isDesktop)
+                ivDesktopCheck?.setImageResource(
+                    if (willBeDesktop) R.drawable.ic_check_box_checked else R.drawable.ic_check_box_outline
+                )
+                Toast.makeText(activity, activity.desktopModeToastText(willBeDesktop), Toast.LENGTH_SHORT).show()
             }
         }
 

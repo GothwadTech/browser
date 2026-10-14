@@ -318,4 +318,25 @@
     <string name="page_download_started">Saving this page\'s HTML\u2026</string>
     <string name="safe_browsing_title">Safe Browsing protection</string>
     <string name="safe_browsing_desc">Ask the WebView engine to check navigation and downloads against Google\'s Safe Browsing lists, like Chrome does. Disabling it is faster on very slow networks but unsafe.</string>
+    <!-- App lock / PIN -->
+    <string name="app_lock_pin_title_set">Set a 4-digit PIN</string>
+    <string name="app_lock_pin_title_confirm">Confirm your PIN</string>
+    <string name="app_lock_pin_title_enter">Enter your PIN</string>
+    <string name="app_lock_pin_title_verify_current">Verify current PIN</string>
+    <string name="app_lock_pin_title_new">Enter a new PIN</string>
+    <string name="app_lock_pin_title_confirm_new">Confirm the new PIN</string>
+    <string name="app_lock_step_new">Step 1 of %1$d: type a new 4-digit PIN</string>
+    <string name="app_lock_step_confirm">Step 2 of %1$d: type the same PIN again</string>
+    <string name="app_lock_step_verify">Step 1 of %1$d: type your current PIN</string>
+    <string name="app_lock_step_new_3">Step 2 of %1$d: type a new 4-digit PIN</string>
+    <string name="app_lock_step_confirm_3">Step 3 of %1$d: type the new PIN again</string>
+    <string name="app_lock_pin_saved">PIN saved</string>
+    <string name="app_lock_pin_changed">PIN changed</string>
+    <string name="app_lock_pin_mismatch">The PINs did not match. Try again.</string>
+    <string name="app_lock_pin_incorrect">Incorrect PIN</string>
+    <string name="app_lock_pin_incorrect_current">Current PIN is incorrect</string>
+    <string name="app_lock_locked_out">Too many attempts. Try again in %1$d s.</string>
+    <string name="app_lock_unlocked_note">The browser stays unlocked for a minute after you leave it, then asks again.</string>
+    <string name="desktop_mode_default_title">Desktop site by default</string>
+    <string name="desktop_mode_default_summary">New tabs start in desktop view. Turn it off for individual tabs from the page menu.</string>
 </resources>

@@ -257,13 +257,15 @@ internal fun MainActivity.createWebView(tab: WebTabState): View? {
     }
 
     var ua = config.userAgentString.value
-    if (ua == null && config.desktopMode.value) {
+    if (ua == null && effectiveDesktopMode(tab)) {
         ua = Config.DESKTOP_UA
     }
     if (ua?.contains("Browser/1.0 ") == true) {
+        // A UA from an older release that no longer applies: drop it rather than keep shipping it.
         config.userAgentString.value = null
-        ua = if (config.desktopMode.value) Config.DESKTOP_UA else null
+        ua = if (effectiveDesktopMode(tab)) Config.DESKTOP_UA else null
     }
+    tab.webEngine.setDesktopModeOverride(tab.desktopMode ?: config.desktopMode.value)
     tab.webEngine.userAgentString = ua
 
     return webView

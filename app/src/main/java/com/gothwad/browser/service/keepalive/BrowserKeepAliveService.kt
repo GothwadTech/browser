@@ -125,7 +125,7 @@ class BrowserKeepAliveService : Service() {
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID_KEEPALIVE)
-            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSmallIcon(R.drawable.ic_stat_network)
             .setContentTitle(getString(R.string.app_name))
             .setContentText(getString(R.string.background_keepalive_desc))
             .setPriority(NotificationCompat.PRIORITY_MIN)

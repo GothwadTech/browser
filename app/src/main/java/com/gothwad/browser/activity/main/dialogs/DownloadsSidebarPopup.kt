@@ -28,6 +28,7 @@ import com.gothwad.browser.R
 import com.gothwad.browser.activity.downloads.ActiveDownloadsModel
 import com.gothwad.browser.activity.main.MainActivity
 import com.gothwad.browser.model.Download
+import com.gothwad.browser.utils.ListDiff
 import com.gothwad.browser.singleton.AppDatabase
 import com.gothwad.browser.utils.activemodel.ActiveModelsRepository
 import kotlinx.coroutines.CoroutineScope
@@ -239,9 +240,14 @@ class DownloadsSidebarPopup(private val activity: MainActivity) : ActiveDownload
             }
 
             withContext(Dispatchers.Main) {
-                downloadItems.clear()
-                downloadItems.addAll(filtered)
-                adapter.notifyDataSetChanged()
+                val downloadsAdapter = adapter
+                if (downloadsAdapter != null) {
+                    ListDiff.submit(downloadsAdapter, downloadItems, filtered, idOf = { it.id },
+                        contentOf = { "${it.filename}|${it.url}|${it.bytesReceived}|${it.size}" })
+                } else {
+                    downloadItems.clear()
+                    downloadItems.addAll(filtered)
+                }
 
                 tvDownloadsCountBadge.text = "${downloadItems.size} files"
                 llEmptyDownloads.visibility = if (downloadItems.isEmpty()) View.VISIBLE else View.GONE
@@ -330,7 +336,7 @@ class DownloadsSidebarPopup(private val activity: MainActivity) : ActiveDownload
 }
 
 class DownloadsSidebarAdapter(
-    private val items: List<Download>,
+    private val items: MutableList<Download>,
     private val onItemClick: (Download) -> Unit,
     private val onDeleteClick: (Download) -> Unit
 ) : RecyclerView.Adapter<DownloadsSidebarAdapter.ViewHolder>() {

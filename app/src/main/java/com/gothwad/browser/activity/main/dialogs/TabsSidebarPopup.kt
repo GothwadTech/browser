@@ -1,6 +1,7 @@
 package com.gothwad.browser.activity.main.dialogs
 
 import android.graphics.Color
+import com.gothwad.browser.utils.ListDiff
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
 import android.view.KeyEvent
@@ -211,10 +212,18 @@ class TabsSidebarAdapter(
     }
 
     fun update(newTabs: List<WebTabState>, newCurrentTab: WebTabState?) {
-        tabs.clear()
-        tabs.addAll(newTabs)
+        val previousCurrent = currentTab
         currentTab = newCurrentTab
-        notifyDataSetChanged()
+        // The active tab is part of the row content, so the old and the new side get their own
+        // signature (otherwise switching tabs would not repaint the highlight).
+        ListDiff.submit(
+            this,
+            tabs,
+            newTabs,
+            idOf = { it.id },
+            contentOfOld = { "${it.title}|${it.url}|${if (it === previousCurrent) 1 else 0}" },
+            contentOfNew = { "${it.title}|${it.url}|${if (it === newCurrentTab) 1 else 0}" }
+        )
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

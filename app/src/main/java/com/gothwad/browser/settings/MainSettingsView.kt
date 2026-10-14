@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.gothwad.browser.AppContext
 import com.gothwad.browser.Config
 import com.gothwad.browser.activity.main.MainActivity
+import com.gothwad.browser.activity.main.applyDesktopModeDefault
 import com.gothwad.browser.databinding.ViewSettingsMainBinding
 import com.gothwad.browser.utils.activemodel.ActiveModelsRepository
 import com.gothwad.browser.utils.activity
@@ -60,6 +61,12 @@ class MainSettingsView @JvmOverloads constructor(
         vb.scKeepScreenOn.isChecked = settingsModel.keepScreenOn.value
         vb.scKeepScreenOn.setOnCheckedChangeListener { _, isChecked ->
             settingsModel.keepScreenOn.value = isChecked
+        }
+
+        vb.scDesktopModeDefault.isChecked = config.desktopMode.value
+        vb.scDesktopModeDefault.setOnCheckedChangeListener { _, isChecked ->
+            config.desktopMode.value = isChecked
+            (activity as? MainActivity)?.applyDesktopModeDefault()
         }
 
         vb.scDisableVirtualKeyboard.isChecked = config.disableVirtualKeyboard

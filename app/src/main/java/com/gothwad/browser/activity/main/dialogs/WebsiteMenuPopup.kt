@@ -20,6 +20,9 @@ import com.gothwad.browser.Config
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.main.MainActivity
 import com.gothwad.browser.activity.main.applyWebPageZoom
+import com.gothwad.browser.activity.main.desktopModeToastText
+import com.gothwad.browser.activity.main.isCurrentTabInDesktopMode
+import com.gothwad.browser.activity.main.toggleDesktopModeForCurrentTab
 import com.gothwad.browser.activity.main.openInNewTab
 import com.gothwad.browser.activity.main.view.home.HomeCardAdapter
 import com.gothwad.browser.activity.main.view.home.HomeData
@@ -130,7 +133,7 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
         // Desktop Site Checkbox setup
         val btnDesktop: View = contentView.findViewById(R.id.btnWebMenuDesktop)
         val cbDesktop: CheckBox = contentView.findViewById(R.id.cbWebMenuDesktop)
-        val isDesktop = config.isDesktopMode()
+        val isDesktop = activity.isCurrentTabInDesktopMode()
         cbDesktop.isChecked = isDesktop
 
         // 🔎 Website Zoom Controls
@@ -172,18 +175,10 @@ class WebsiteMenuPopup(private val activity: MainActivity) {
 
         // 2. Desktop Site Checkbox
         bindItem(btnDesktop) {
-            val willBeDesktop = !cbDesktop.isChecked
+            val willBeDesktop = activity.toggleDesktopModeForCurrentTab(!cbDesktop.isChecked)
             cbDesktop.isChecked = willBeDesktop
-            config.desktopMode.value = willBeDesktop
-            config.userAgentString.value = if (willBeDesktop) Config.DESKTOP_UA else null
-            val newZoom = config.getEffectiveZoom(willBeDesktop)
-            for (tab in activity.tabsModel.tabsStates) {
-                tab.webEngine.userAgentString = if (willBeDesktop) Config.DESKTOP_UA else null
-                tab.webEngine.setPageZoom(newZoom)
-            }
-            currentTab?.webEngine?.reload()
             updateZoomDisplay()
-            Toast.makeText(activity, if (willBeDesktop) "Desktop mode enabled (${newZoom}% zoom)" else "Mobile mode enabled (${newZoom}% zoom)", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.desktopModeToastText(willBeDesktop), Toast.LENGTH_SHORT).show()
         }
 
         // 3. Find In Page
