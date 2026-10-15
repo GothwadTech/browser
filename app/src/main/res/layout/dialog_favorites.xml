@@ -30,8 +30,8 @@
                 android:id="@+id/tvBookmarksTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bookmarks"
-                android:textColor="#FFFFFF"
+                android:text="@string/bookmarks"
+                android:textColor="@color/app_on_surface"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -40,8 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="0 saved"
-                android:textColor="#94A3B8"
+                android:text="@string/settings_favorites_0_saved"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -71,12 +71,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                android:hint="Search bookmarks"
+                android:hint="@string/settings_favorites_search_bookmarks"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#64748B"
+                android:textColor="@color/app_on_surface"
+                android:textColorHint="@color/app_on_surface_muted"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -92,9 +92,9 @@
             android:focusable="true"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="Recently added"
+            android:text="@string/settings_favorites_recently_added"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="12sp" />
 
         <!-- Add Bookmark Button -->
@@ -107,9 +107,9 @@
             android:focusable="true"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:text="+ Add"
+            android:text="@string/settings_favorites_add"
             android:textAllCaps="false"
-            android:textColor="#0284C7"
+            android:textColor="@color/app_accent"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -154,8 +154,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="All bookmarks"
-            android:textColor="#FFFFFF"
+            android:text="@string/settings_favorites_all_bookmarks"
+            android:textColor="@color/app_on_surface"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -163,8 +163,8 @@
             android:id="@+id/tvSectionCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 items"
-            android:textColor="#94A3B8"
+            android:text="@string/settings_favorites_0_items"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
     </LinearLayout>
 
@@ -211,8 +211,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:text="No bookmarks yet"
-                android:textColor="#FFFFFF"
+                android:text="@string/no_bookmarks_yet"
+                android:textColor="@color/app_on_surface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -220,8 +220,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="Bookmark pages to easily access them here."
-                android:textColor="#94A3B8"
+                android:text="@string/settings_favorites_bookmark_pages_to_easily"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="14sp" />
         </LinearLayout>
     </FrameLayout>

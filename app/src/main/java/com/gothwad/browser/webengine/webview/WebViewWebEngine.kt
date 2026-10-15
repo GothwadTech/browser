@@ -101,6 +101,15 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
         pageZoomController?.zoomBy(zoomBy) ?: webView?.zoomBy(zoomBy)
     }
 
+    // Named so it does not collide with the JVM setter of a `desktopModeOverride` property; the
+    // override is cached here because the tab can be told before its WebView exists.
+    private var pendingDesktopModeOverride: Boolean? = null
+
+    override fun setDesktopModeOverride(enabled: Boolean?) {
+        pendingDesktopModeOverride = enabled
+        webView?.desktopModeOverride = enabled
+    }
+
     override fun setPageZoom(percent: Int) {
         pageZoomController?.setPageZoom(percent) ?: webView?.applyZoom(percent)
     }
@@ -114,7 +123,10 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
         if (webView == null) {
             val wv = WebViewEx(activityContext, webViewCallback, jsInterface)
             val cfg = AppContext.provideConfig()
-            val effectiveUa = userAgentString ?: cfg.userAgentString.value ?: if (cfg.desktopMode.value) Config.DESKTOP_UA else null
+            val tabDesktop = pendingDesktopModeOverride ?: tab.desktopMode ?: cfg.desktopMode.value
+            wv.desktopModeOverride = tabDesktop
+            val effectiveUa = userAgentString ?: cfg.userAgentString.value
+                ?: if (tabDesktop) Config.DESKTOP_UA else null
             userAgentString = effectiveUa
             wv.settings.userAgentString = effectiveUa
             val pzc = PageZoomController(wv, tab)
@@ -286,7 +298,18 @@ class WebViewWebEngine(val tab: WebTabState) : WebEngine, CursorDrawerDelegate.C
             WebEngineFactory.registerProvider(WebEngineProvider("WebView", object : WebEngineProviderCallback {
                 override suspend fun initialize(context: Context, webViewContainer: CursorLayout) {}
                 override fun createWebEngine(tab: WebTabState): WebEngine = WebViewWebEngine(tab)
-                override suspend fun clearCache(ctx: Context) { WebView(ctx).clearCache(true) }
+                override suspend fun clearCache(ctx: Context) = withContext(Dispatchers.Main) {
+                    // The on-disk cache is shared per app, so a throwaway WebView is the only
+                    // documented way to clear it for every live tab. It must be destroyed
+                    // afterwards: previously each "Clear cache" leaked a whole renderer instance
+                    // (tens of MB), on exactly the low-RAM devices this setting exists for.
+                    val wv = WebView(ctx)
+                    try {
+                        wv.clearCache(true)
+                    } finally {
+                        wv.destroy()
+                    }
+                }
                 override fun onThemeSettingUpdated(value: Config.Theme) {}
                 override fun getWebEngineVersionString(): String {
                     val pkg = WebViewCompat.getCurrentWebViewPackage(AppContext.get())

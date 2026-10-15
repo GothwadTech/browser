@@ -123,8 +123,8 @@ class HistoryActivity : AppCompatActivity(), AdapterView.OnItemClickListener, Ad
     }
 
     private fun updateFilterUI(filter: Int) {
-        val activeColor = 0xFF38BDF8.toInt()
-        val inactiveColor = 0xFF94A3B8.toInt()
+        val activeColor = androidx.core.content.ContextCompat.getColor(this, R.color.app_accent)
+        val inactiveColor = androidx.core.content.ContextCompat.getColor(this, R.color.app_on_surface_muted)
 
         vb.btnFilterAll.setTextColor(if (filter == HistoryModel.FILTER_ALL) activeColor else inactiveColor)
         vb.btnFilterToday.setTextColor(if (filter == HistoryModel.FILTER_TODAY) activeColor else inactiveColor)
@@ -215,7 +215,7 @@ class HistoryActivity : AppCompatActivity(), AdapterView.OnItemClickListener, Ad
                     val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                     val clip = ClipData.newPlainText("URL", item.url)
                     clipboard.setPrimaryClip(clip)
-                    Toast.makeText(this, "Link copied to clipboard", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, this.getString(R.string.history_link_copied_to_clipboard), Toast.LENGTH_SHORT).show()
                     true
                 }
                 4 -> {
@@ -282,8 +282,8 @@ class HistoryActivity : AppCompatActivity(), AdapterView.OnItemClickListener, Ad
 
     private fun showClearBrowsingDataDialog() {
         AlertDialog.Builder(this)
-            .setTitle("Clear Browsing Data")
-            .setMessage("Delete all browsing history, cached files, and cookies?")
+            .setTitle(R.string.history_clear_browsing_data)
+            .setMessage(R.string.history_delete_all_confirm)
             .setPositiveButton("Clear Everything") { _, _ ->
                 lifecycleScope.launch(Dispatchers.Main) {
                     try {

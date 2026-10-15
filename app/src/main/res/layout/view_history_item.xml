@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
         android:text="15:46"
-        android:textColor="#64748B"
+        android:textColor="@color/app_on_surface_muted"
         android:textSize="12sp"
         android:textStyle="bold" />
 
@@ -68,8 +68,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Page Title"
-            android:textColor="#FFFFFF"
+            android:text="@string/settings_history_item_page_title"
+            android:textColor="@color/app_on_surface"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -80,8 +80,8 @@
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="https://example.com"
-            android:textColor="#94A3B8"
+            android:text="@string/settings_download_item_https_example_com"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="11sp" />
     </LinearLayout>
 
@@ -92,7 +92,7 @@
         android:layout_height="34dp"
         android:layout_marginStart="6dp"
         android:background="@drawable/button_bg_selector"
-        android:contentDescription="Remove from history"
+        android:contentDescription="@string/settings_history_item_remove_from_history"
         android:focusable="true"
         android:padding="7dp"
         android:scaleType="fitCenter"
@@ -106,7 +106,7 @@
         android:layout_height="34dp"
         android:layout_marginStart="4dp"
         android:background="@drawable/button_bg_selector"
-        android:contentDescription="More options"
+        android:contentDescription="@string/bottom_toolbar_more_options"
         android:focusable="true"
         android:padding="6dp"
         android:scaleType="fitCenter"

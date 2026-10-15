@@ -16,7 +16,7 @@ import com.gothwad.browser.model.util.Converters
     HistoryItem::class, WebTabState::class,
     HostConfig::class
                      ],
-    version = 21, exportSchema = false)
+    version = 22, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun downloadDao(): DownloadDao
@@ -165,6 +165,13 @@ abstract class AppDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_21_22 = object : Migration(21, 22) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Per-tab desktop-mode override (null = follow the global default).
+                db.execSQL("ALTER TABLE tabs ADD COLUMN desktop_mode INTEGER;")
+            }
+        }
+
         private val MIGRATION_20_21 = object : Migration(20, 21) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("DROP TABLE IF EXISTS `notes`")
@@ -217,7 +224,7 @@ abstract class AppDatabase : RoomDatabase() {
                 MIGRATION_1_2, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_8, MIGRATION_8_9,
                 MIGRATION_9_10, MIGRATION_10_11, MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14,
                 MIGRATION_14_15, MIGRATION_15_16, MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19,
-                MIGRATION_19_20, MIGRATION_20_21
+                MIGRATION_19_20, MIGRATION_20_21, MIGRATION_21_22
             )
             .fallbackToDestructiveMigration()
             .allowMainThreadQueries()

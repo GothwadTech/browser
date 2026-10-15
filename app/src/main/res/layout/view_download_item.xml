@@ -44,8 +44,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="File Name"
-            android:textColor="#FFFFFF"
+            android:text="@string/settings_download_item_file_name"
+            android:textColor="@color/app_on_surface"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -56,8 +56,8 @@
             android:layout_marginTop="2dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="https://example.com"
-            android:textColor="#94A3B8"
+            android:text="@string/settings_download_item_https_example_com"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="12sp" />
 
         <ProgressBar
@@ -82,8 +82,8 @@
             android:id="@+id/tvSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 KB"
-            android:textColor="#FFFFFF"
+            android:text="@string/settings_download_item_0_kb"
+            android:textColor="@color/app_on_surface"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:text="12:00"
-            android:textColor="#64748B"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="12sp" />
 
         <ProgressBar

@@ -9,3 +9,8 @@
 !debug.keystore
 *.hprof
 /buildSrc/build
+
+/.kotlin
+/local.properties
+/app/build
+/app/common/build

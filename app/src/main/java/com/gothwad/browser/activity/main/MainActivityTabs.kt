@@ -69,7 +69,9 @@ fun MainActivity.showTabsRowDialog() {
 
 fun MainActivity.updateTabCountBadge() {
     val count = tabsModel.tabsStates.size
-    vb.tvTabCountBadge.text = if (count > 0) count.toString() else "1"
+    val label = if (count > 0) count.toString() else "1"
+    vb.tvTabCountBadge.text = label
+    vb.tvBottomTabCountBadge.text = label
     refreshTopTabs()
     if (vb.vChromeTabSwitcher.isVisible) {
         vb.vChromeTabSwitcher.updateTabs(tabsModel.tabsStates, tabsModel.currentTab.value)

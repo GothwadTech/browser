@@ -43,7 +43,7 @@
                 android:layout_height="32dp"
                 android:background="@drawable/bg_tv_side_back_btn"
                 android:clickable="true"
-                android:contentDescription="Close"
+                android:contentDescription="@string/close"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="Search Tabs"
+                android:text="@string/settings_tab_search_dropdown_search_tabs"
                 android:textColor="@color/day_night_text_color_contrast"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -71,9 +71,9 @@
                 android:minWidth="0dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="+ New Tab"
+                android:text="@string/settings_tab_search_dropdown_new_tab"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
-                android:hint="Search open and recently closed tabs..."
+                android:hint="@string/settings_tab_search_dropdown_search_open_and_recently"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"

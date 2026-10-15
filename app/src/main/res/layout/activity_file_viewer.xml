@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0F172A"
+    android:background="@color/app_surface_elevated"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="#1E293B"
+        android:background="@color/app_surface_elevated"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="16dp"
@@ -19,7 +19,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Back"
+            android:contentDescription="@string/chrome_menu_back"
             android:focusable="true"
             android:src="@drawable/ic_arrow_back"
             android:tint="#F8FAFC" />
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:singleLine="true"
-                android:textColor="#F8FAFC"
+                android:textColor="@color/app_on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
                 android:id="@+id/tvViewerFileMeta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -54,7 +54,7 @@
             android:layout_width="44dp"
             android:layout_height="44dp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="Share"
+            android:contentDescription="@string/activity_file_viewer_share"
             android:focusable="true"
             android:src="@drawable/ic_share"
             android:tint="#F8FAFC" />
@@ -69,7 +69,7 @@
             android:id="@+id/wvFileContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#0F172A" />
+            android:background="@color/app_surface_elevated" />
 
         <ProgressBar
             android:id="@+id/pbViewerLoading"

@@ -64,6 +64,8 @@ class BrowserApp : Application(), Application.ActivityLifecycleCallbacks {
         instance = this
 
         AppContext.init(this, Config(getSharedPreferences(MAIN_PREFS_NAME, MODE_MULTI_PROCESS)))
+        // Must run before the first tab is restored: it decides how many WebViews may stay live.
+        AppContext.provideConfig().applyMemoryAwareDefaults(this)
 
         val maxThreadsInOfflineJobsPool = Runtime.getRuntime().availableProcessors()
         threadPool = ThreadPoolExecutor(0, maxThreadsInOfflineJobsPool, 20,

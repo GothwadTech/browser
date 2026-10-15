@@ -30,7 +30,15 @@ fun MainActivity.getHeaderFocusableViews(): List<View> {
         vb.ibDownloads,
         vb.ibMenu
     )
-    for (v in candidateViews) {
+    val bottomBarViews = listOf(
+        vb.ibBottomBack,
+        vb.ibBottomHome,
+        vb.ibBottomNewTab,
+        vb.flBottomTabsSwitcher,
+        vb.ibBottomMenu
+    )
+    val all = candidateViews + bottomBarViews
+    for (v in all) {
         if (v.isShown && v.visibility == View.VISIBLE) {
             list.add(v)
         }

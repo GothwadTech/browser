@@ -36,8 +36,8 @@
             android:layout_weight="1"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Tab Title"
-            android:textColor="#FFFFFF"
+            android:text="@string/item_tab_grid_card_tab_title"
+            android:textColor="@color/app_on_surface"
             android:textSize="12sp"
             android:textStyle="bold" />
 
@@ -47,7 +47,7 @@
             android:layout_height="24dp"
             android:background="@drawable/bg_chrome_close_btn"
             android:clickable="true"
-            android:contentDescription="Close Tab"
+            android:contentDescription="@string/item_sidebar_tab_close_tab"
             android:focusable="true"
             android:padding="4dp"
             android:scaleType="fitCenter"
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#161B26">
+        android:background="@color/app_surface_elevated">
 
         <ImageView
             android:id="@+id/ivTabPreview"
@@ -81,8 +81,8 @@
             android:paddingEnd="6dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
-            android:text="ACTIVE"
-            android:textColor="#FFFFFF"
+            android:text="@string/item_sidebar_tab_active"
+            android:textColor="@color/app_on_surface"
             android:textSize="9sp"
             android:textStyle="bold"
             android:visibility="gone" />
@@ -110,8 +110,8 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="google.com"
-            android:textColor="#94A3B8"
+            android:text="@string/item_sidebar_favorite_google_com"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="10sp" />
     </LinearLayout>
 </LinearLayout>

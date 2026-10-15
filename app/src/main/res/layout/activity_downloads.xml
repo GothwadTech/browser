@@ -32,8 +32,8 @@
                 android:id="@+id/tvDownloadsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Downloads"
-                android:textColor="#FFFFFF"
+                android:text="@string/downloads"
+                android:textColor="@color/app_on_surface"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
@@ -42,8 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Nothing in progress · 17.73 GB free"
-                android:textColor="#94A3B8"
+                android:text="@string/activity_downloads_nothing_in_progress_17"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="13sp" />
         </LinearLayout>
 
@@ -80,9 +80,9 @@
             android:focusable="true"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="All"
+            android:text="@string/activity_downloads_all"
             android:textAllCaps="false"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/app_on_surface"
             android:textSize="13sp"
             android:textStyle="bold" />
 
@@ -95,9 +95,9 @@
             android:focusable="true"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Active"
+            android:text="@string/activity_downloads_active"
             android:textAllCaps="false"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
 
         <Button
@@ -109,9 +109,9 @@
             android:focusable="true"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Completed"
+            android:text="@string/activity_downloads_completed"
             android:textAllCaps="false"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
 
         <Button
@@ -122,16 +122,16 @@
             android:focusable="true"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="Failed"
+            android:text="@string/activity_downloads_failed"
             android:textAllCaps="false"
-            android:textColor="#94A3B8"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#1E2638" />
+        android:background="@color/app_surface_elevated" />
 
     <!-- Content Area: ListView or Modern Empty State -->
     <FrameLayout
@@ -169,8 +169,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14dp"
-                android:text="No downloads"
-                android:textColor="#FFFFFF"
+                android:text="@string/activity_downloads_no_downloads"
+                android:textColor="@color/app_on_surface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -178,8 +178,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="Files you download from a page will appear here."
-                android:textColor="#94A3B8"
+                android:text="@string/activity_downloads_files_you_download_from"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="14sp" />
         </LinearLayout>
     </FrameLayout>

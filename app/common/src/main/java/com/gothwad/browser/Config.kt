@@ -76,13 +76,19 @@ class Config(val prefs: SharedPreferences) {
         const val KEEP_ALIVE_IN_BACKGROUND_KEY = "keep_alive_in_background"
         const val MAX_LIVE_TABS_KEY = "max_live_tabs"
         const val SAVE_HISTORY_KEY = "save_history"
+    const val TRANSLATE_TARGET_LANGUAGE_KEY = "translate_target_language"
+    const val SAFE_BROWSING_KEY = "safe_browsing_enabled"
         /**
          * Maximum number of tab WebViews kept fully live in memory simultaneously.
          * Default is 6: balanced for typical Android TV boxes (1.5GB - 3GB RAM) to allow
          * fast tab switching without exhausting system memory.
          */
         const val DEFAULT_MAX_LIVE_TABS = 6
+        /** Cap for the tab-switcher snapshot width; the grid cards are far smaller than a screen. */
+        const val THUMBNAIL_MAX_WIDTH_PX = 480
         const val DESKTOP_MODE_KEY = "desktop_mode"
+        /** Which input device the user drives the browser with - see [InputMode]. */
+        const val INPUT_MODE_KEY = "input_mode"
         const val DESKTOP_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 
         const val ENGINE_WEB_VIEW = "WebView"
@@ -117,6 +123,23 @@ class Config(val prefs: SharedPreferences) {
         BLACK_MIDNIGHT;
     }
 
+    /**
+     * How the user drives the browser. This is the one setting that decides pointer handling and
+     * the default page layout, so that TV users do not have to dig through four different
+     * sub-screens (virtual cursor, joystick axes, user agent) to get a working remote or a working
+     * mouse.
+     *
+     * - [AUTO] - resolve from the device: touch screen -> [TOUCH], TV with a mouse plugged in ->
+     *   [KEYBOARD_MOUSE], anything else -> [TV_REMOTE].
+     * - [TV_REMOTE] - D-pad only: the DPAD-driven virtual cursor and axis navigation are on.
+     * - [KEYBOARD_MOUSE] - a real pointer drives the page, so the drawn virtual cursor is turned
+     *   off (two pointers on screen at once was the classic "double cursor" complaint).
+     * - [TOUCH] - phone / tablet: no virtual cursor, no axis-to-DPAD translation.
+     */
+    enum class InputMode {
+        AUTO, TV_REMOTE, KEYBOARD_MOUSE, TOUCH
+    }
+
     enum class HomePageMode {
         HOME_PAGE, SEARCH_ENGINE, CUSTOM, BLANK
     }
@@ -129,7 +152,9 @@ class Config(val prefs: SharedPreferences) {
         get() = prefs.getBoolean(INCOGNITO_MODE_KEY, false)
         @SuppressLint("ApplySharedPref")
         set(value) {
-            prefs.edit().putBoolean(INCOGNITO_MODE_KEY, value).commit()
+            // The incognito process reads this flag, so it has to hit disk before the other
+            // process is started - apply() would race with it.
+            prefs.edit().putBoolean(INCOGNITO_MODE_KEY, value).commit() // quality-gate: allow
         }
 
     var incognitoModeHintSuppress: Boolean
@@ -195,6 +220,26 @@ class Config(val prefs: SharedPreferences) {
         get() = prefs.getBoolean(ENABLE_VIRTUAL_CURSOR_KEY, true)
         set(value) {
             prefs.edit().putBoolean(ENABLE_VIRTUAL_CURSOR_KEY, value).apply()
+        }
+
+    /** Stored input-mode choice (`AUTO` by default, i.e. "follow the device"). */
+    var inputMode: InputMode
+        get() = prefs.getString(INPUT_MODE_KEY, null)?.let { saved ->
+            InputMode.entries.firstOrNull { it.name == saved }
+        } ?: InputMode.AUTO
+        set(value) {
+            prefs.edit().putString(INPUT_MODE_KEY, value.name).apply()
+        }
+
+    /** [InputMode.AUTO] resolved against the actual device / connected hardware. */
+    fun resolveInputMode(isTvDevice: Boolean, physicalMouseConnected: Boolean): InputMode =
+        when (inputMode) {
+            InputMode.AUTO -> when {
+                !isTvDevice -> InputMode.TOUCH
+                physicalMouseConnected -> InputMode.KEYBOARD_MOUSE
+                else -> InputMode.TV_REMOTE
+            }
+            else -> inputMode
         }
 
     var cursorSizePercent: Int
@@ -332,6 +377,23 @@ class Config(val prefs: SharedPreferences) {
             setEffectiveZoom(isDesktopMode(), value)
         }
 
+    /** Target language code for "Translate this page" ("" = device language). */
+    var translateTargetLanguage: String
+        get() = prefs.getString(TRANSLATE_TARGET_LANGUAGE_KEY, "") ?: ""
+        set(value) {
+            prefs.edit().putString(TRANSLATE_TARGET_LANGUAGE_KEY, value).apply()
+        }
+
+    /**
+     * Chrome-like Safe Browsing checks for navigations and downloads. Enabled by default; it can
+     * be turned off for debugging or on very constrained devices where the extra lookups hurt.
+     */
+    var safeBrowsingEnabled: Boolean
+        get() = prefs.getBoolean(SAFE_BROWSING_KEY, true)
+        set(value) {
+            prefs.edit().putBoolean(SAFE_BROWSING_KEY, value).apply()
+        }
+
     /** Whether to record visited URLs and searches into local history. */
     var saveHistory: Boolean
         get() = prefs.getBoolean(SAVE_HISTORY_KEY, true)
@@ -420,11 +482,42 @@ class Config(val prefs: SharedPreferences) {
     var showTopTabBar = ObservableBooleanPreference(false, SHOW_TOP_TAB_BAR_KEY)
     var keepAliveInBackground = ObservableBooleanPreference(true, KEEP_ALIVE_IN_BACKGROUND_KEY)
 
+    /**
+     * Cap used when the user never set one. Lowered once at startup by [applyMemoryAwareDefaults]:
+     * a 1 GB Android TV box cannot keep six renderers alive, since every extra live WebView is a
+     * full native process plus a painted buffer.
+     */
+    @Volatile
+    var maxLiveTabsDefault: Int = DEFAULT_MAX_LIVE_TABS
+
     var maxLiveTabs: Int
-        get() = prefs.getInt(MAX_LIVE_TABS_KEY, DEFAULT_MAX_LIVE_TABS).coerceIn(2, 20)
+        get() = prefs.getInt(MAX_LIVE_TABS_KEY, maxLiveTabsDefault).coerceIn(2, 20)
         set(value) {
             prefs.edit().putInt(MAX_LIVE_TABS_KEY, value.coerceIn(2, 20)).apply()
         }
+
+    /**
+     * Device-aware defaults, called from `BrowserApp.onCreate` before the first tab is restored.
+     * Only lowers limits on small-memory hardware; it never raises above the shipped defaults.
+     */
+    fun applyMemoryAwareDefaults(context: android.content.Context) {
+        try {
+            val am = context.getSystemService(android.content.Context.ACTIVITY_SERVICE)
+                    as? android.app.ActivityManager ?: return
+            val info = android.app.ActivityManager.MemoryInfo()
+            am.getMemoryInfo(info)
+            val totalMb = if (info.totalMem > 0) info.totalMem / (1024L * 1024L) else 0L
+            maxLiveTabsDefault = when {
+                // isLowRamDevice() is a method on ActivityManager (API 19), not on MemoryInfo.
+                am.isLowRamDevice || totalMb in 1..1536 -> 3
+                totalMb in 1537..2816 -> 4
+                totalMb > 2816 -> DEFAULT_MAX_LIVE_TABS
+                else -> DEFAULT_MAX_LIVE_TABS
+            }
+        } catch (e: Throwable) {
+            // Keep the shipped default when the memory query is unavailable.
+        }
+    }
 
     var adBlockEnabled: Boolean = prefs.getBoolean(ADBLOCK_ENABLED_PREF_KEY, true)
         set(value) {

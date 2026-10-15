@@ -72,10 +72,6 @@ class SearchOverlayView @JvmOverloads constructor(
             onVoiceSearchRequested?.invoke()
         }
 
-        vb.ibSearchLens.setOnClickListener {
-            onVoiceSearchRequested?.invoke()
-        }
-
         vb.etSearchInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH ||
                 actionId == EditorInfo.IME_ACTION_GO ||
@@ -123,6 +119,16 @@ class SearchOverlayView @JvmOverloads constructor(
         imm?.hideSoftInputFromWindow(vb.etSearchInput.windowToken, 0)
         visibility = View.GONE
         vb.etSearchInput.clearFocus()
+        // Hand focus back to the page (or the home grid). Leaving focus on a view that is now
+        // GONE strands it: D-pad, Enter and tab-switch keys stop working until the user taps twice.
+        post {
+            val parent = (context as? android.app.Activity)?.findViewById<View>(R.id.flWebViewContainer)
+            if (parent != null && parent.isShown) {
+                parent.requestFocus()
+            } else {
+                (context as? android.app.Activity)?.findViewById<View>(R.id.ibHome)?.requestFocus()
+            }
+        }
     }
 
     private fun performNavigation(query: String) {
@@ -190,10 +196,20 @@ class SearchSuggestionsAdapter(
 
     private val items = mutableListOf<SearchSuggestionItem>()
 
+    /**
+     * Precise range updates instead of notifyDataSetChanged(): a full rebind of the suggestion
+     * list flickers and drops D-pad focus while the user is still typing (AGENTS.md rule 5).
+     */
     fun submitList(newItems: List<SearchSuggestionItem>) {
+        val oldSize = items.size
         items.clear()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        if (oldSize > 0) {
+            notifyItemRangeRemoved(0, oldSize)
+        }
+        if (newItems.isNotEmpty()) {
+            notifyItemRangeInserted(0, newItems.size)
+        }
     }
 
     class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {

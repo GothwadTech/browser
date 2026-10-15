@@ -110,6 +110,25 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
         return callback.onRenderProcessGone(view, didCrash)
     }
 
+    /**
+     * Per-tab desktop-mode state, pushed in by `WebViewWebEngine` (null = follow the global
+     * default). Everything that used to read `config.isDesktopMode()` here now reads this, so the
+     * zoom / UA of a backgrounded tab can no longer leak into the tab being displayed.
+     *
+     * Declared above `init {}` on purpose: the init block reads it while computing the effective
+     * user agent, and Kotlin runs property initializers in declaration order. Assigning it applies
+     * the mode, which is why there is no separate `setDesktopModeOverride()` function — a function
+     * with that name clashes with the JVM setter this property generates.
+     */
+    var desktopModeOverride: Boolean? = null
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            applyDesktopMode()
+        }
+
     init {
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
         overScrollMode = View.OVER_SCROLL_IF_CONTENT_SCROLLS
@@ -128,15 +147,28 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
             defaultTextEncodingName = "UTF-8"
             domStorageEnabled = true
             databaseEnabled = true
+            // Needed for file:// pages (the bundled asset home page, local documents), but a local
+            // page must never be able to read other origins.
             allowFileAccess = true
             allowContentAccess = true
-            cacheMode = WebSettings.LOAD_DEFAULT
-            setRenderPriority(WebSettings.RenderPriority.HIGH)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                safeBrowsingEnabled = false
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                allowFileAccessFromFileURLs = false
+                allowUniversalAccessFromFileURLs = false
             }
+            cacheMode = WebSettings.LOAD_DEFAULT
+            // setRenderPriority(HIGH) used to be called here: it has been a documented no-op since
+            // API 18, so it is removed rather than "tuned".
+            // Chrome keeps Safe Browsing on; it was previously pinned to `false` while the
+            // README advertised "securest browser". Now it follows a real setting (default on).
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                safeBrowsingEnabled = config.safeBrowsingEnabled
+            }
+            // Offscreen pre-rasterization is only worth its memory on the tab the user is
+            // actually looking at. Keeping it on for every background tab cost an extra painted
+            // buffer per tab, which is exactly what 1-2 GB TV boxes cannot spare; it is toggled
+            // with attach/detach below.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                offscreenPreRaster = true
+                offscreenPreRaster = false
             }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
@@ -152,7 +184,8 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
             setSupportMultipleWindows(true)
             setNeedInitialFocus(false)
 
-            val effectiveUa = config.userAgentString.value ?: if (config.desktopMode.value) Config.DESKTOP_UA else null
+            val effectiveUa = config.userAgentString.value
+                ?: if (config.desktopMode.value || desktopModeOverride == true) Config.DESKTOP_UA else null
             if (effectiveUa != null) {
                 userAgentString = effectiveUa
             }
@@ -269,9 +302,15 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
     fun renderThumbnail(bitmap: Bitmap?): Bitmap? {
         if (width == 0 || height == 0) return null
         var thumbnail = bitmap
-        if (thumbnail == null) {
+        // The snapshot only ever feeds a small grid card, so cap it: at full view size one tab
+        // thumbnail costs megabytes of RGB_565 on a 1080p TV, and drawing the whole view tree into
+        // it happens on the UI thread.
+        val maxWidth = Config.THUMBNAIL_MAX_WIDTH_PX.coerceAtLeast(120)
+        if (thumbnail == null || thumbnail.width > maxWidth || thumbnail.height <= 0) {
+            val targetWidth = minOf(width, maxWidth)
+            val targetHeight = (height.toFloat() * targetWidth / width.toFloat()).toInt().coerceAtLeast(1)
             try {
-                thumbnail = createBitmap(width, height, Bitmap.Config.RGB_565)
+                thumbnail = createBitmap(targetWidth, targetHeight, Bitmap.Config.RGB_565)
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
@@ -408,6 +447,26 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
         return super.onTouchEvent(event)
     }
 
+    /**
+     * Only the visible tab pre-rasters. `TabsModel` keeps several tab WebViews alive at once, so
+     * `offscreenPreRaster` used to allocate a paint buffer for each of them; on low-RAM TV boxes
+     * that extra memory was the difference between smooth tab switching and the renderer being
+     * killed.
+     */
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            settings.offscreenPreRaster = true
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            settings.offscreenPreRaster = false
+        }
+        super.onDetachedFromWindow()
+    }
+
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         super.onScrollChanged(l, t, oldl, oldt)
         val dy = t - oldt
@@ -417,11 +476,12 @@ open class WebViewEx(context: Context, val callback: Callback, val jsInterface: 
     }
 
     fun isDesktopModeEnabled(): Boolean {
-        return config.isDesktopMode()
+        return desktopModeOverride ?: config.isDesktopMode()
     }
 
     fun applyDesktopMode() {
         val isDesktop = isDesktopModeEnabled()
+        // A user-configured custom UA always wins over the desktop switch (same rule as Chrome).
         val effectiveUa = config.userAgentString.value ?: if (isDesktop) Config.DESKTOP_UA else null
         settings.userAgentString = effectiveUa
         val targetZoom = config.getEffectiveZoom(isDesktop)

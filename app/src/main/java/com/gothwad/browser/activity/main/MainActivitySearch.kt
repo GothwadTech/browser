@@ -29,21 +29,14 @@ fun MainActivity.handleSearch(aText: String) {
     }
 }
 
-fun MainActivity.isCurrentTabInDesktopMode(): Boolean {
-    val currentTab = tabsModel.currentTab.value
-    val engineUa = currentTab?.webEngine?.userAgentString ?: config.userAgentString.value
-    return config.isDesktopMode(engineUa)
-}
+fun MainActivity.isCurrentTabInDesktopMode(): Boolean = effectiveDesktopMode(tabsModel.currentTab.value)
 
 fun MainActivity.applyWebPageZoom(percent: Int, targetIsDesktop: Boolean? = null) {
     val clamped = percent.coerceIn(Config.WEB_PAGE_ZOOM_PERCENT_MIN, Config.WEB_PAGE_ZOOM_PERCENT_MAX)
     val isDesktop = targetIsDesktop ?: isCurrentTabInDesktopMode()
     config.setEffectiveZoom(isDesktop, clamped)
     tabsModel.tabsStates.forEach { tab ->
-        val tabIsDesktop = tab.webEngine.userAgentString?.let { ua ->
-            config.isDesktopUa(ua)
-        } ?: config.isDesktopMode()
-        if (tabIsDesktop == isDesktop) {
+        if (effectiveDesktopMode(tab) == isDesktop) {
             tab.webEngine.setPageZoom(clamped)
         }
     }

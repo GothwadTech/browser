@@ -1,6 +1,7 @@
 package com.gothwad.browser.activity.main.view.tabs
 
 import android.content.Context
+import com.gothwad.browser.utils.ListDiff
 import android.graphics.Color
 import android.net.Uri
 import android.text.Editable
@@ -209,10 +210,16 @@ class ChromeTabGridAdapter(
     private var activeTab: WebTabState? = null
 
     fun submitList(tabs: List<WebTabState>, current: WebTabState?) {
-        items.clear()
-        items.addAll(tabs)
+        val previousActive = activeTab
         activeTab = current
-        notifyDataSetChanged()
+        ListDiff.submit(
+            this,
+            items,
+            tabs,
+            idOf = { it.id },
+            contentOfOld = { "${it.title}|${it.url}|${if (it === previousActive) 1 else 0}|${it.thumbnail}" },
+            contentOfNew = { "${it.title}|${it.url}|${if (it === current) 1 else 0}|${it.thumbnail}" }
+        )
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="@string/settings_new_favorite_item_new_text"
             android:id="@+id/tvTitle"
             android:textStyle="bold"
             android:textSize="16sp"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="@string/settings_new_favorite_item_new_text"
             android:id="@+id/tvUrl"
             android:textSize="14sp"
             android:lines="1"

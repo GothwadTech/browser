@@ -13,13 +13,19 @@ import android.view.View
 import com.gothwad.browser.AppContext
 
 /**
- * HardwareInputManager & Android TV Box Input Management Engine.
+ * Inventory of the physical input devices attached to this box, plus the user's per-device block list.
  *
- * Specifically handles:
- * 1. Real-time detection & individual blocking/allowing of connected physical/USB/Bluetooth Keyboards & Mice.
- * 2. Precision mouse click compatibility fix for Android TV Set-Top Boxes (Airtel Xstream, Amlogic, Rockchip)
- *    where mouse button presses drop click events on web elements (Google products 9-dot menu, sign-in buttons, SPA buttons).
- * 3. Input filtering and synthetic touch injection pipeline.
+ * Deliberately narrow: it answers "what is plugged in" ([getConnectedDevices], [isPhysicalMouseConnected],
+ * [isPhysicalKeyboardConnected]) and "has the user ignored this device" ([isDeviceBlocked], [setDeviceBlocked]),
+ * and reports changes through [InputDevicesListener]. Everything that *acts* on those answers — the overlay
+ * cursor, joystick-axis D-pad translation, which [com.gothwad.browser.Config.InputMode] the app is in — lives in
+ * the activity/overlay code and is driven by the platform's own flags.
+ *
+ * This class must never rewrite, inject or synthesize an input event: a real event reaches the WebView exactly as
+ * the OS reported it (AGENTS.md §3, rules 2 and 3). The "precision mouse click" synthetic mouse→touch pipeline that
+ * used to be advertised here is gone for good — it broke Chromium's native drag-to-select and only ever papered
+ * over one box's input driver. If clicks are dropped on a device, that is a platform/OEM bug, not something to
+ * compensate for in app code.
  */
 class HardwareInputManager private constructor(private val context: Context) : InputManager.InputDeviceListener {
 

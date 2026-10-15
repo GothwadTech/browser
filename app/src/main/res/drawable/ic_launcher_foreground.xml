@@ -30,13 +30,13 @@
 
     <!-- Globe Grid Lines -->
     <path
-        android:strokeColor="#FFFFFF"
+        android:strokeColor="@color/app_surface_elevated"
         android:strokeWidth="1.8"
         android:fillColor="#00000000"
         android:pathData="M54,35 A15,15 0 1,1 53.9,35 Z" />
 
     <path
-        android:strokeColor="#FFFFFF"
+        android:strokeColor="@color/app_surface_elevated"
         android:strokeWidth="1.8"
         android:fillColor="#00000000"
         android:pathData="M39,50 L69,50" />
@@ -53,13 +53,13 @@
         android:pathData="M43,57 C49,54 59,54 65,57" />
 
     <path
-        android:strokeColor="#FFFFFF"
+        android:strokeColor="@color/app_surface_elevated"
         android:strokeWidth="1.8"
         android:fillColor="#00000000"
         android:pathData="M54,35 C46,42 46,58 54,65 C62,58 62,42 54,35 Z" />
 
     <path
-        android:strokeColor="#FFFFFF"
+        android:strokeColor="@color/app_surface_elevated"
         android:strokeWidth="1.8"
         android:fillColor="#00000000"
         android:pathData="M54,35 L54,65" />

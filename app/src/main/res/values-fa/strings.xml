@@ -80,9 +80,9 @@
   <string name="version_and_updates">نسخه و به روزرسانی ها</string>
   <string name="version_s">"نسخه: %s"</string>
   <string name="build_flavor_s">نوع ساخت: %1$s · %2$s</string>
-  <string name="support_the_author">☕ حمایت از نویسنده</string>
-  <string name="view_license">📃 مجوز</string>
-  <string name="privacy_policy">🔒 سیاست حریم خصوصی</string>
+  <string name="support_the_author">حمایت از نویسنده</string>
+  <string name="view_license">مجوز</string>
+  <string name="privacy_policy">سیاست حریم خصوصی</string>
   <string name="update_channel">"کانال ترجمه:"</string>
   <string name="auto_check_for_updates">"بررسی خودکار برای به روزرسانی ها"</string>
   <string name="update">"به روز رسانی"</string>

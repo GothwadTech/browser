@@ -22,7 +22,7 @@
         android:layout_width="14dp"
         android:layout_height="14dp"
         android:layout_marginEnd="5dp"
-        android:contentDescription="Tab Icon"
+        android:contentDescription="@string/item_top_chrome_tab_tab_icon"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_tab_default_favicon" />
 
@@ -34,7 +34,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:singleLine="true"
-        android:text="New Tab"
+        android:text="@string/shortcut_new_tab"
         android:includeFontPadding="false"
         android:textColor="@color/day_night_text_color_contrast"
         android:textSize="11sp"
@@ -47,7 +47,7 @@
         android:layout_marginStart="2dp"
         android:background="@drawable/bg_chrome_close_btn"
         android:clickable="true"
-        android:contentDescription="Close Tab"
+        android:contentDescription="@string/item_sidebar_tab_close_tab"
         android:focusable="true"
         android:padding="3dp"
         android:scaleType="fitCenter"

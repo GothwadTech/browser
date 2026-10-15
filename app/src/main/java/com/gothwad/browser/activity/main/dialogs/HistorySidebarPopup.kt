@@ -232,7 +232,7 @@ class HistorySidebarPopup(
         btnResumeHistory.setOnClickListener {
             activity.config.saveHistory = true
             llHistoryPausedBanner.visibility = View.GONE
-            Toast.makeText(activity, "Browsing history tracking enabled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.history_browsing_history_tracking_enable), Toast.LENGTH_SHORT).show()
         }
 
         btnSelectAll.setOnClickListener {
@@ -249,8 +249,14 @@ class HistorySidebarPopup(
         btnDeleteSelected.setOnClickListener {
             if (selectedItemIds.isEmpty()) return@setOnClickListener
             AlertDialog.Builder(activity)
-                .setTitle("Delete Selected")
-                .setMessage("Remove ${selectedItemIds.size} history items?")
+                .setTitle(R.string.history_delete_selected)
+                .setMessage(
+                    activity.resources.getQuantityString(
+                        R.plurals.history_remove_items_confirm,
+                        selectedItemIds.size,
+                        selectedItemIds.size
+                    )
+                )
                 .setPositiveButton("Delete") { _, _ ->
                     deleteSelectedItems()
                 }
@@ -521,14 +527,14 @@ class HistorySidebarPopup(
                 2 -> {
                     item.url?.let { url ->
                         activity.openInNewTab(url)
-                        Toast.makeText(activity, "Opened in new tab", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, activity.getString(R.string.history_opened_in_new_tab), Toast.LENGTH_SHORT).show()
                     }
                     true
                 }
                 3 -> {
                     val clipboard = activity.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                     clipboard?.setPrimaryClip(ClipData.newPlainText("URL", item.url ?: ""))
-                    Toast.makeText(activity, "Link copied to clipboard", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, activity.getString(R.string.history_link_copied_to_clipboard), Toast.LENGTH_SHORT).show()
                     true
                 }
                 4 -> {
@@ -562,7 +568,11 @@ class HistorySidebarPopup(
                 allHistoryItems.removeAll(itemsToDelete)
                 exitMultiselectMode()
                 rebuildDisplayedList()
-                Toast.makeText(activity, "Deleted ${itemsToDelete.size} items", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    activity,
+                    activity.resources.getQuantityString(R.plurals.history_deleted_items, itemsToDelete.size, itemsToDelete.size),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -574,7 +584,7 @@ class HistorySidebarPopup(
             "Clear cache and cookies"
         )
         AlertDialog.Builder(activity)
-            .setTitle("Clear Browsing Data")
+            .setTitle(R.string.history_clear_browsing_data)
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> clearAllHistory()
@@ -583,7 +593,7 @@ class HistorySidebarPopup(
                         CoroutineScope(Dispatchers.IO).launch {
                             com.gothwad.browser.webengine.WebEngineFactory.clearCache(activity)
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(activity, "Cache & cookies cleared", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.menu_cache_and_cookies_cleared), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -601,7 +611,7 @@ class HistorySidebarPopup(
                 selectedItemIds.clear()
                 exitMultiselectMode()
                 rebuildDisplayedList()
-                Toast.makeText(activity, "All browsing history cleared", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.history_all_browsing_history_cleared), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -614,7 +624,7 @@ class HistorySidebarPopup(
             withContext(Dispatchers.Main) {
                 allHistoryItems.removeAll(todayItems)
                 rebuildDisplayedList()
-                Toast.makeText(activity, "Today's history cleared", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.history_today_s_history_cleared), Toast.LENGTH_SHORT).show()
             }
         }
     }

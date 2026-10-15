@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="@string/voice_search"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -39,7 +39,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Close"
+                android:contentDescription="@string/close"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/voice_search_listening"
-            android:textColor="#388BFD"
+            android:textColor="@color/app_accent"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -104,7 +104,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/voice_search_speak_now"
-            android:textColor="#8B949E"
+            android:textColor="@color/app_on_surface_muted"
             android:textSize="13sp" />
 
         <!-- Live Recognized Text Card -->
@@ -123,9 +123,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:hint="Speak to search or type URL…"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#484F58"
+                android:hint="@string/settings_voice_search_speak_to_search_or"
+                android:textColor="@color/app_on_surface"
+                android:textColorHint="@color/app_surface_elevated"
                 android:textSize="17sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -149,7 +149,7 @@
                 android:paddingEnd="16dp"
                 android:text="@android:string/cancel"
                 android:textAllCaps="false"
-                android:textColor="#8B949E"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="14sp" />
 
             <Button
@@ -164,7 +164,7 @@
                 android:paddingEnd="16dp"
                 android:text="@string/voice_search_try_again"
                 android:textAllCaps="false"
-                android:textColor="#58A6FF"
+                android:textColor="@color/app_accent"
                 android:textSize="14sp" />
 
             <Button
@@ -177,7 +177,7 @@
                 android:paddingEnd="22dp"
                 android:text="@string/search"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>

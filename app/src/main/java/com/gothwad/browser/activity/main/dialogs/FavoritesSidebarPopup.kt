@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.main.MainActivity
 import com.gothwad.browser.model.FavoriteItem
+import com.gothwad.browser.utils.ListDiff
 import com.gothwad.browser.singleton.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -204,9 +205,16 @@ class FavoritesSidebarPopup(
             }
         }
 
-        displayedFavorites.clear()
-        displayedFavorites.addAll(filtered)
-        adapter.notifyDataSetChanged()
+        // DiffUtil update instead of notifyDataSetChanged (AGENTS.md rule 5): a re-typed search box
+        // must not rebind the whole grid.
+        val favoritesAdapter = adapter
+        if (favoritesAdapter != null) {
+            ListDiff.submit(favoritesAdapter, displayedFavorites, filtered, idOf = { it.id },
+                contentOf = { "${it.title}|${it.url}|${it.favicon}" })
+        } else {
+            displayedFavorites.clear()
+            displayedFavorites.addAll(filtered)
+        }
 
         llEmptyFavorites.visibility = if (displayedFavorites.isEmpty()) View.VISIBLE else View.GONE
         rvFavGrid.visibility = if (displayedFavorites.isEmpty()) View.GONE else View.VISIBLE
@@ -229,7 +237,7 @@ class FavoritesSidebarPopup(
         val url = currentTab?.url ?: ""
 
         if (url.isBlank() || url == "about:blank") {
-            Toast.makeText(activity, "No active page to bookmark", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.bookmarks_no_active_page_to), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -243,7 +251,7 @@ class FavoritesSidebarPopup(
             val db = AppDatabase.db
             db.favoritesDao().insert(item)
             withContext(Dispatchers.Main) {
-                Toast.makeText(activity, "Bookmark Added!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.bookmarks_bookmark_added), Toast.LENGTH_SHORT).show()
                 loadBookmarks()
             }
         }
@@ -251,7 +259,7 @@ class FavoritesSidebarPopup(
 }
 
 class FavoritesSidebarAdapter(
-    private val items: List<FavoriteItem>,
+    private val items: MutableList<FavoriteItem>,
     private val onItemClick: (FavoriteItem) -> Unit,
     private val onDeleteClick: (FavoriteItem) -> Unit
 ) : RecyclerView.Adapter<FavoritesSidebarAdapter.ViewHolder>() {

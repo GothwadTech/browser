@@ -3,20 +3,20 @@
     <item android:state_focused="true">
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="#2563EB" />
-            <stroke android:width="2dp" android:color="#60A5FA" />
+            <solid android:color="@color/app_accent" />
+            <stroke android:width="2dp" android:color="@color/app_accent" />
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="#1D4ED8" />
+            <solid android:color="@color/app_accent" />
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="#1E293B" />
+            <solid android:color="@color/app_surface_elevated" />
         </shape>
     </item>
 </selector>

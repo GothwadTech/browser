@@ -16,7 +16,6 @@ import com.gothwad.browser.utils.observable.ObservableValue
 import com.gothwad.browser.webengine.WebEngineWindowProviderCallback
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import java.net.URL
 
@@ -88,6 +87,23 @@ class TabsModel : ActiveModel() {
         val tabsDao = AppDatabase.db.tabsDao()
         tabsStates.replaceAll(tabsDao.getAll(config.incognitoMode))
         loaded = true
+    }
+
+    /**
+     * Persist only the lightweight per-tab flags (currently: desktop-mode override) without
+     * touching the WebView state file, so a menu tap does not do any disk I/O on the UI thread.
+     */
+    fun persistDesktopMode(tab: WebTabState) {
+        if (tab.id == 0L) {
+            return
+        }
+        modelScope.launch(Dispatchers.IO) {
+            try {
+                AppDatabase.db.tabsDao().update(tab)
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to persist desktop-mode flag: $e")
+            }
+        }
     }
 
     suspend fun saveTab(tab: WebTabState) = withContext(Dispatchers.IO) {

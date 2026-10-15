@@ -27,13 +27,13 @@
             android:layout_height="22dp"
             android:src="@drawable/ic_add"
             android:tint="@color/day_night_icon_color"
-            android:contentDescription="New tab" />
+            android:contentDescription="@string/bottom_toolbar_new_tab" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="New tab"
+            android:text="@string/bottom_toolbar_new_tab"
             android:textColor="@color/day_night_text_color_contrast"
             android:textSize="15sp" />
     </LinearLayout>
@@ -56,13 +56,13 @@
             android:layout_height="22dp"
             android:src="@drawable/ic_incognito"
             android:tint="@color/day_night_icon_color"
-            android:contentDescription="New Incognito tab" />
+            android:contentDescription="@string/chrome_menu_new_incognito_tab" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="New Incognito tab"
+            android:text="@string/chrome_menu_new_incognito_tab"
             android:textColor="@color/day_night_text_color_contrast"
             android:textSize="15sp" />
     </LinearLayout>
@@ -85,13 +85,13 @@
             android:layout_height="22dp"
             android:src="@drawable/ic_view_grid"
             android:tint="@color/day_night_icon_color"
-            android:contentDescription="New tab group" />
+            android:contentDescription="@string/chrome_tabs_menu_new_tab_group" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="New tab group"
+            android:text="@string/chrome_tabs_menu_new_tab_group"
             android:textColor="@color/day_night_text_color_contrast"
             android:textSize="15sp" />
     </LinearLayout>
@@ -114,13 +114,13 @@
             android:layout_height="22dp"
             android:src="@drawable/ic_close_grey_900_24dp"
             android:tint="@color/day_night_icon_color"
-            android:contentDescription="Close all tabs" />
+            android:contentDescription="@string/chrome_tabs_menu_close_all_tabs" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Close all tabs"
+            android:text="@string/chrome_tabs_menu_close_all_tabs"
             android:textColor="@color/day_night_text_color_contrast"
             android:textSize="15sp" />
     </LinearLayout>
@@ -143,13 +143,13 @@
             android:layout_height="22dp"
             android:src="@drawable/ic_check_box_outline"
             android:tint="@color/day_night_icon_color"
-            android:contentDescription="Select tabs" />
+            android:contentDescription="@string/chrome_tabs_menu_select_tabs" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Select tabs"
+            android:text="@string/chrome_tabs_menu_select_tabs"
             android:textColor="@color/day_night_text_color_contrast"
             android:textSize="15sp" />
     </LinearLayout>
@@ -172,13 +172,13 @@
             android:layout_height="22dp"
             android:src="@drawable/ic_delete"
             android:tint="@color/day_night_icon_color"
-            android:contentDescription="Delete browsing data" />
+            android:contentDescription="@string/chrome_menu_delete_browsing_data" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="Delete browsing data"
+            android:text="@string/chrome_menu_delete_browsing_data"
             android:textColor="@color/day_night_text_color_contrast"
             android:textSize="15sp" />
     </LinearLayout>
@@ -201,7 +201,7 @@
             android:layout_height="22dp"
             android:src="@drawable/ic_settings_grey_900_24dp"
             android:tint="@color/day_night_icon_color"
-            android:contentDescription="Settings" />
+            android:contentDescription="@string/settings" />
 
         <TextView
             android:layout_width="wrap_content"

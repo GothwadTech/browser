@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tab_shortcuts"
-                android:textColor="#38BDF8"
+                android:textColor="@color/google_accent"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/shortcuts_customization_hint"
-                android:textColor="#94A3B8"
+                android:textColor="@color/google_text_secondary"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -49,8 +49,8 @@
             android:focusable="true"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:text="🔄 Reset Defaults"
-            android:textColor="#38BDF8"
+            android:text="@string/settings_shortcuts_reset_defaults"
+            android:textColor="@color/google_accent"
             android:textSize="12sp"
             android:textStyle="bold" />
     </LinearLayout>

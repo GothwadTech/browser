@@ -41,7 +41,14 @@ data class WebTabState(@PrimaryKey(autoGenerate = true)
                        @ColumnInfo(name = "wv_state_file")
                        var wvStateFileName: String? = null,
                        var adblock: Boolean? = null,
-                       var scale: Float? = null) {
+                       var scale: Float? = null,
+                       /**
+                        * Per-tab "Desktop site" override. `null` means "follow the global default"
+                        * (Config.desktopMode), which keeps existing installs behaving as before until
+                        * the user actually toggles the menu entry for one tab.
+                        */
+                       @ColumnInfo(name = "desktop_mode")
+                       var desktopMode: Boolean? = null) {
     companion object {
         val TAG: String = WebTabState::class.java.simpleName
 
@@ -64,6 +71,9 @@ data class WebTabState(@PrimaryKey(autoGenerate = true)
     var lastLoadingUrl: String? = null //this is last url appeared in WebViewClient.shouldOverrideUrlLoading callback
     @Ignore
     var lastUrlBeforeHome: String? = null
+    /** Title of the page currently covered by the native home screen (in-memory only). */
+    @Ignore
+    var lastTitleBeforeHome: String? = null
     @Ignore
     var blockedAds = 0
     @Ignore

@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="middle"
                 android:maxLines="1"
-                android:text="sample_video.mp4"
+                android:text="@string/item_sidebar_download_sample_video_mp4"
                 android:textColor="@color/day_night_text_color_contrast"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -48,8 +48,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="Completed • 14.2 MB"
-                android:textColor="#94A3B8"
+                android:text="@string/item_sidebar_download_completed_14_2_mb"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -59,7 +59,7 @@
             android:layout_height="28dp"
             android:background="@drawable/bg_tv_side_back_btn"
             android:clickable="true"
-            android:contentDescription="Delete download"
+            android:contentDescription="@string/item_sidebar_download_delete_download"
             android:focusable="true"
             android:padding="6dp"
             android:scaleType="fitCenter"

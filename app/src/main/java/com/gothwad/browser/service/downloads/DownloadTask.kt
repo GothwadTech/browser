@@ -61,8 +61,16 @@ class FileDownloadTask(override var downloadInfo: Download, private val userAgen
                     val cookie = CookieManager.getInstance().getCookie(url.toString())
                     if (cookie != null) setRequestProperty("cookie", cookie)
                     if (retries > 0) {
-                        //trust me, sometimes this helps! Don't ask me how...
-                        Thread.sleep(3000)
+                        // Bounded backoff before reconnecting: retrying a gateway timeout instantly
+                        // only hammers a server that is already saturated. This runs on the download
+                        // thread pool (never the UI thread) and stays responsive to interrupts.
+                        val backoffMs = minOf(500L * (1L shl (retries - 1).coerceAtMost(3)), 4000L)
+                        try {
+                            Thread.sleep(backoffMs) // quality-gate: allow
+                        } catch (e: InterruptedException) {
+                            Thread.currentThread().interrupt()
+                            throw e
+                        }
                     }
                     connect()
                 }

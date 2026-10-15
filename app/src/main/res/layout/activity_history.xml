@@ -47,8 +47,8 @@
                 android:id="@+id/tvHistoryTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"
-                android:textColor="#FFFFFF"
+                android:text="@string/history"
+                android:textColor="@color/app_on_surface"
                 android:textSize="22sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -81,12 +81,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="Search history"
+                android:hint="@string/search_history"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:lines="1"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#64748B"
+                android:textColor="@color/app_on_surface"
+                android:textColorHint="@color/app_on_surface_muted"
                 android:textSize="13sp" />
 
             <!-- Clear Search Query Button -->
@@ -95,7 +95,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Clear search"
+                android:contentDescription="@string/activity_history_clear_search"
                 android:focusable="true"
                 android:padding="7dp"
                 android:scaleType="fitCenter"
@@ -110,7 +110,7 @@
                 android:layout_height="32dp"
                 android:layout_marginStart="2dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Voice search"
+                android:contentDescription="@string/voice_search"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
@@ -133,8 +133,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="12dp"
-                android:text="1 selected"
-                android:textColor="#38BDF8"
+                android:text="@string/activity_history_1_selected"
+                android:textColor="@color/app_accent"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -149,9 +149,9 @@
                 android:focusable="true"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="Delete"
+                android:text="@string/delete"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="12sp" />
 
             <Button
@@ -162,9 +162,9 @@
                 android:focusable="true"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
         </LinearLayout>
 
@@ -224,8 +224,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Chrome history"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/activity_history_chrome_history"
+                    android:textColor="@color/app_on_surface"
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -237,8 +237,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="4dp"
-                android:text="FILTERS"
-                android:textColor="#64748B"
+                android:text="@string/activity_history_filters"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -252,9 +252,9 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  All time"
+                android:text="@string/activity_history_all_time"
                 android:textAllCaps="false"
-                android:textColor="#38BDF8"
+                android:textColor="@color/app_accent"
                 android:textSize="12sp" />
 
             <!-- Filter: Today -->
@@ -267,9 +267,9 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  Today"
+                android:text="@string/activity_history_today"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <!-- Filter: Yesterday -->
@@ -282,9 +282,9 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  Yesterday"
+                android:text="@string/activity_history_yesterday"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <!-- Filter: Older -->
@@ -297,9 +297,9 @@
                 android:gravity="start|center_vertical"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="•  Older"
+                android:text="@string/activity_history_older"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <View
@@ -307,7 +307,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:background="#1E293B" />
+                android:background="@color/app_surface_elevated" />
 
             <!-- Clear Browsing Data Button -->
             <Button
@@ -321,9 +321,9 @@
                 android:gravity="center"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:text="Clear browsing data"
+                android:text="@string/activity_history_clear_browsing_data"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="12sp" />
 
             <!-- Filler View -->
@@ -338,8 +338,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="0 visits recorded"
-                android:textColor="#64748B"
+                android:text="@string/activity_history_0_visits_recorded"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -388,8 +388,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Your browsing history appears here"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/activity_history_your_browsing_history_appears"
+                    android:textColor="@color/app_on_surface"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -398,8 +398,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Websites you visit in TV Browser will be listed here"
-                    android:textColor="#64748B"
+                    android:text="@string/activity_history_websites_you_visit_in"
+                    android:textColor="@color/app_on_surface_muted"
                     android:textSize="13sp" />
             </LinearLayout>
         </FrameLayout>

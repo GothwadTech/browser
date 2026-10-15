@@ -71,36 +71,36 @@ class TvPinDialog(
         when (mode) {
             Mode.CREATE -> {
                 if (step == 1) {
-                    tvTitle.text = "🔒 Set 4-Digit TV PIN"
-                    tvSubtitle.text = "Step 1/2: Enter new 4-digit PIN"
-                    tvSubtitle.setTextColor(0xFF94A3B8.toInt())
+                    tvTitle.setText(R.string.app_lock_pin_title_set)
+                    tvSubtitle.text = context.getString(R.string.app_lock_step_new, 2)
+                    tvSubtitle.setTextColor(themedColor(R.color.google_text_secondary))
                 } else {
-                    tvTitle.text = "🔒 Confirm 4-Digit PIN"
-                    tvSubtitle.text = "Step 2/2: Re-enter PIN to confirm"
-                    tvSubtitle.setTextColor(0xFF38BDF8.toInt())
+                    tvTitle.setText(R.string.app_lock_pin_title_confirm)
+                    tvSubtitle.text = context.getString(R.string.app_lock_step_confirm, 2)
+                    tvSubtitle.setTextColor(themedColor(R.color.google_accent))
                 }
             }
             Mode.VERIFY -> {
-                tvTitle.text = "🔒 Enter 4-Digit PIN"
-                tvSubtitle.text = "Enter current PIN to continue"
-                tvSubtitle.setTextColor(0xFF94A3B8.toInt())
+                tvTitle.setText(R.string.app_lock_pin_title_enter)
+                tvSubtitle.setText(R.string.app_lock_pin_title_verify_current)
+                tvSubtitle.setTextColor(themedColor(R.color.google_text_secondary))
             }
             Mode.CHANGE -> {
                 when (step) {
                     1 -> {
-                        tvTitle.text = "🔒 Verify Current PIN"
-                        tvSubtitle.text = "Step 1/3: Enter current PIN"
-                        tvSubtitle.setTextColor(0xFF94A3B8.toInt())
+                        tvTitle.setText(R.string.app_lock_pin_title_verify_current)
+                        tvSubtitle.text = context.getString(R.string.app_lock_step_verify, 3)
+                        tvSubtitle.setTextColor(themedColor(R.color.google_text_secondary))
                     }
                     2 -> {
-                        tvTitle.text = "🔒 Enter New PIN"
-                        tvSubtitle.text = "Step 2/3: Enter new 4-digit PIN"
-                        tvSubtitle.setTextColor(0xFF38BDF8.toInt())
+                        tvTitle.setText(R.string.app_lock_pin_title_new)
+                        tvSubtitle.text = context.getString(R.string.app_lock_step_new_3, 3)
+                        tvSubtitle.setTextColor(themedColor(R.color.google_accent))
                     }
                     3 -> {
-                        tvTitle.text = "🔒 Confirm New PIN"
-                        tvSubtitle.text = "Step 3/3: Re-enter new PIN"
-                        tvSubtitle.setTextColor(0xFF38BDF8.toInt())
+                        tvTitle.setText(R.string.app_lock_pin_title_confirm_new)
+                        tvSubtitle.text = context.getString(R.string.app_lock_step_confirm_3, 3)
+                        tvSubtitle.setTextColor(themedColor(R.color.google_accent))
                     }
                 }
             }
@@ -171,11 +171,11 @@ class TvPinDialog(
                     if (entered == tempNewPin) {
                         AppLockManager.setPin(context, entered)
                         AppLockManager.setLockEnabled(context, true)
-                        Toast.makeText(context, "✅ 4-Digit PIN Set Successfully!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.app_lock_pin_saved, Toast.LENGTH_SHORT).show()
                         dismiss()
                         onSuccess?.invoke(entered)
                     } else {
-                        showError("PINs do not match! Try again.")
+                        showError(context.getString(R.string.app_lock_pin_mismatch))
                         step = 1
                         tempNewPin = null
                         setupStepUI()
@@ -183,21 +183,29 @@ class TvPinDialog(
                 }
             }
             Mode.VERIFY -> {
-                if (AppLockManager.verifyPin(context, entered)) {
+                val result = AppLockManager.verifyPinDetailed(context, entered)
+                if (result.success) {
                     dismiss()
                     onSuccess?.invoke(entered)
                 } else {
-                    showError("Incorrect PIN! Try again.")
+                    showError(
+                        if (result.lockoutMs > 0) {
+                            context.getString(R.string.app_lock_locked_out, (result.lockoutMs / 1000L).toInt())
+                        } else {
+                            context.getString(R.string.app_lock_pin_incorrect)
+                        }
+                    )
                 }
             }
             Mode.CHANGE -> {
                 when (step) {
                     1 -> {
-                        if (AppLockManager.verifyPin(context, entered)) {
+                        val current = AppLockManager.verifyPinDetailed(context, entered)
+                        if (current.success) {
                             step = 2
                             setupStepUI()
                         } else {
-                            showError("Incorrect Current PIN!")
+                            showError(context.getString(R.string.app_lock_pin_incorrect_current))
                         }
                     }
                     2 -> {
@@ -208,11 +216,11 @@ class TvPinDialog(
                     3 -> {
                         if (entered == tempNewPin) {
                             AppLockManager.setPin(context, entered)
-                            Toast.makeText(context, "✅ PIN Changed Successfully!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, R.string.app_lock_pin_changed, Toast.LENGTH_SHORT).show()
                             dismiss()
                             onSuccess?.invoke(entered)
                         } else {
-                            showError("New PINs do not match! Try again.")
+                            showError(context.getString(R.string.app_lock_pin_mismatch))
                             step = 2
                             tempNewPin = null
                             setupStepUI()
@@ -225,7 +233,7 @@ class TvPinDialog(
 
     private fun showError(msg: String) {
         tvSubtitle.text = msg
-        tvSubtitle.setTextColor(0xFFEF4444.toInt())
+        tvSubtitle.setTextColor(themedColor(R.color.google_error))
 
         dotsContainer.animate()
             ?.translationXBy(20f)
@@ -245,6 +253,9 @@ class TvPinDialog(
         inputPin.clear()
         updateDots()
     }
+
+    private fun themedColor(colorRes: Int): Int =
+        androidx.core.content.ContextCompat.getColor(context, colorRes)
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         when (keyCode) {

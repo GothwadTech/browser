@@ -11,6 +11,12 @@ interface WebEngine {
     val url: String?
     var userAgentString: String?
 
+    /**
+     * Resolved per-tab desktop-mode state (see `activity.main.DesktopMode`). Engines that cannot
+     * change their UA at runtime keep the default no-op and simply reload the page instead.
+     */
+    fun setDesktopModeOverride(enabled: Boolean?) {}
+
     fun getWebEngineName(): String
     fun saveState(): Any?//Bundle or any Object convertible to string
     fun restoreState(savedInstanceState: Any)

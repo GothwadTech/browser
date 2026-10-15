@@ -153,7 +153,7 @@ class SearchEngineMenuPopup(private val activity: MainActivity) {
             // Update search bar icon immediately to reflect new chosen engine
             activity.vb.vActionBar.updateAddressBarIcon(enteredQuery)
 
-            Toast.makeText(activity, "$engineName selected", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.menu_search_engine_selected, engineName), Toast.LENGTH_SHORT).show()
             etUrl?.requestFocus()
         }
     }

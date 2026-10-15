@@ -70,6 +70,27 @@ object SettingsEngineSection {
             .show()
     }
 
+    fun initSafeBrowsingUI(
+        context: Context,
+        vb: ViewSettingsMainBinding,
+        config: Config
+    ) {
+        vb.llSafeBrowsing.setOnLongClickListener {
+            android.widget.Toast.makeText(context, R.string.safe_browsing_desc, android.widget.Toast.LENGTH_LONG).show()
+            true
+        }
+        vb.scSafeBrowsing.isChecked = config.safeBrowsingEnabled
+        vb.llSafeBrowsing.setOnClickListener { vb.scSafeBrowsing.toggle() }
+        vb.scSafeBrowsing.setOnCheckedChangeListener { _, isChecked ->
+            config.safeBrowsingEnabled = isChecked
+            android.widget.Toast.makeText(
+                context,
+                "Safe browsing applies to newly opened tabs",
+                android.widget.Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     fun initHomePageAndSearchEngineConfigUI(
         context: Context,
         vb: ViewSettingsMainBinding,
@@ -211,7 +232,7 @@ object SettingsEngineSection {
                 config.adBlockListURL.value = url
             }
             adblockModel.loadAdBlockList(forceReload = true)
-            Toast.makeText(context, "Updating ad blocker filters...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.settings_updating_ad_blocker_filters), Toast.LENGTH_SHORT).show()
         }
     }
 

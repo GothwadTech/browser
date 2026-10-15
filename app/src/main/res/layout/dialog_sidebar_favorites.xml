@@ -43,7 +43,7 @@
                 android:layout_height="32dp"
                 android:background="@drawable/bg_tv_side_back_btn"
                 android:clickable="true"
-                android:contentDescription="Close Bookmarks"
+                android:contentDescription="@string/settings_sidebar_favorites_close_bookmarks"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="Bookmarks"
+                android:text="@string/bookmarks"
                 android:textColor="@color/day_night_text_color_contrast"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -71,9 +71,9 @@
                 android:minWidth="0dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="+ Add"
+                android:text="@string/settings_favorites_add"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -87,13 +87,13 @@
             android:background="@drawable/key_badge_bg"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="8dp"
-            android:hint="Search bookmarks..."
+            android:hint="@string/settings_sidebar_favorites_search_bookmarks"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:textColor="@color/day_night_text_color_contrast"
-            android:textColorHint="#64748B"
+            android:textColorHint="@color/app_on_surface_muted"
             android:textSize="12sp" />
 
         <!-- 2-Column Grid RecyclerView for Bookmarks -->
@@ -136,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="No Bookmarks"
+                    android:text="@string/settings_sidebar_favorites_no_bookmarks"
                     android:textColor="@color/day_night_text_color_contrast"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -145,8 +145,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Click + Add to bookmark this page"
-                    android:textColor="#64748B"
+                    android:text="@string/settings_sidebar_favorites_click_add_to_bookmark"
+                    android:textColor="@color/app_on_surface_muted"
                     android:textSize="12sp" />
             </LinearLayout>
         </FrameLayout>

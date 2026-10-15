@@ -21,7 +21,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="6dp"
         android:text="@string/this_time_search_with"
-        android:textColor="#9E9EA8"
+        android:textColor="@color/app_on_surface_muted"
         android:textSize="11.5sp"
         android:textStyle="bold" />
 
@@ -54,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Google"
-            android:textColor="#FFFFFF"
+            android:text="@string/item_sidebar_favorite_google"
+            android:textColor="@color/app_on_surface"
             android:textSize="13.5sp" />
 
         <ImageView
@@ -97,8 +97,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Bing"
-            android:textColor="#FFFFFF"
+            android:text="@string/search_engine_menu_bing"
+            android:textColor="@color/app_on_surface"
             android:textSize="13.5sp" />
 
         <ImageView
@@ -140,8 +140,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="DuckDuckGo"
-            android:textColor="#FFFFFF"
+            android:text="@string/search_engine_menu_duckduckgo"
+            android:textColor="@color/app_on_surface"
             android:textSize="13.5sp" />
 
         <ImageView
@@ -183,8 +183,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Yahoo!"
-            android:textColor="#FFFFFF"
+            android:text="@string/search_engine_menu_yahoo"
+            android:textColor="@color/app_on_surface"
             android:textSize="13.5sp" />
 
         <ImageView
@@ -226,8 +226,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Yandex"
-            android:textColor="#FFFFFF"
+            android:text="@string/search_engine_menu_yandex"
+            android:textColor="@color/app_on_surface"
             android:textSize="13.5sp" />
 
         <ImageView
@@ -269,8 +269,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:text="Startpage"
-            android:textColor="#FFFFFF"
+            android:text="@string/search_engine_menu_startpage"
+            android:textColor="@color/app_on_surface"
             android:textSize="13.5sp" />
 
         <ImageView
@@ -291,7 +291,7 @@
         android:layout_marginBottom="6dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:background="#383842" />
+        android:background="@color/app_surface_elevated" />
 
     <!-- Bottom: Search Settings -->
     <LinearLayout
@@ -324,7 +324,7 @@
             android:layout_weight="1"
             android:layout_marginStart="14dp"
             android:text="@string/search_settings"
-            android:textColor="#E4E4E8"
+            android:textColor="@color/app_on_surface"
             android:textSize="13sp" />
     </LinearLayout>
 

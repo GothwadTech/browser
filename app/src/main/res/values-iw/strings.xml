@@ -79,9 +79,9 @@
   <string name="version_and_updates">גרסא ועדכונים</string>
   <string name="version_s">"גרסא: %s"</string>
   <string name="build_flavor_s">גרסת בנייה: %1$s · %2$s</string>
-  <string name="support_the_author">☕ תמיכה במחבר</string>
-  <string name="view_license">📃 רישיון</string>
-  <string name="privacy_policy">🔒 מדיניות פרטיות</string>
+  <string name="support_the_author">תמיכה במחבר</string>
+  <string name="view_license">רישיון</string>
+  <string name="privacy_policy">מדיניות פרטיות</string>
   <string name="update_channel">"ערוץ עדכונים:"</string>
   <string name="auto_check_for_updates">"בדוק אוטומטית לעדכונים:"</string>
   <string name="update">"עדכן:"</string>

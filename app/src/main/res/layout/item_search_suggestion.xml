@@ -25,7 +25,7 @@
             android:src="@drawable/ic_history_grey_900_36dp"
             android:tint="#9AA0A6"
             android:scaleType="fitCenter"
-            android:contentDescription="History query" />
+            android:contentDescription="@string/item_search_suggestion_history_query" />
 
         <!-- Middle: Query text -->
         <TextView
@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:ellipsize="end"
             android:textSize="15sp"
-            android:textColor="#E3E3E3"
+            android:textColor="@color/app_on_surface"
             tools:text="mawara.ink -mawartoto" />
 
         <!-- Right: Insert Arrow ↖ -->
@@ -51,7 +51,7 @@
             android:tint="#9AA0A6"
             android:padding="8dp"
             android:scaleType="fitCenter"
-            android:contentDescription="Insert into search bar"
+            android:contentDescription="@string/item_search_suggestion_insert_into_search_bar"
             android:focusable="true"
             android:clickable="true" />
     </LinearLayout>
@@ -61,5 +61,5 @@
         android:id="@+id/vSuggestionDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#131314" />
+        android:background="@color/app_surface_elevated" />
 </LinearLayout>

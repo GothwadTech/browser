@@ -134,16 +134,15 @@ internal fun MainActivity.handleBackNavigation() {
         return
     }
 
-    val isNativeHomeVisible = vb.vNativeHome.isVisible
     val currentTab = tabsModel.currentTab.value
-    val currentUrl = currentTab?.url ?: ""
-    val isHome = isNativeHomeVisible || currentTab == null ||
-            currentUrl.isEmpty() ||
-            currentUrl == settingsModel.homePage ||
-            currentUrl == Config.HOME_PAGE_URL ||
-            currentUrl == Config.HOME_URL_ALIAS
+    val isHome = currentTab == null || isHomeUrl(currentTab.url)
 
     if (isHome) {
+        // Back on the home screen first reveals the page Home was covering; only a home screen
+        // with nothing behind it takes part in double-press-to-exit.
+        if (vb.vNativeHome.isVisible && hideHomeScreen()) {
+            return
+        }
         val now = System.currentTimeMillis()
         if (now - lastBackPressTime < 2500L) {
             closeWindow()

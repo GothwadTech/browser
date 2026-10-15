@@ -43,7 +43,7 @@
                 android:layout_height="34dp"
                 android:background="@drawable/bg_tv_side_back_btn"
                 android:clickable="true"
-                android:contentDescription="Close History"
+                android:contentDescription="@string/settings_sidebar_history_close_history"
                 android:focusable="true"
                 android:padding="7dp"
                 android:scaleType="fitCenter"
@@ -64,8 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="History"
-                android:textColor="#FFFFFF"
+                android:text="@string/history"
+                android:textColor="@color/app_on_surface"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -76,7 +76,7 @@
                 android:layout_height="32dp"
                 android:layout_marginEnd="6dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Open in full screen"
+                android:contentDescription="@string/settings_sidebar_history_open_in_full_screen"
                 android:focusable="true"
                 android:padding="6dp"
                 android:scaleType="fitCenter"
@@ -94,9 +94,9 @@
                 android:minWidth="0dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="Clear Data"
+                android:text="@string/settings_sidebar_history_clear_data"
                 android:textAllCaps="false"
-                android:textColor="#EF4444"
+                android:textColor="@color/app_error"
                 android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -125,8 +125,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="History tracking is paused"
-                android:textColor="#F59E0B"
+                android:text="@string/settings_sidebar_history_history_tracking_is_paused"
+                android:textColor="@color/app_warning"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -140,9 +140,9 @@
                 android:minWidth="0dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="Resume"
+                android:text="@string/settings_sidebar_history_resume"
                 android:textAllCaps="false"
-                android:textColor="#38BDF8"
+                android:textColor="@color/app_accent"
                 android:textSize="11sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -165,8 +165,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="1 selected"
-                android:textColor="#38BDF8"
+                android:text="@string/activity_history_1_selected"
+                android:textColor="@color/app_accent"
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
@@ -181,9 +181,9 @@
                 android:minWidth="0dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="Select All"
+                android:text="@string/settings_sidebar_history_select_all"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
 
             <Button
@@ -197,9 +197,9 @@
                 android:minWidth="0dp"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:text="Delete"
+                android:text="@string/delete"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -213,9 +213,9 @@
                 android:minWidth="0dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -244,12 +244,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="Search history..."
+                android:hint="@string/settings_sidebar_history_search_history"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:singleLine="true"
                 android:textColor="@color/day_night_text_color_contrast"
-                android:textColorHint="#64748B"
+                android:textColorHint="@color/app_on_surface_muted"
                 android:textSize="12sp" />
 
             <ImageButton
@@ -257,7 +257,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Clear search"
+                android:contentDescription="@string/activity_history_clear_search"
                 android:focusable="true"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
@@ -271,7 +271,7 @@
                 android:layout_height="26dp"
                 android:layout_marginStart="4dp"
                 android:background="@drawable/button_bg_selector"
-                android:contentDescription="Voice search"
+                android:contentDescription="@string/voice_search"
                 android:focusable="true"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
@@ -294,9 +294,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_pill_button"
                 android:focusable="true"
-                android:text="All"
+                android:text="@string/activity_downloads_all"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/app_on_surface"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -308,9 +308,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_pill_button"
                 android:focusable="true"
-                android:text="Today"
+                android:text="@string/settings_sidebar_history_today"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
 
             <Button
@@ -321,9 +321,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_pill_button"
                 android:focusable="true"
-                android:text="Yesterday"
+                android:text="@string/settings_sidebar_history_yesterday"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
 
             <Button
@@ -333,9 +333,9 @@
                 android:layout_weight="1"
                 android:background="@drawable/bg_pill_button"
                 android:focusable="true"
-                android:text="Older"
+                android:text="@string/settings_sidebar_history_older"
                 android:textAllCaps="false"
-                android:textColor="#94A3B8"
+                android:textColor="@color/app_on_surface_muted"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -382,8 +382,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
-                    android:text="No Browsing History"
-                    android:textColor="#FFFFFF"
+                    android:text="@string/settings_sidebar_history_no_browsing_history"
+                    android:textColor="@color/app_on_surface"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -393,8 +393,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
-                    android:text="Pages you visit in Gothwad Browser will appear here with timestamps, search, and quick access."
-                    android:textColor="#94A3B8"
+                    android:text="@string/settings_sidebar_history_pages_you_visit_in"
+                    android:textColor="@color/app_on_surface_muted"
                     android:textSize="12sp" />
             </LinearLayout>
         </FrameLayout>

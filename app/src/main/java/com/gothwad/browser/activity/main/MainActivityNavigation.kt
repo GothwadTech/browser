@@ -108,28 +108,49 @@ internal fun MainActivity.updateBackForwardButtons(canGoBack: Boolean, canGoForw
     vb.ibBack.isFocusable = true
     vb.ibBack.alpha = if (canGoBack) 1.0f else 0.4f
 
+    // The phone layout owns its own Back button in the bottom toolbar - keep it in sync,
+    // otherwise it stays visually enabled on the home screen where there is nothing to go back to.
+    vb.ibBottomBack.isEnabled = true
+    vb.ibBottomBack.isFocusable = true
+    vb.ibBottomBack.alpha = if (canGoBack) 1.0f else 0.4f
+
     vb.ibForward.isEnabled = true
     vb.ibForward.isFocusable = true
     vb.ibForward.alpha = if (canGoForward) 1.0f else 0.4f
 }
 
+/** True when the native home screen covers the page of the current tab. */
+internal fun MainActivity.isHomeScreenShown(): Boolean = vb.vNativeHome.isVisible
+
+/** Single definition of "this url is the home screen", used by every layout / menu / back path. */
+internal fun MainActivity.isHomeUrl(url: String?): Boolean =
+    url.isNullOrEmpty() ||
+            url == settingsModel.homePage ||
+            url == Config.HOME_PAGE_URL ||
+            url == Config.HOME_URL_ALIAS ||
+            url == "about:blank"
+
+/**
+ * Show the native home screen.
+ *
+ * This is deliberately NOT a navigation: the WebView keeps its document and its whole
+ * back/forward list, the only thing that changes is which view is on top. `loadUrl("about:blank")`
+ * + `clearHistory()` (what this used to do) destroyed the page the user was reading, so a single
+ * accidental Home tap cost a full reload. Playback is paused so nothing keeps making noise behind
+ * the home screen.
+ */
 internal fun MainActivity.showHomeScreen() {
     val currentTab = tabsModel.currentTab.value
     if (currentTab != null) {
         val currentUrl = currentTab.url
-        val isAlreadyHome = currentUrl.isEmpty() ||
-                currentUrl == settingsModel.homePage ||
-                currentUrl == Config.HOME_PAGE_URL ||
-                currentUrl == Config.HOME_URL_ALIAS
-
-        if (!isAlreadyHome) {
+        if (!isHomeUrl(currentUrl)) {
             currentTab.lastUrlBeforeHome = currentUrl
+            currentTab.lastTitleBeforeHome = currentTab.title
+            currentTab.webEngine.stopPlayback()
         }
         currentTab.url = Config.HOME_URL_ALIAS
         currentTab.title = getString(R.string.home_screen)
         currentTab.thumbnail = null
-        currentTab.webEngine.clearHistory()
-        currentTab.webEngine.loadUrl("about:blank")
         lifecycleScope.launch(Dispatchers.IO) {
             tabsModel.saveTab(currentTab)
         }
@@ -139,15 +160,42 @@ internal fun MainActivity.showHomeScreen() {
     vb.rlActionBar.bringToFront()
     vb.vActionBar.setAddressBoxText("")
     updateBackForwardButtons(
-        canGoBack = false,
-        canGoForward = !currentTab?.lastUrlBeforeHome.isNullOrEmpty()
+        canGoBack = currentTab?.lastUrlBeforeHome.isNullOrEmpty() == false,
+        canGoForward = false
     )
     showMenuOverlay()
-    vb.ibHome.requestFocus()
+    requestHeaderFocus()
+}
+
+/**
+ * Reveal the page that [showHomeScreen] covered.
+ *
+ * @return false when there is nothing behind the home screen (fresh tab), so callers can fall back
+ * to their own behaviour (double-press-to-exit on the home screen).
+ */
+internal fun MainActivity.hideHomeScreen(): Boolean {
+    val tab = tabsModel.currentTab.value ?: return false
+    val restoreUrl = tab.lastUrlBeforeHome
+    if (restoreUrl.isNullOrEmpty()) {
+        return false
+    }
+    tab.lastUrlBeforeHome = null
+    tab.url = restoreUrl
+    tab.title = tab.lastTitleBeforeHome ?: restoreUrl
+    tab.lastTitleBeforeHome = null
+    vb.vNativeHome.visibility = View.GONE
+    vb.flWebViewContainer.visibility = View.VISIBLE
+    vb.vActionBar.setAddressBoxText(restoreUrl)
+    updateBackForwardButtons(
+        canGoBack = tab.webEngine.canGoBack(),
+        canGoForward = tab.webEngine.canGoForward()
+    )
+    switchToTab(tab)
+    return true
 }
 
 internal fun MainActivity.switchToTab(newTab: WebTabState) {
-    val isHome = newTab.url == settingsModel.homePage || newTab.url == Config.HOME_PAGE_URL || newTab.url == Config.HOME_URL_ALIAS || newTab.url.isEmpty() || newTab.url == "about:blank"
+    val isHome = isHomeUrl(newTab.url)
     changeTab(newTab)
     if (isHome) {
         vb.vNativeHome.visibility = View.VISIBLE
@@ -155,11 +203,11 @@ internal fun MainActivity.switchToTab(newTab: WebTabState) {
         vb.rlActionBar.bringToFront()
         vb.vActionBar.setAddressBoxText("")
         updateBackForwardButtons(
-            canGoBack = false,
-            canGoForward = !newTab.lastUrlBeforeHome.isNullOrEmpty()
+            canGoBack = !newTab.lastUrlBeforeHome.isNullOrEmpty(),
+            canGoForward = false
         )
         showMenuOverlay()
-        vb.ibHome.requestFocus()
+        requestHeaderFocus()
     } else {
         vb.vNativeHome.visibility = View.GONE
         vb.flWebViewContainer.visibility = View.VISIBLE
@@ -251,13 +299,15 @@ internal fun MainActivity.createWebView(tab: WebTabState): View? {
     }
 
     var ua = config.userAgentString.value
-    if (ua == null && config.desktopMode.value) {
+    if (ua == null && effectiveDesktopMode(tab)) {
         ua = Config.DESKTOP_UA
     }
     if (ua?.contains("Browser/1.0 ") == true) {
+        // A UA from an older release that no longer applies: drop it rather than keep shipping it.
         config.userAgentString.value = null
-        ua = if (config.desktopMode.value) Config.DESKTOP_UA else null
+        ua = if (effectiveDesktopMode(tab)) Config.DESKTOP_UA else null
     }
+    tab.webEngine.setDesktopModeOverride(tab.desktopMode ?: config.desktopMode.value)
     tab.webEngine.userAgentString = ua
 
     return webView
@@ -265,11 +315,11 @@ internal fun MainActivity.createWebView(tab: WebTabState): View? {
 
 internal fun MainActivity.onWebViewUpdated(tab: WebTabState) {
     if (tab != tabsModel.currentTab.value) return
-    val isHome = tab.url == settingsModel.homePage || tab.url == Config.HOME_PAGE_URL || tab.url == Config.HOME_URL_ALIAS || tab.url.isEmpty() || tab.url == "about:blank"
+    val isHome = isHomeUrl(tab.url)
     if (isHome) {
         updateBackForwardButtons(
-            canGoBack = false,
-            canGoForward = !tab.lastUrlBeforeHome.isNullOrEmpty()
+            canGoBack = !tab.lastUrlBeforeHome.isNullOrEmpty(),
+            canGoForward = false
         )
         vb.vNativeHome.visibility = View.VISIBLE
         vb.vNativeHome.bringToFront()
@@ -278,7 +328,7 @@ internal fun MainActivity.onWebViewUpdated(tab: WebTabState) {
         showMenuOverlay()
         val current = currentFocus
         if (current == null || (!isToolbarView(current) && !vb.vNativeHome.hasFocus())) {
-            vb.ibHome.post { vb.ibHome.requestFocus() }
+            vb.ibHome.post { requestHeaderFocus() }
         }
     } else {
         updateBackForwardButtons(
@@ -313,12 +363,14 @@ internal fun MainActivity.navigateInternal(url: String) {
     }
     val tab = tabsModel.currentTab.value
     if (tab != null) {
-        val wasOnHome = vb.vNativeHome.isVisible || tab.url == Config.HOME_URL_ALIAS || tab.url.isEmpty() || tab.url == settingsModel.homePage
-        if (wasOnHome) {
-            tab.webEngine.clearHistory()
-            tab.webEngine.loadUrl("about:blank")
+        // Leaving the home screen is just hiding an overlay: the WebView stays alive, its history
+        // list is what it is (a page opened from Home can still be gone back from).
+        if (vb.vNativeHome.isVisible) {
+            vb.vNativeHome.visibility = View.GONE
+            vb.flWebViewContainer.visibility = View.VISIBLE
         }
         tab.lastUrlBeforeHome = null
+        tab.lastTitleBeforeHome = null
         tab.url = url
         vb.progressBarGeneric.visibility = View.VISIBLE
         tab.webEngine.loadUrl(url)
@@ -328,9 +380,14 @@ internal fun MainActivity.navigateInternal(url: String) {
     }
 }
 
-internal fun MainActivity.navigateBackInternal(goHomeIfNoHistory: Boolean = false) {
-    val currentTab = tabsModel.currentTab.value
-    if (currentTab != null && currentTab.webEngine.canGoBack()) {
+internal fun MainActivity.navigateBackInternal() {
+    val currentTab = tabsModel.currentTab.value ?: return
+    // Home sits on top of the page, so Back reveals the page again instead of reloading it.
+    if (isHomeScreenShown()) {
+        hideHomeScreen()
+        return
+    }
+    if (currentTab.webEngine.canGoBack()) {
         currentTab.webEngine.goBack()
     } else {
         showHomeScreen()

@@ -23,7 +23,10 @@ import com.gothwad.browser.Config
 import com.gothwad.browser.R
 import com.gothwad.browser.activity.lock.AppLockActivity
 import com.gothwad.browser.activity.main.MainActivity
+import com.gothwad.browser.activity.main.desktopModeToastText
+import com.gothwad.browser.activity.main.isCurrentTabInDesktopMode
 import com.gothwad.browser.activity.main.openInNewTab
+import com.gothwad.browser.activity.main.toggleDesktopModeForCurrentTab
 import com.gothwad.browser.activity.main.showDownloads
 import com.gothwad.browser.activity.main.showFavoritesDialog
 import com.gothwad.browser.activity.main.showHistoryActivity
@@ -116,7 +119,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         }
 
         // 2. Forward
-        val canGoForward = currentTab?.webEngine?.canGoForward() == true || (!currentTab?.lastUrlBeforeHome.isNullOrEmpty())
+        val canGoForward = currentTab?.webEngine?.canGoForward() == true
         btnForward.isEnabled = canGoForward
         btnForward.alpha = if (canGoForward) 1.0f else 0.4f
         bindMenuItem(btnForward) {
@@ -145,16 +148,20 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                         }
                         favDao.insert(newItem)
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(activity, "Bookmark added: $title", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                activity,
+                                activity.getString(R.string.bookmark_added, title),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     } else {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(activity, "Already in bookmarks", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, R.string.bookmark_already_exists, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             } else {
-                Toast.makeText(activity, "No active webpage to bookmark", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, R.string.bookmark_no_page, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -169,7 +176,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                             setDestinationInExternalPublicDir(android.os.Environment.DIRECTORY_DOWNLOADS, "page_${System.currentTimeMillis()}.html")
                         }
                         dm.enqueue(request)
-                        Toast.makeText(activity, "Download started...", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, activity.getString(R.string.menu_download_started), Toast.LENGTH_SHORT).show()
                     } else {
                         activity.showDownloads(activity.vb.ibMenu)
                     }
@@ -247,7 +254,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                 }
                 activity.startActivity(Intent.createChooser(sendIntent, "Share URL"))
             } else {
-                Toast.makeText(activity, "No active webpage to share", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.menu_no_active_webpage_to), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -256,18 +263,26 @@ class ChromeMenuPopup(private val activity: MainActivity) {
             showFindInPageDialog()
         }
 
-        // 10. Translate...
+        // 10. Translate this page (Chrome-style, via the page proxy - see PageTranslate helper)
         bindMenuItem(contentView.findViewById(R.id.btnMenuTranslate)) {
-            if (isWebPage) {
-                try {
-                    val encoded = URLEncoder.encode(currentUrl, "UTF-8")
-                    val translateUrl = "https://translate.google.com/translate?sl=auto&tl=en&u=$encoded"
-                    activity.navigate(translateUrl)
-                } catch (e: Exception) {
-                    Toast.makeText(activity, "Unable to translate page", Toast.LENGTH_SHORT).show()
-                }
+            if (!isWebPage || !PageTranslate.isTranslatable(currentUrl)) {
+                Toast.makeText(activity, R.string.translate_unsupported, Toast.LENGTH_SHORT).show()
+                return@bindMenuItem
+            }
+            val original = PageTranslate.originalUrlOf(currentUrl)
+            if (original != null) {
+                // Already on a translated copy -> go back to the source page, like Chrome's
+                // "Show original" toggle.
+                activity.navigate(original)
             } else {
-                Toast.makeText(activity, "No webpage to translate", Toast.LENGTH_SHORT).show()
+                PageTranslate.pickTargetLanguage(activity) { lang ->
+                    val proxyUrl = PageTranslate.buildProxyUrl(currentUrl, lang)
+                    if (proxyUrl == null) {
+                        Toast.makeText(activity, R.string.translate_failed, Toast.LENGTH_SHORT).show()
+                    } else {
+                        activity.navigate(proxyUrl)
+                    }
+                }
             }
         }
 
@@ -286,16 +301,23 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                                 document.body.classList.add('tv-reading-mode');
                                 var s = document.createElement('style');
                                 s.id = 'tv-reading-style';
-                                s.innerHTML = 'body.tv-reading-mode { max-width: 800px !important; margin: 0 auto !important; padding: 24px !important; font-size: 20px !important; line-height: 1.6 !important; background: #1a1a1a !important; color: #e0e0e0 !important; }';
+                                s.innerHTML = 'body.tv-reading-mode { max-width: 800px !important; margin: 0 auto !important; padding: 24px !important; font-size: 20px !important; line-height: 1.6 !important; }';
                                 document.head.appendChild(s);
                             }
+                            return document.body.classList.contains('tv-reading-mode') ? 1 : 0;
                         })();
                     """.trimIndent()
-                    webView.evaluateJavascript(js, null)
-                    Toast.makeText(activity, "Reading mode toggled", Toast.LENGTH_SHORT).show()
+                    webView.evaluateJavascript(js) { result ->
+                        val enabled = result?.trim()?.trim('"') == "1"
+                        Toast.makeText(
+                            activity,
+                            if (enabled) R.string.reading_mode_toggled_on else R.string.reading_mode_toggled_off,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             } else {
-                Toast.makeText(activity, "Reading mode not available on this page", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, R.string.reading_mode_unavailable, Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -312,32 +334,27 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                     }
                     favDao.insert(newItem)
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(activity, "Shortcut created on Home & Bookmarks: $title", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, activity.getString(R.string.menu_shortcut_created, title), Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {
-                Toast.makeText(activity, "No webpage to create shortcut for", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.menu_no_webpage_to_create), Toast.LENGTH_SHORT).show()
             }
         }
 
         // 13. Desktop Site Checkbox
         val btnDesktop: View = contentView.findViewById(R.id.btnMenuDesktop)
         val cbDesktop: CheckBox = contentView.findViewById(R.id.cbDesktopSite)
-        val isDesktop = config.isDesktopMode()
-        cbDesktop.isChecked = isDesktop
+        cbDesktop.isChecked = activity.isCurrentTabInDesktopMode()
 
         bindMenuItem(btnDesktop) {
-            val willBeDesktop = !cbDesktop.isChecked
+            val willBeDesktop = activity.toggleDesktopModeForCurrentTab(!cbDesktop.isChecked)
             cbDesktop.isChecked = willBeDesktop
-            config.desktopMode.value = willBeDesktop
-            config.userAgentString.value = if (willBeDesktop) Config.DESKTOP_UA else null
-            val newZoom = config.getEffectiveZoom(willBeDesktop)
-            for (tab in activity.tabsModel.tabsStates) {
-                tab.webEngine.userAgentString = if (willBeDesktop) Config.DESKTOP_UA else null
-                tab.webEngine.setPageZoom(newZoom)
-            }
-            currentTab?.webEngine?.reload()
-            Toast.makeText(activity, if (willBeDesktop) "Desktop site enabled" else "Mobile site enabled", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                activity,
+                activity.desktopModeToastText(willBeDesktop),
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         // 14. Settings
@@ -348,9 +365,12 @@ class ChromeMenuPopup(private val activity: MainActivity) {
         // 15. Help & feedback
         bindMenuItem(contentView.findViewById(R.id.btnMenuHelp)) {
             AlertDialog.Builder(activity)
-                .setTitle("Gothwad TV Browser")
-                .setMessage("Android TV & Tablet Web Browser.\n\nVersion: ${BuildConfig.VERSION_NAME}\nDeveloper: gothwadtech@gmail.com\n\nFast, lightweight, ad-free browsing optimized for remote and touch.")
-                .setPositiveButton("OK", null)
+                .setTitle(R.string.app_name)
+                .setMessage(activity.getString(R.string.menu_about_message, BuildConfig.VERSION_NAME))
+                .setPositiveButton(R.string.menu_about_website) { _, _ ->
+                    activity.navigate("https://github.com/GothwadTech/browser")
+                }
+                .setNegativeButton(android.R.string.ok, null)
                 .show()
         }
 
@@ -380,14 +400,14 @@ class ChromeMenuPopup(private val activity: MainActivity) {
             "Clear everything (History, Cache & Cookies)"
         )
         AlertDialog.Builder(activity)
-            .setTitle("Delete Browsing Data")
+            .setTitle(R.string.menu_delete_browsing_data)
             .setItems(options) { _, which ->
                 when (which) {
                     0 -> {
                         CoroutineScope(Dispatchers.IO).launch {
                             AppDatabase.db.historyDao().deleteAll()
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(activity, "Browsing history cleared", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.menu_browsing_history_cleared), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -395,7 +415,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                         CoroutineScope(Dispatchers.IO).launch {
                             WebEngineFactory.clearCache(activity)
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(activity, "Cache & cookies cleared", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.menu_cache_and_cookies_cleared), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -404,7 +424,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
                             AppDatabase.db.historyDao().deleteAll()
                             WebEngineFactory.clearCache(activity)
                             withContext(Dispatchers.Main) {
-                                Toast.makeText(activity, "All browsing data cleared", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(activity, activity.getString(R.string.menu_all_browsing_data_cleared), Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
@@ -415,27 +435,7 @@ class ChromeMenuPopup(private val activity: MainActivity) {
     }
 
     private fun showFindInPageDialog() {
-        val currentTab = activity.tabsModel.currentTab.value ?: return
-        val webView = currentTab.webEngine.getView() as? WebView ?: return
-
-        val input = EditText(activity).apply {
-            hint = "Search on webpage..."
-            setSingleLine(true)
-            setPadding(32, 24, 32, 24)
-        }
-
-        AlertDialog.Builder(activity)
-            .setTitle("Find in page")
-            .setView(input)
-            .setPositiveButton("Find") { _, _ ->
-                val query = input.text.toString().trim()
-                if (query.isNotEmpty()) {
-                    webView.findAllAsync(query)
-                    Toast.makeText(activity, "Searching for: $query", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .show()
+        FindInPageDialog.show(activity)
     }
 
     fun show(anchorView: View) {
