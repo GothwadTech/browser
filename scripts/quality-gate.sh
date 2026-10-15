@@ -123,8 +123,11 @@ EOF
 )
 report "string resources escape apostrophes and avoid unicode escapes" "$esc"
 
-# CDATA inside a <string> is a hard aapt2 failure ("Can not extract resource from ParsedResource"),
-# so escaped entities are the only legal way to carry & or < in a resource.
+# Prefer entities over CDATA in value resources: aapt2 accepts CDATA, but it also disables aapt's
+# escape handling inside it (a \n or \' in a CDATA block reaches the user literally), which is a
+# silent-trap in a file where the other 660 strings rely on escapes. Found while chasing a real
+# "Can not extract resource" failure — which turned out to be unescaped apostrophes, not CDATA.
+# (Yes, the first version of this comment blamed the wrong thing; keep the diagnosis honest.)
 cdata=$(grep -rn 'CDATA' app/src/main/res/values* app/common/src/main/res/values* 2>/dev/null || true)
 report "no CDATA in resource values" "$cdata"
 
