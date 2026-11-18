@@ -269,13 +269,13 @@
     <string name="shortcut_reset_all">Reset All Shortcuts to Defaults</string>
     <string name="shortcut_reset_all_confirm">Are you sure you want to restore all keyboard shortcuts to PC standard defaults?</string>
     <string name="shortcuts_customization_hint">Click any shortcut to record a new key combination. Supports physical keyboards, mice, and TV remotes.</string>
-    <string name="about_gothwad_title">About Gothwad Tech</string>
+    <string name="about_gothwad_title">About Bansify</string>
     <string name="about_tagline">Fastest · Lightest · Securest · Zero Tracking · 100% Client-Side Local</string>
     <string name="gothwad_tech_desc">Bansify Browser is an ultra-fast, lightweight, and completely open-source web browser designed specifically for Android TV and Set-Top Boxes. Built with a 100% local-first architecture, it ensures zero telemetry, zero background data tracking, and maximum user privacy.</string>
-    <string name="created_by_gothwad_tech">Created &amp; Maintained by Gothwad Tech</string>
+    <string name="created_by_gothwad_tech">Created Created &amp; Maintained by Gothwad Techamp; Maintained by Bansify</string>
     <string name="github_repository">GitHub: github.com/gothwadtech/tvbrowser</string>
     <string name="official_website">Official Website: gothwadtech.com</string>
-    <string name="support_gothwad_tech">Support Gothwad Tech</string>
+    <string name="support_gothwad_tech">Support Bansify</string>
     <string name="terms_and_conditions">Terms &amp; Conditions</string>
     <string name="open_source_notice">100% Open Source Software · Zero Server Dependencies</string>
     <string name="press_back_again_to_exit">Press BACK again to exit</string>
@@ -605,7 +605,7 @@
     <string name="settings_version_github_com_gothwadtech_tvbrowser">github.com/gothwadtech/tvbrowser</string>
     <string name="settings_version_gothwadtech_com">gothwadtech.com</string>
     <string name="settings_version_100_local_and_privacy">100% Local &amp; Privacy First</string>
-    <string name="settings_version_zero_tracking_no_telemetry">• Zero Tracking: No telemetry, no background analytics, and no remote data harvesting.\n• 100% Client-Side Local: All history, bookmarks, notes, and preferences remain solely on this device.\n• Open Source: Fully transparent architecture crafted by Gothwad Tech with zero server dependencies.</string>
+    <string name="settings_version_zero_tracking_no_telemetry">• Zero Tracking: No telemetry, no background analytics, and no remote data harvesting.\n• 100% Client-Side Local: All history, bookmarks, notes, and preferences remain solely on this device.\n• Open Source: Fully transparent architecture crafted by Bansify with zero server dependencies.</string>
     <string name="settings_version_legal_author_and_organization">Legal, Author &amp; Organization</string>
     <string name="settings_version_privacy_policy_in_built">Privacy Policy (In-Built)</string>
     <string name="settings_version_open_source_license_mit">Open Source License (MIT)</string>

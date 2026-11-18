@@ -18,6 +18,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Gothwad Browser"
+rootProject.name = "Bansify Browser"
 include(":app")
 include(":app:common")
