@@ -161,7 +161,7 @@ class NativeHomeView @JvmOverloads constructor(
         // 0. Gothwad Browser Category (Dashboard Status Cards)
         bookmarkItems.add(
             HomeShortcutItem(
-                title = "bansify browser",
+                title = "Bansify Browser",
                 isHeader = true
             )
         )
@@ -263,7 +263,7 @@ class NativeHomeView @JvmOverloads constructor(
             if (!::rvBookmarks.isInitialized || rvBookmarks.isComputingLayout) return
             if (bookmarksAdapter == null) return
             if (bookmarkItems.size < 6) return
-            if (!bookmarkItems[0].isHeader || bookmarkItems[0].title != "bansify browser") return
+            if (!bookmarkItems[0].isHeader || bookmarkItems[0].title != "Bansify Browser") return
             if (!isShown) return
             val scope = statsScope ?: return
             if (statsJob?.isActive == true) return
