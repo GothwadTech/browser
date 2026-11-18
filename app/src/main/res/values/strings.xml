@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Gothwad Browser</string>
-    <string name="app_name_short" translatable="false">Gothwad Browser</string>
+    <string name="app_name">bansify</string>
+    <string name="app_name_short" translatable="false">bansify</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
     <string name="loading">Loading&#8230;</string>
@@ -271,7 +271,7 @@
     <string name="shortcuts_customization_hint">Click any shortcut to record a new key combination. Supports physical keyboards, mice, and TV remotes.</string>
     <string name="about_gothwad_title">About Gothwad Tech</string>
     <string name="about_tagline">Fastest · Lightest · Securest · Zero Tracking · 100% Client-Side Local</string>
-    <string name="gothwad_tech_desc">Gothwad Browser is an ultra-fast, lightweight, and completely open-source web browser designed specifically for Android TV and Set-Top Boxes. Built with a 100% local-first architecture, it ensures zero telemetry, zero background data tracking, and maximum user privacy.</string>
+    <string name="gothwad_tech_desc">bansify is an ultra-fast, lightweight, and completely open-source web browser designed specifically for Android TV and Set-Top Boxes. Built with a 100% local-first architecture, it ensures zero telemetry, zero background data tracking, and maximum user privacy.</string>
     <string name="created_by_gothwad_tech">Created &amp; Maintained by Gothwad Tech</string>
     <string name="github_repository">GitHub: github.com/gothwadtech/tvbrowser</string>
     <string name="official_website">Official Website: gothwadtech.com</string>
@@ -414,7 +414,7 @@
     <string name="settings_configurable_hotkeys_for_tabs">Configurable hotkeys for tabs &amp; navigation</string>
     <string name="settings_about">About</string>
     <string name="settings_about_and_version">About &amp; Version</string>
-    <string name="settings_gothwad_browser_build_details">Gothwad Browser, build details, updates</string>
+    <string name="settings_gothwad_browser_build_details">bansify, build details, updates</string>
     <string name="settings_back_to_settings_categories">Back to Settings Categories</string>
     <string name="settings_setting">Setting</string>
     <string name="settings_preferences">Preferences</string>
@@ -427,7 +427,7 @@
     <string name="settings_media_and_playback">Media &amp; Playback</string>
     <string name="settings_search_engine_settings">Search Engine Settings</string>
     <string name="settings_set_as_default_browser">Set as Default Browser</string>
-    <string name="settings_make_gothwad_browser_your">Make Gothwad Browser your system default browser</string>
+    <string name="settings_make_gothwad_browser_your">Make bansify your system default browser</string>
     <string name="settings_enable_ad_and_tracker">Enable Ad &amp; Tracker Blocking</string>
     <string name="settings_filter_list_url_easylist">Filter List URL (EasyList format):</string>
     <string name="settings_filter_list_loaded_and">Filter list loaded &amp; active</string>
@@ -532,7 +532,7 @@
     <string name="settings_sidebar_history_yesterday">Yesterday</string>
     <string name="settings_sidebar_history_older">Older</string>
     <string name="settings_sidebar_history_no_browsing_history">No Browsing History</string>
-    <string name="settings_sidebar_history_pages_you_visit_in">Pages you visit in Gothwad Browser will appear here with timestamps, search, and quick access.</string>
+    <string name="settings_sidebar_history_pages_you_visit_in">Pages you visit in bansify will appear here with timestamps, search, and quick access.</string>
     <string name="settings_sidebar_tabs_close_tabs">Close Tabs</string>
     <string name="settings_sidebar_tabs_open_tabs">Open Tabs</string>
     <string name="settings_sidebar_tabs_new">+ New</string>
@@ -636,9 +636,9 @@
     <string name="bookmarks_bookmark_added">Bookmark Added!</string>
     <string name="settings_pin_lock_disabled">PIN Lock Disabled</string>
     <string name="settings_updating_ad_blocker_filters">Updating ad blocker filters...</string>
-    <string name="default_browser_gothwad_browser_is_already">Gothwad Browser is already your default browser</string>
-    <string name="default_browser_select_browser_app_choose">Select \'Browser app\' -&gt; choose \'Gothwad Browser\'</string>
-    <string name="default_browser_set_gothwad_browser_as">Set Gothwad Browser as default browser in App Settings</string>
+    <string name="default_browser_gothwad_browser_is_already">bansify is already your default browser</string>
+    <string name="default_browser_select_browser_app_choose">Select \'Browser app\' -&gt; choose \'bansify\'</string>
+    <string name="default_browser_set_gothwad_browser_as">Set bansify as default browser in App Settings</string>
     <string name="default_browser_could_not_open_system">Could not open system settings</string>
     <string name="shortcut_already_in_bookmarks">Already in Bookmarks</string>
     <string name="home_no_manual_shortcuts_to">No manual shortcuts to remove</string>
