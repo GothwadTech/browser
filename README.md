@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌐 Gothwad TV Browser
+# 🌐 Bansify Browser
 ### *The Ultimate Desktop-Grade Web Browser for Android TVs, Tablets, Phones, Linux, Windows & macOS*
 
 [![Platform](https://img.shields.io/badge/Platforms-Android%20TV%20%7C%20Tablets%20%7C%20Linux%20%7C%20Windows%20%7C%20macOS-4CAF50?style=for-the-badge&logo=android)](https://github.com/GothwadTech/browser)
@@ -12,7 +12,7 @@
 
 <br/>
 
-### 📥 Get Gothwad TV Browser
+### 📥 Get Bansify Browser
 
 [![Get on Google Play](https://img.shields.io/badge/Google_Play-Get%20it%20on%20Play%20Store-00875A?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.gothwad.browser)
 [![Get on JioStore](https://img.shields.io/badge/JioStore-Available%20on%20Jio%20Set--Top%20Box-0A2885?style=for-the-badge&logo=reliance&logoColor=white)](https://www.jio.com/fiber/services/set-top-box)
@@ -21,8 +21,8 @@
 
 <br/>
 
-> **"Gothwad Browser is the fastest, securest, and most lightweight browser for Android Phones, TVs, Linux, Windows, and macOS you have ever seen. Engineered with full keyboard and mouse parity, industry-leading TV remote D-Pad navigation, an inbuilt File Manager, TV Notepad, AdBlocker, and Clipboard Manager. Try first, then believe."**  
-> — *Made in India with ❤️ by Gothwad Tech*
+> **"Bansify Browser is the fastest, securest, and most lightweight browser for Android Phones, TVs, Linux, Windows, and macOS you have ever seen. Engineered with full keyboard and mouse parity, industry-leading TV remote D-Pad navigation, an inbuilt File Manager, TV Notepad, AdBlocker, and Clipboard Manager. Try first, then believe."**  
+> — *Made in India with ❤️ by Bansify*
 
 > **Status note (2026-10-14).** The app is in a pre-release hardening pass. Claims below are being
 > converted one by one from "aspirational" into "measured": the APK-size figure is a **target**, not a
@@ -46,13 +46,13 @@
 | **🐧 Linux (Ubuntu, Debian, Mint)** | `.deb` | `sudo dpkg -i gothwad-browser_*_all.deb`<br/>*(Installs launcher, icon, and desktop entry automatically)* |
 | **🐧 Linux (Arch, Fedora, Universal)** | `.tar.gz` | Extract `gothwad-browser-linux-v*.tar.gz` and run `./install.sh` |
 | **🪟 Windows (10 & 11)** | `.zip` (Portable / Installer) | Extract `gothwad-browser-windows-*.zip` and double-click **`Install.bat`**<br/>*(Creates Desktop + Start Menu shortcuts with icon)* |
-| **🍎 macOS (Apple Silicon & Intel)** | `.zip` (`.app` bundle) | Extract `gothwad-browser-macos-*.zip` and drag **`Gothwad TV Browser.app`** to `/Applications` |
+| **🍎 macOS (Apple Silicon & Intel)** | `.zip` (`.app` bundle) | Extract `gothwad-browser-macos-*.zip` and drag **`Bansify Browser.app`** to `/Applications` |
 
 ---
 
 > [!CAUTION]
 > ### ⚖️ PROPRIETARY NOTICE & USAGE RESTRICTIONS
-> **Copyright © Gothwad Tech. All Rights Reserved.**  
+> **Copyright © Bansify. All Rights Reserved.**  
 > The source code in this repository is published strictly as **Source-Available for inspection, security auditing, and viewing purposes only**.  
 > **NO OPEN SOURCE LICENSE IS GRANTED.**  
 > - You **MAY NOT** copy, clone, distribute, redistribute, modify, sub-license, reverse-engineer, publish, or monetize this code or any part of it.
@@ -81,7 +81,7 @@
 
 ## ✨ Core Highlights
 
-Gothwad Browser is built with a singular mission: **bring desktop PC Chrome-grade browsing to Android TV, mobile screens, Linux, Windows, and macOS without the bloat.**
+Bansify Browser is built with a singular mission: **bring desktop PC Chrome-grade browsing to Android TV, mobile screens, Linux, Windows, and macOS without the bloat.**
 
 - ⚡ **Ultra-Fast & Featherweight:** Engineered around a **sub-10 MB APK target**, with the live-page cap, snapshot thumbnails and cache behaviour sized for budget TV streaming sticks (1–2 GB RAM, slow eMMC). The size figure is a target, not a measured CI number yet.
 - 🖥️ **PC-Grade Chromium Engine:** Native Chromium rendering fidelity. No synthetic CSS zooms, no layout reflow compromises, and no artificial color shifts—pages render exactly as intended.
@@ -95,7 +95,7 @@ Gothwad Browser is built with a singular mission: **bring desktop PC Chrome-grad
 ## 💻 Multi-Platform Installation Guide
 
 ### 📱 1. Android (TV, Phones & Tablets)
-1. **Google Play Store / JioStore:** Search for **"Gothwad TV Browser"** and install with 1-click.
+1. **Google Play Store / JioStore:** Search for **"Bansify Browser"** and install with 1-click.
 2. **Direct APK Side-loading:**
    - Download `GothwadTVBrowser-vX.X.X-Release.apk` from [GitHub Releases](https://github.com/GothwadTech/browser/releases).
    - Use a file manager, USB drive, or "Send Files to TV" app to install the APK directly on your TV box or phone.
@@ -120,7 +120,7 @@ tar -xzf gothwad-browser-linux-v*.tar.gz
 cd gothwad-browser-linux-*
 ./install.sh
 ```
-*Gothwad TV Browser will be added to your desktop application launcher with its native high-res icon.*
+*Bansify Browser will be added to your desktop application launcher with its native high-res icon.*
 
 ---
 
@@ -140,7 +140,7 @@ cd gothwad-browser-linux-*
 
 1. Download **`gothwad-browser-macos-vX.X.X.zip`** from [GitHub Releases](https://github.com/GothwadTech/browser/releases).
 2. Extract the archive.
-3. Drag **`Gothwad TV Browser.app`** into your **`/Applications`** folder (or run `./install.sh`).
+3. Drag **`Bansify Browser.app`** into your **`/Applications`** folder (or run `./install.sh`).
 4. Launch via **Launchpad**, **Spotlight**, or your **Dock**.
 5. To uninstall, simply run `./uninstall.sh` or move the app to Trash.
 
@@ -148,7 +148,7 @@ cd gothwad-browser-linux-*
 
 ## 🎮 Complete Input & Hardware Parity
 
-Browsing on Android TV is often plagued by clunky remote controls or broken mouse input. Gothwad Browser is engineered with a **triple-input pipeline** where every input mechanism functions at full fidelity without interfering with another:
+Browsing on Android TV is often plagued by clunky remote controls or broken mouse input. Bansify Browser is engineered with a **triple-input pipeline** where every input mechanism functions at full fidelity without interfering with another:
 
 | Input Method | Supported Behaviors & Capabilities |
 |---|---|
@@ -161,7 +161,7 @@ Browsing on Android TV is often plagued by clunky remote controls or broken mous
 
 ## 🧰 Integrated Productivity Suite
 
-Gothwad Browser eliminates the need to switch between multiple utility apps on your TV:
+Bansify Browser eliminates the need to switch between multiple utility apps on your TV:
 
 1. **📁 Inbuilt File Manager:**
    - Explore local TV storage, external USB drives, and download directories directly from the browser sidebar.
@@ -179,7 +179,7 @@ Gothwad Browser eliminates the need to switch between multiple utility apps on y
 
 ## 🚀 Genesis & Engineering Journey
 
-Gothwad Browser was born out of frustration with existing TV browsers that were either sluggish, filled with intrusive ads, or incapable of handling basic mouse and keyboard inputs.
+Bansify Browser was born out of frustration with existing TV browsers that were either sluggish, filled with intrusive ads, or incapable of handling basic mouse and keyboard inputs.
 
 ```
 ┌──────────────────────────────┐
@@ -208,7 +208,7 @@ Gothwad Browser was born out of frustration with existing TV browsers that were 
 
 - **The AI Studio Foundation:** The initial architecture was scaffolded in **Google AI Studio** during the first two weeks, quickly validating the tab management, input routing, and core UI abstractions.
 - **The Shift to Antigravity & Android Studio:** Development was transitioned to **Antigravity** and local **Android Studio** for deep native optimization. Over 60% of the codebase was developed through precision AI-augmented engineering, coupled with rigorous human systems programming.
-- **Battle-Tested Across 100+ Real Devices:** Before its first public release, Gothwad Browser underwent over a month of stress testing on emulators and **100+ physical hardware configurations**—including low-end Amlogic, Allwinner, and Rockchip TV boxes, certified Google TV dongles, Fire OS streaming devices, and Android tablets.
+- **Battle-Tested Across 100+ Real Devices:** Before its first public release, Bansify Browser underwent over a month of stress testing on emulators and **100+ physical hardware configurations**—including low-end Amlogic, Allwinner, and Rockchip TV boxes, certified Google TV dongles, Fire OS streaming devices, and Android tablets.
 - **The Golden Engineering Rule:** **"Zero Jugaad — Native Platform First."** Every workaround (synthetic touch conversion, CSS zoom hacks, forced algorithmic dark mode) was eradicated in favor of clean, native Android and Chromium APIs.
 - **The Grand Vision:** An all-in-one, productive, feature-dense web browser that never compromises on performance and stays strictly **under 10 MB**.
 
@@ -274,8 +274,8 @@ PROPRIETARY SOURCE-AVAILABLE NOTICE
 
 1. OWNERSHIP & COPYRIGHT:
    All source code, designs, assets, and branding contained in this repository
-   are the proprietary intellectual property of Gothwad Tech.
-   Copyright (c) Gothwad Tech. All rights reserved.
+   are the proprietary intellectual property of Bansify.
+   Copyright (c) Bansify. All rights reserved.
 
 2. ALLOWED USAGE:
    - This repository is made public exclusively for code inspection, educational
@@ -290,14 +290,14 @@ PROPRIETARY SOURCE-AVAILABLE NOTICE
    - Any violation of these terms will be met with immediate legal action and DMCA
      takedowns.
 
-Inquiries and permissions: Contact Gothwad Tech.
+Inquiries and permissions: Contact Bansify.
 ```
 
 ---
 
 ## ❤️ Author & Credits
 
-- **Creator & Lead Developer:** **Gothwad Tech** (Pawan Gothwad)
+- **Creator & Lead Developer:** **Bansify** (Pawan Gothwad)
 - **Origin:** Proudly conceived, engineered, and built in **India 🇮🇳**
 - **Contact:** [pawangothwad@gmail.com](mailto:pawangothwad@gmail.com)
 
