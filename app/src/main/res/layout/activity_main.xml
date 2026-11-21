@@ -185,7 +185,7 @@
                 android:src="@drawable/ic_refresh_grey_900_24dp" />
 
             <!-- 5. Search Bar (with Lock & Mic inside) -->
-            <com.gothwad.browser.activity.main.view.ActionBar
+            <com.bansify.internet.activity.main.view.ActionBar
                 android:id="@+id/vActionBar"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
@@ -269,14 +269,14 @@
         android:progressTint="@color/progressbar_tint"
         android:visibility="gone" />
 
-    <com.gothwad.browser.widgets.cursor.CursorLayout
+    <com.bansify.internet.widgets.cursor.CursorLayout
         android:id="@+id/flWebViewContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rlActionBar"
         android:layout_above="@+id/llBottomPanel" />
 
-    <com.gothwad.browser.activity.main.view.home.NativeHomeView
+    <com.bansify.internet.activity.main.view.home.NativeHomeView
         android:id="@+id/vNativeHome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -412,7 +412,7 @@
             android:tint="@color/header_button_icon_tint" />
     </LinearLayout>
     
-    <com.gothwad.browser.activity.main.view.CursorMenuView
+    <com.bansify.internet.activity.main.view.CursorMenuView
         android:id="@+id/vCursorMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -434,7 +434,7 @@
         />
 
     <!-- Full-screen Chrome Search Screen Overlay -->
-    <com.gothwad.browser.activity.main.view.search.SearchOverlayView
+    <com.bansify.internet.activity.main.view.search.SearchOverlayView
         android:id="@+id/vSearchOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -442,7 +442,7 @@
         android:visibility="gone" />
 
     <!-- Full-screen Chrome Tab Switcher (Tab Grid) Overlay -->
-    <com.gothwad.browser.activity.main.view.tabs.ChromeTabSwitcherOverlay
+    <com.bansify.internet.activity.main.view.tabs.ChromeTabSwitcherOverlay
         android:id="@+id/vChromeTabSwitcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

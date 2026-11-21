@@ -20,16 +20,16 @@
 }
 
 # WebEngine and Models
--keep class com.gothwad.browser.webengine.webview.WebViewWebEngine { *; }
+-keep class com.bansify.internet.webengine.webview.WebViewWebEngine { *; }
 
--keepclassmembers class com.gothwad.browser.model.** {
+-keepclassmembers class com.bansify.internet.model.** {
    public *;
 }
 -keepclassmembers class com.brave.adblock.AdBlockClient {
    public *;
    private *;
 }
--keepclassmembers class com.gothwad.browser.webengine.webview.AndroidJSInterface {
+-keepclassmembers class com.bansify.internet.webengine.webview.AndroidJSInterface {
    public *;
    private *;
 }

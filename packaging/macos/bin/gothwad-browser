@@ -6,8 +6,8 @@
 BUNDLE_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 RESOURCES_DIR="$BUNDLE_DIR/Contents/Resources"
 APK_PATH="$RESOURCES_DIR/app.apk"
-PACKAGE="com.gothwad.browser"
-ACTIVITY="com.gothwad.browser/.activity.main.MainActivity"
+PACKAGE="com.bansify.internet"
+ACTIVITY="com.bansify.internet/.activity.main.MainActivity"
 
 # Detect ADB in PATH or standard macOS Android SDK location
 ADB_BIN="adb"

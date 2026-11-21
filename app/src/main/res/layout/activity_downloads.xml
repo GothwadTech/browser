@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     android:background="@drawable/bg_tv_right_sidebar"
-    tools:context="com.gothwad.browser.activity.downloads.DownloadsActivity">
+    tools:context="com.bansify.internet.activity.downloads.DownloadsActivity">
 
     <!-- Top Header Area -->
     <LinearLayout

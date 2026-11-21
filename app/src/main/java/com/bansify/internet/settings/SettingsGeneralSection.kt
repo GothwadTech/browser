@@ -1,0 +1,319 @@
+package com.bansify.internet.settings
+
+import android.app.AlertDialog
+import android.content.Context
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
+import com.bansify.internet.Config
+import com.bansify.internet.R
+import com.bansify.internet.activity.main.MainActivity
+import com.bansify.internet.activity.main.applyWebPageZoom
+import com.bansify.internet.activity.main.zoomWebIn
+import com.bansify.internet.activity.main.zoomWebOut
+import com.bansify.internet.databinding.ViewSettingsMainBinding
+import com.bansify.internet.webengine.WebEngineFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+object SettingsGeneralSection {
+
+    fun initThemeSettingsUI(
+        context: Context,
+        vb: ViewSettingsMainBinding,
+        config: Config,
+        onDismissDialog: (() -> Unit)?,
+        activity: Context?
+    ) {
+        val adapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, context.resources.getStringArray(R.array.themes))
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        vb.spTheme.adapter = adapter
+        vb.spTheme.setSelection(config.theme.value.ordinal, false)
+
+        vb.spTheme.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                if (config.theme.value.ordinal == position) return
+                val newTheme = Config.Theme.values()[position]
+                config.theme.value = newTheme
+                val nightMode = when (newTheme) {
+                    Config.Theme.BLACK_AMOLED,
+                    Config.Theme.BLACK_CHARCOAL,
+                    Config.Theme.BLACK_MIDNIGHT -> AppCompatDelegate.MODE_NIGHT_YES
+                    Config.Theme.WHITE_PURE,
+                    Config.Theme.WHITE_WARM,
+                    Config.Theme.WHITE_COOL -> AppCompatDelegate.MODE_NIGHT_NO
+                    else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+                }
+                AppCompatDelegate.setDefaultNightMode(nightMode)
+                WebEngineFactory.onThemeSettingUpdated(newTheme)
+
+                onDismissDialog?.invoke()
+                (activity as? AppCompatActivity)?.recreate()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+    }
+
+    fun initAppLockSettingsUI(context: Context, vb: ViewSettingsMainBinding) {
+        var isUpdatingProgrammatically = false
+
+        fun syncSwitchState() {
+            isUpdatingProgrammatically = true
+            vb.scAppLock.isChecked = com.bansify.internet.singleton.AppLockManager.isLockEnabled(context)
+            isUpdatingProgrammatically = false
+            updateAppLockStatus(context, vb)
+        }
+
+        syncSwitchState()
+
+        val toggleAction = {
+            val currentlyEnabled = com.bansify.internet.singleton.AppLockManager.isLockEnabled(context)
+            if (!currentlyEnabled) {
+                // User wants to enable PIN lock
+                if (!com.bansify.internet.singleton.AppLockManager.hasPinSet(context)) {
+                    // Force user to create and confirm 4-digit PIN first
+                    val dlg = com.bansify.internet.activity.lock.TvPinDialog(
+                        context = context,
+                        mode = com.bansify.internet.activity.lock.TvPinDialog.Mode.CREATE,
+                        onSuccess = {
+                            syncSwitchState()
+                        },
+                        onCancel = {
+                            syncSwitchState()
+                        }
+                    )
+                    dlg.show()
+                } else {
+                    com.bansify.internet.singleton.AppLockManager.setLockEnabled(context, true)
+                    syncSwitchState()
+                }
+            } else {
+                // User wants to disable PIN lock -> Require PIN verification
+                val dlg = com.bansify.internet.activity.lock.TvPinDialog(
+                    context = context,
+                    mode = com.bansify.internet.activity.lock.TvPinDialog.Mode.VERIFY,
+                    onSuccess = {
+                        com.bansify.internet.singleton.AppLockManager.setLockEnabled(context, false)
+                        syncSwitchState()
+                        Toast.makeText(context, context.getString(R.string.settings_pin_lock_disabled), Toast.LENGTH_SHORT).show()
+                    },
+                    onCancel = {
+                        syncSwitchState()
+                    }
+                )
+                dlg.show()
+            }
+        }
+
+        vb.llAppLock.setOnClickListener {
+            toggleAction()
+        }
+
+        vb.scAppLock.setOnClickListener {
+            toggleAction()
+        }
+
+        vb.scAppLock.setOnCheckedChangeListener { _, isChecked ->
+            if (isUpdatingProgrammatically) return@setOnCheckedChangeListener
+            // Revert direct toggle and route through secure action
+            syncSwitchState()
+            toggleAction()
+        }
+
+        vb.btnChangePin.setOnClickListener {
+            val mode = if (com.bansify.internet.singleton.AppLockManager.hasPinSet(context)) {
+                com.bansify.internet.activity.lock.TvPinDialog.Mode.CHANGE
+            } else {
+                com.bansify.internet.activity.lock.TvPinDialog.Mode.CREATE
+            }
+            val dlg = com.bansify.internet.activity.lock.TvPinDialog(
+                context = context,
+                mode = mode,
+                onSuccess = {
+                    syncSwitchState()
+                }
+            )
+            dlg.show()
+        }
+    }
+
+    private fun updateAppLockStatus(context: Context, vb: ViewSettingsMainBinding) {
+        val isEnabled = com.bansify.internet.singleton.AppLockManager.isLockEnabled(context)
+        val hasPin = com.bansify.internet.singleton.AppLockManager.hasPinSet(context)
+        if (isEnabled) {
+            vb.tvAppLockStatus.text = "PIN Lock Active (Protected)"
+            vb.tvAppLockStatus.setTextColor(ContextCompat.getColor(context, R.color.app_accent))
+            vb.btnChangePin.visibility = View.VISIBLE
+            vb.btnChangePin.text = "Change PIN"
+        } else if (hasPin) {
+            vb.tvAppLockStatus.text = "PIN Lock Disabled (PIN configured)"
+            vb.tvAppLockStatus.setTextColor(ContextCompat.getColor(context, R.color.app_on_surface_muted))
+            vb.btnChangePin.visibility = View.VISIBLE
+            vb.btnChangePin.text = "Change PIN"
+        } else {
+            vb.tvAppLockStatus.text = "No PIN set (Set 4-digit PIN to enable)"
+            vb.tvAppLockStatus.setTextColor(ContextCompat.getColor(context, R.color.app_on_surface_muted))
+            vb.btnChangePin.visibility = View.GONE
+        }
+    }
+
+    fun initQuickToolsUI(
+        context: Context,
+        vb: ViewSettingsMainBinding,
+        config: Config,
+        onDismissDialog: (() -> Unit)?,
+        activity: Context?
+    ) {
+        val mainAct = activity as? MainActivity
+        vb.btnQuickHistory.setOnClickListener {
+            onDismissDialog?.invoke()
+            mainAct?.showHistory()
+        }
+        vb.btnQuickFavorites.setOnClickListener {
+            onDismissDialog?.invoke()
+            mainAct?.showFavorites()
+        }
+        vb.btnQuickDownloads.setOnClickListener {
+            onDismissDialog?.invoke()
+            mainAct?.showDownloads()
+        }
+        vb.btnQuickIncognito.setOnClickListener {
+            mainAct?.toggleIncognitoMode()
+            Toast.makeText(context, R.string.incognito_mode, Toast.LENGTH_SHORT).show()
+        }
+        vb.btnQuickPopupBlock.setOnClickListener {
+            onDismissDialog?.invoke()
+            mainAct?.apply {
+                lifecycleScope.launch {
+                    showPopupBlockOptions()
+                }
+            }
+        }
+        vb.btnQuickRotate.setOnClickListener {
+            val nextOrientation = when (config.screenOrientation) {
+                Config.ORIENTATION_LANDSCAPE -> Config.ORIENTATION_PORTRAIT
+                Config.ORIENTATION_PORTRAIT -> Config.ORIENTATION_AUTO
+                else -> Config.ORIENTATION_LANDSCAPE
+            }
+            config.screenOrientation = nextOrientation
+            mainAct?.applyScreenOrientation()
+            val label = context.getString(
+                when (nextOrientation) {
+                    Config.ORIENTATION_PORTRAIT -> R.string.settings_orientation_portrait
+                    Config.ORIENTATION_AUTO -> R.string.settings_orientation_auto
+                    else -> R.string.settings_orientation_landscape
+                }
+            )
+            Toast.makeText(context, label, Toast.LENGTH_SHORT).show()
+        }
+
+        // One refresh path for the three zoom buttons (they used to duplicate the same five lines).
+        fun refreshZoomUi(): String {
+            val isDesk = config.isDesktopMode()
+            val zoom = config.getEffectiveZoom(isDesk)
+            vb.sbWebPageZoom.progress =
+                (zoom - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
+                    .coerceIn(0, Config.WEB_PAGE_ZOOM_PERCENT_MAX - Config.WEB_PAGE_ZOOM_PERCENT_MIN)
+            val modeTitle = context.getString(if (isDesk) R.string.mode_desktop else R.string.mode_mobile)
+            vb.tvWebPageZoomValue.text = if (zoom == Config.WEB_PAGE_ZOOM_PERCENT_DEFAULT) {
+                context.getString(R.string.settings_zoom_value_default, modeTitle)
+            } else {
+                context.getString(R.string.settings_zoom_value, modeTitle, zoom)
+            }
+            return context.getString(R.string.settings_zoom_value, modeTitle, zoom)
+        }
+
+        vb.btnQuickZoomIn.setOnClickListener {
+            mainAct?.zoomWebIn()
+            Toast.makeText(context, refreshZoomUi(), Toast.LENGTH_SHORT).show()
+        }
+
+        vb.btnQuickZoomOut.setOnClickListener {
+            mainAct?.zoomWebOut()
+            Toast.makeText(context, refreshZoomUi(), Toast.LENGTH_SHORT).show()
+        }
+
+        vb.btnQuickZoomReset.setOnClickListener {
+            mainAct?.applyWebPageZoom(Config.WEB_PAGE_ZOOM_PERCENT_DEFAULT, config.isDesktopMode())
+            vb.sbWebPageZoom.progress = Config.WEB_PAGE_ZOOM_PERCENT_DEFAULT - Config.WEB_PAGE_ZOOM_PERCENT_MIN
+            Toast.makeText(context, R.string.quick_zoom_reset, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun initDefaultBrowserUI(
+        context: Context,
+        vb: ViewSettingsMainBinding,
+        onDismissDialog: (() -> Unit)?,
+        activity: Context?
+    ) {
+        fun updateDefaultBrowserStatus() {
+            val isDefault = com.bansify.internet.utils.DefaultBrowserHelper.isDefaultBrowser(context)
+            if (isDefault) {
+                vb.tvDefaultBrowserStatus.text = "Status: Currently Default Browser (Active)"
+                vb.tvDefaultBrowserStatus.setTextColor(ContextCompat.getColor(context, R.color.app_accent))
+            } else {
+                vb.tvDefaultBrowserStatus.text = "Status: Not Default Browser (Click to Set)"
+                vb.tvDefaultBrowserStatus.setTextColor(ContextCompat.getColor(context, R.color.app_on_surface_muted))
+            }
+        }
+
+        updateDefaultBrowserStatus()
+
+        val action = {
+            com.bansify.internet.utils.DefaultBrowserHelper.requestSetDefaultBrowser(context)
+            vb.root.postDelayed({
+                updateDefaultBrowserStatus()
+            }, 1000)
+        }
+
+        vb.llSetDefaultBrowser.setOnClickListener {
+            action()
+        }
+
+        vb.btnQuickDefaultBrowser.setOnClickListener {
+            action()
+        }
+    }
+
+    fun initHistorySettingsUI(
+        context: Context,
+        vb: ViewSettingsMainBinding,
+        config: Config,
+        activity: Context?
+    ) {
+        vb.scSaveHistory.isChecked = config.saveHistory
+        vb.scSaveHistory.setOnCheckedChangeListener { _, isChecked ->
+            config.saveHistory = isChecked
+            val msg = if (isChecked) "Browsing history tracking enabled" else "Browsing history tracking paused"
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        }
+
+        vb.llSaveHistory.setOnClickListener {
+            vb.scSaveHistory.toggle()
+        }
+
+        vb.btnClearHistorySettings.setOnClickListener {
+            android.app.AlertDialog.Builder(context)
+                .setTitle(R.string.settings_clear_browsing_history)
+                .setMessage(R.string.settings_delete_history_confirm)
+                .setPositiveButton("Clear History") { _, _ ->
+                    (activity as? androidx.appcompat.app.AppCompatActivity)?.lifecycleScope?.launch(Dispatchers.IO) {
+                        com.bansify.internet.singleton.AppDatabase.db.historyDao().deleteAll()
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(context, context.getString(R.string.menu_browsing_history_cleared), Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+        }
+    }
+}

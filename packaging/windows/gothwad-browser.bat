@@ -2,8 +2,8 @@
 setlocal enabledelayedexpansion
 title Gothwad TV Browser
 
-set "PACKAGE=com.gothwad.browser"
-set "ACTIVITY=com.gothwad.browser/.activity.main.MainActivity"
+set "PACKAGE=com.bansify.internet"
+set "ACTIVITY=com.bansify.internet/.activity.main.MainActivity"
 set "SCRIPT_DIR=%~dp0"
 set "APK_FILE=%SCRIPT_DIR%app.apk"
 

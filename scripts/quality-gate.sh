@@ -38,6 +38,45 @@ scan_res() {
 
 echo "== AGENTS.md mechanical gates =="
 
+# Android's runtime ID, generated resource namespaces and source/test paths must stay in sync.
+# A package rename that only changes applicationId can still compile but break XML/reflection.
+packages=$(python3 - <<'EOF'
+from pathlib import Path
+import re
+
+app_id = 'com.bansify.internet'
+for module, namespace in ((Path('app'), app_id), (Path('app/common'), app_id + '.common')):
+    config = module / 'build.gradle.kts'
+    text = config.read_text(encoding='utf-8')
+    expected = {'namespace': namespace}
+    if module == Path('app'):
+        expected['applicationId'] = app_id
+    for key, value in expected.items():
+        match = re.search(r'(?m)^\s*' + key + r'\s*=\s*"([^"]+)"', text)
+        if match is None or match.group(1) != value:
+            print(f'{config}: {key} must be {value}')
+
+    for source_set in ('main', 'test'):
+        directory = module / 'src' / source_set / 'java' / Path(*app_id.split('.'))
+        if not directory.is_dir():
+            print(f'{directory}: expected package directory is missing')
+    for root in sorted(module.glob('src/*/java')):
+        for path in sorted(root.rglob('*')):
+            if path.suffix not in ('.kt', '.java'):
+                continue
+            match = re.search(r'(?m)^package\s+([\w.]+)', path.read_text(encoding='utf-8'))
+            if match is None:
+                print(f'{path}: missing package declaration')
+                continue
+            package = match.group(1)
+            if package != app_id and not package.startswith(app_id + '.'):
+                print(f'{path}: package must be under {app_id}')
+            if path.parent != root.joinpath(*package.split('.')):
+                print(f'{path}: directory does not match package {package}')
+EOF
+)
+report "application ID, namespaces and source/test package paths agree" "$packages"
+
 # rule 6 / §6 checklist: no blocking calls on the UI thread
 report "no runBlocking()" "$(scan 'runBlocking[[:space:]]*\(' "${SRC[@]}")"
 report "no Thread.sleep()" "$(scan 'Thread[[:space:]]*\.[[:space:]]*sleep' "${SRC[@]}")"
