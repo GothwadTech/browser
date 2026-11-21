@@ -14,7 +14,7 @@
 
 ### 📥 Get Bansify Browser
 
-[![Get on Google Play](https://img.shields.io/badge/Google_Play-Get%20it%20on%20Play%20Store-00875A?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.gothwad.browser)
+[![Get on Google Play](https://img.shields.io/badge/Google_Play-Get%20it%20on%20Play%20Store-00875A?style=for-the-badge&logo=google-play&logoColor=white)](https://play.google.com/store/apps/details?id=com.bansify.internet)
 [![Get on JioStore](https://img.shields.io/badge/JioStore-Available%20on%20Jio%20Set--Top%20Box-0A2885?style=for-the-badge&logo=reliance&logoColor=white)](https://www.jio.com/fiber/services/set-top-box)
 [![Official Website](https://img.shields.io/badge/Official_Website-Visit%20gothwad.com-FF6F00?style=for-the-badge&logo=google-chrome&logoColor=white)](https://gothwad.com)
 [![Direct Download](https://img.shields.io/badge/GitHub-Download%20Latest%20Release-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GothwadTech/browser/releases)
@@ -95,6 +95,15 @@ Bansify Browser is built with a singular mission: **bring desktop PC Chrome-grad
 ## 💻 Multi-Platform Installation Guide
 
 ### 📱 1. Android (TV, Phones & Tablets)
+
+**Android package / application ID:** `com.bansify.internet` (common-module resource namespace:
+`com.bansify.internet.common`). App and common-module sources and tests live under
+`src/main/java/com/bansify/internet/` and `src/test/java/com/bansify/internet/` in their respective modules.
+
+> **Package change:** Android treats this package as a separate app from builds using the previous
+> package ID. It can be installed alongside the old app, but existing app data, preferences and
+> permissions are not automatically migrated.
+
 1. **Google Play Store / JioStore:** Search for **"Bansify Browser"** and install with 1-click.
 2. **Direct APK Side-loading:**
    - Download `GothwadTVBrowser-vX.X.X-Release.apk` from [GitHub Releases](https://github.com/GothwadTech/browser/releases).

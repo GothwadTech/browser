@@ -1,3 +1,3 @@
--keepclassmembers class * extends com.gothwad.browser.utils.activemodel.ActiveModel {
+-keepclassmembers class * extends com.bansify.internet.utils.activemodel.ActiveModel {
    <init>(...);
 }

@@ -18,7 +18,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command ^
 where adb >nul 2>&1
 if %errorlevel% equ 0 (
     adb connect 127.0.0.1:58526 >nul 2>&1
-    adb uninstall com.gothwad.browser >nul 2>&1
+    adb uninstall com.bansify.internet >nul 2>&1
 )
 
 :: Remove installed directory

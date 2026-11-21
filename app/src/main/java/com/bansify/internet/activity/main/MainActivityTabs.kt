@@ -1,0 +1,88 @@
+package com.bansify.internet.activity.main
+
+import android.content.Intent
+import android.view.View
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bansify.internet.activity.main.dialogs.TabsSidebarPopup
+import com.bansify.internet.browser.tabs.TabsRowDialog
+import com.bansify.internet.browser.tabs.TopTabsAdapter
+import com.bansify.internet.model.WebTabState
+
+fun MainActivity.setupTopTabBar() {
+    val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    vb.rvTopTabs.layoutManager = layoutManager
+    val adapter = TopTabsAdapter(
+        tabs = tabsModel.tabsStates,
+        currentTab = tabsModel.currentTab.value,
+        onTabClick = { tab ->
+            switchToTab(tab)
+        },
+        onCloseTabClick = { tab ->
+            closeTab(tab)
+        },
+        onNewTabClick = {
+            openInNewTab(settingsModel.homePage, tabsModel.tabsStates.size, needToHideMenuOverlay = false, navigateImmediately = true)
+        },
+        onTabFocused = { _, position, _ ->
+            vb.rvTopTabs.smoothScrollToPosition(position)
+        }
+    )
+    topTabsAdapter = adapter
+    vb.rvTopTabs.adapter = adapter
+
+    vb.ibTopNewTab.setOnClickListener {
+        openInNewTab(settingsModel.homePage, tabsModel.tabsStates.size, needToHideMenuOverlay = false, navigateImmediately = true)
+    }
+
+    val isTopTabBarEnabled = config.showTopTabBar.value
+    val isPortrait = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
+            resources.configuration.screenWidthDp < 600
+    vb.llTopTabBar.visibility = if (isTopTabBarEnabled && !isPortrait) View.VISIBLE else View.GONE
+
+    config.showTopTabBar.subscribe(this) { isEnabled ->
+        val portrait = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT ||
+                resources.configuration.screenWidthDp < 600
+        vb.llTopTabBar.visibility = if (isEnabled && !portrait) View.VISIBLE else View.GONE
+    }
+}
+
+fun MainActivity.refreshTopTabs() {
+    val adapter = topTabsAdapter ?: return
+    val current = tabsModel.currentTab.value
+    adapter.updateData(tabsModel.tabsStates, current)
+    if (current != null) {
+        val index = tabsModel.tabsStates.indexOf(current)
+        if (index >= 0) {
+            vb.rvTopTabs.post {
+                vb.rvTopTabs.smoothScrollToPosition(index)
+            }
+        }
+    }
+}
+
+fun MainActivity.showTabsRowDialog() {
+    val tabs = tabsModel.tabsStates
+    val activeTab = tabsModel.currentTab.value
+    vb.vChromeTabSwitcher.show(tabs, activeTab)
+}
+
+fun MainActivity.updateTabCountBadge() {
+    val count = tabsModel.tabsStates.size
+    val label = if (count > 0) count.toString() else "1"
+    vb.tvTabCountBadge.text = label
+    vb.tvBottomTabCountBadge.text = label
+    refreshTopTabs()
+    if (vb.vChromeTabSwitcher.isVisible) {
+        vb.vChromeTabSwitcher.updateTabs(tabsModel.tabsStates, tabsModel.currentTab.value)
+    }
+}
+
+fun MainActivity.closeAllTabs() {
+    val tabsToClose = tabsModel.tabsStates.toList()
+    for (tab in tabsToClose) {
+        closeTab(tab)
+    }
+    openInNewTab(settingsModel.homePage, 0, needToHideMenuOverlay = false, navigateImmediately = true)
+}
+

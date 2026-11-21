@@ -5,7 +5,7 @@
 
 set -e
 
-APP_ID="com.gothwad.browser"
+APP_ID="com.bansify.internet"
 APP_NAME="Gothwad TV Browser"
 
 # Find bundled APK path

@@ -45,7 +45,7 @@
         android:src="@drawable/ic_mic_none_grey_900_36dp" />
 
     <!-- URL and Search input text field -->
-    <com.gothwad.browser.widgets.TvSearchEditText
+    <com.bansify.internet.widgets.TvSearchEditText
         android:id="@+id/etUrl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

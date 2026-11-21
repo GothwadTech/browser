@@ -4,10 +4,10 @@ plugins {
 }
 
 android {
-    namespace = "com.gothwad.browser"
+    namespace = "com.bansify.internet"
 
     defaultConfig {
-        applicationId = "com.gothwad.browser"
+        applicationId = "com.bansify.internet"
         val vCode = (project.findProperty("versionCode") as? String)?.toIntOrNull() ?: 2
         val vName = (project.findProperty("versionName") as? String) ?: "1.0.$vCode"
         versionCode = vCode

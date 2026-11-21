@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.gothwad.browser.common"
+    namespace = "com.bansify.internet.common"
 }
 
 dependencies {
